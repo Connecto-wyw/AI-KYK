@@ -31,13 +31,13 @@ export default function KYKLandingPage() {
         </div>
 
         <h1 className="text-[34px] md:text-5xl lg:text-[56px] font-extrabold tracking-tight mb-5 text-slate-900 leading-[1.35] break-keep">
-          우리 아이 숨겨진 솔직한 마음,<br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red1 to-[#FF6B5C]">AI가 찾아줍니다</span>
+          3분 진단으로 시작하는<br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red1 to-[#FF6B5C]">맞춤형 AI 육아 코칭</span>
         </h1>
 
         <p className="text-slate-500 mb-10 text-[16px] md:text-lg lg:text-xl leading-relaxed max-w-xl break-keep">
-          3분 만에 알아보는 16가지 동물 기질 유형.<br/>
-          아이의 성향에 딱 맞는 1:1 양육 코칭을 경험하세요.
+          아이의 기질과 부모의 고민을 함께 분석해<br/>
+          AI가 지금 상황에 맞는 육아 방향을 제안합니다.
         </p>
 
         <div className="w-full max-w-sm md:max-w-md hidden lg:block">
@@ -97,9 +97,9 @@ export default function KYKLandingPage() {
             <div className="w-14 h-14 bg-brand-yellowgreen/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellowgreen">
               <BarChart2 size={26} strokeWidth={1.5} />
             </div>
-            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">스케줄 성장 리포트</h4>
+            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">맞춤형 성장 플랜</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
-              아이의 학습/놀이 스케줄을 기록하면, 동년배 평균 데이터와 비교하여 객관적인 성장 평가 리포트를 제공합니다.
+              아이의 진단 결과를 바탕으로, 앞으로의 학습/놀이 방향성을 제시하는 맞춤형 성장 플랜을 제공합니다.
             </p>
           </div>
         </div>
