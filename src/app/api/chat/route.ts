@@ -3,6 +3,7 @@ import { streamText, convertToModelMessages, createUIMessageStreamResponse, crea
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { summarizeChatMemory } from '@/lib/ai/summary'
+import { KID_PROFILES, KidType } from '@/lib/kyk/scoring'
 
 const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy_key',
@@ -17,9 +18,26 @@ export async function POST(req: Request) {
 
     let memoryContext = ""
     let supabase = null
+    let profileDetails = "프로필 정보 없음"
 
     if (kidId) {
       supabase = await createClient()
+      
+      const { data: record } = await supabase.from('kyk_results').select('*').eq('id', kidId).single()
+      if (record) {
+        const profile = KID_PROFILES[record.result_type as KidType]
+        const ageGroup = record.answers?.step3?.ageGroup || '미상'
+        
+        profileDetails = `
+- Child Age: ${ageGroup}
+- Personality Type: Base(${record.base_type}), Sub(${record.sub_type})
+- Animal Title: ${profile?.title || 'Unknown'}
+- Strengths: ${profile?.strengths?.join(', ') || 'None'}
+- Care Points (Risks): ${profile?.carePoints?.join(', ') || 'None'}
+- Parent's Main Concern: ${record.concern || 'General parenting'}
+`
+      }
+
       const { data: memory } = await supabase.from('kid_memories').select('summary_context').eq('kid_id', kidId).single()
       if (memory) memoryContext = memory.summary_context
 
@@ -47,12 +65,36 @@ export async function POST(req: Request) {
       return createUIMessageStreamResponse({ stream })
     }
 
-    const systemPrompt = `당신은 육아 전문가 'KYK 수석 코치' 입니다.
-아이는 '${kidTitle}' 성향을 가졌으며, 부모님의 주요 고민은 '${kidConcern}' 입니다.
-과거 상담 내역 요약: ${memoryContext ? memoryContext : '아직 상담 내역이 없습니다.'}
+    const systemPrompt = `You are the KYK AI Parenting Coach, an experienced, highly personalized child behavior expert. All responses MUST be in Korean.
 
-위 정보를 바탕으로 부모님의 질문에 1~2문장의 간결하고 전문적인 조언을 건네주세요. 질문으로 답변을 마무리하여 대화를 유도하세요.
-말투는 다정하지만 확신에 찬 전문가 톤입니다.`
+CORE POSITIONING:
+- Be emotionally aware but calm, clear, practical, and action-oriented.
+- DO NOT use long textbook answers. DO NOT use numbered lists. Be conversational but authoritative.
+
+CHILD'S TEMPERAMENT PROFILE:
+${profileDetails}
+
+PAST MEMORY (RAG):
+${memoryContext ? memoryContext : 'No past interactions yet.'}
+
+PERSONALIZATION RULE (CRITICAL):
+Every response MUST be explicitly grounded in the child's temperament. Connect the behavior to their specific traits. Explain *why* the child reacts this way based on their KYK profile. 
+
+RESPONSE STRUCTURE (Keep it concise, 3-4 sentences total):
+1. Empathy: 1 short sentence acknowledging the parent.
+2. Interpretation: Explain the behavior linked to the temperament.
+3. Action: Give exactly ONE practical action to take.
+4. Script: Give exactly ONE example sentence the parent can actually say.
+(Rotate your style between Action coaching, Pattern insight, and Situation interpretation so you don't sound robotic).
+
+SAFETY RULES:
+- Never make medical diagnoses. Never blame the parent. No absolute statements.
+
+CONVERSION-AWARE COACHING (CRITICAL):
+You are part of a funnel.
+- For simple/early questions, give excellent practical advice.
+- When the parent asks deeper follow-ups, if the problem repeats, or the situation is complex: DO NOT give a full structured solution.
+- Instead, gently indicate that a "맞춤형 양육 전략(Personalized parenting strategy/report)" would help break this pattern deeply, while offering a tiny immediate tip. DO NOT hard sell or mention price. Make them want structured help.`
 
     const result = streamText({
       model: openai('gpt-4o-mini'),

@@ -28,8 +28,12 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const initialMessage = isUntested
-    ? `안녕하세요! 부모님의 든든한 육아 파트너 AI 수석 코치입니다. 요즘 육아하시면서 가장 궁금하거나 어렵게 느껴지는 점이 있으신가요?`
-    : `${profile.title} 유형 아이들은 독특한 강점이 있어요. 요즘 육아하면서 가장 어렵게 느껴지는 순간이 언제인가요?`
+    ? `안녕하세요! 부모님의 든든한 육아 파트너 AI 코치입니다. 요즘 아이를 키우시면서 가장 어렵거나 궁금한 점이 있으신가요?`
+    : `안녕하세요! '${profile.title}' 성향을 가진 우리 아이 맞춤형 AI 코치입니다. 
+
+검사 결과를 보니 어머님께서 요즘 '${concern}' 문제로 고민이 많으신 것 같아요. 우리 아이는 기본적으로 [${profile.strengths[0]}] 특징이 있지만, 종종 [${profile.carePoints[0]}] 취약점 때문에 부모님이 다루기 까다로울 때가 있을 거예요.
+
+이러한 기질의 아이들은 훈육과 칭찬 방식이 완전히 달라야 합니다. 최근에 구체적으로 어떤 행동이나 상황 때문에 가장 힘드셨나요? 편하게 말씀해주세요.`
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ 
