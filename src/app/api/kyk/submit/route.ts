@@ -22,17 +22,16 @@ export async function POST(request: Request) {
     const result = calculateKYKResult(step2Answers)
 
     const insertPayload = {
-      parent_id: user.id,
-      birth_year: step3Answers?.birthYear || null,
-      gender: step3Answers?.gender || null,
-      region: step3Answers?.region || null,
-      main_concern: step3Answers?.concern || null,
-      kyk_result_type: result.mbtiType,
-      raw_answers: { step1: step1Answers, step2: step2Answers, step3: step3Answers },
+      user_id: user.id,
+      result_type: result.mbtiType,
+      base_type: result.mbtiType.slice(0, 2),
+      sub_type: result.mbtiType.slice(2, 4),
+      concern: step3Answers?.concern || null,
+      answers: { step1: step1Answers, step2: step2Answers, step3: step3Answers },
     }
 
-    const { data: insertedKid, error: dbError } = await supabase
-      .from('kids')
+    const { data: insertedRecord, error: dbError } = await supabase
+      .from('kyk_results')
       .insert([insertPayload])
       .select('id')
       .single()
@@ -42,7 +41,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Database error' }, { status: 500 })
     }
 
-    return NextResponse.json({ success: true, kidId: insertedKid.id })
+    return NextResponse.json({ success: true, kidId: insertedRecord.id })
   } catch (err) {
     console.error('Submit API Error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })

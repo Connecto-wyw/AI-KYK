@@ -11,9 +11,9 @@ export default async function CoachPage() {
 
   if (user) {
     const { data } = await supabase
-      .from('kids')
+      .from('kyk_results')
       .select('*')
-      .eq('parent_id', user.id)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
       .limit(1)
       .single()
@@ -22,15 +22,15 @@ export default async function CoachPage() {
   }
 
   const isUntested = !kidData
-  const profileTitle = kidData ? KID_PROFILES[kidData.kyk_result_type as KidType]?.title : '우리 아이'
+  const profileTitle = kidData ? KID_PROFILES[kidData.result_type as KidType]?.title : '우리 아이'
   
   // Mock a safe profile object to pass TypeScript
-  const profile = kidData ? KID_PROFILES[kidData.kyk_result_type as KidType] : {
+  const profile = kidData ? KID_PROFILES[kidData.result_type as KidType] : {
     title: profileTitle,
     mbti: '', animalType: '', summary: '', strengths: [], carePoints: [], approaches: []
   } as unknown as any // Bypass strict typing for untested dummy profile
 
-  const concern = kidData?.main_concern || '양육 고민'
+  const concern = kidData?.concern || '양육 고민'
 
   return (
     <div className="flex flex-col min-h-screen bg-white p-4 lg:p-8 overflow-hidden relative pb-[100px] lg:pb-8">
