@@ -67,9 +67,9 @@ export default function KYKLandingPage() {
           {/* Feature 1 */}
           <div className="bg-white p-8 rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-slate-50 hover:-translate-y-1 transition-transform">
             <div className="w-14 h-14 bg-brand-yellow/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellow">
-              <ShieldCheck size={14} className="text-brand-forestgreen" />
+              <Sparkles size={26} strokeWidth={1.5} />
             </div>
-            <span className="text-[13px] font-bold text-slate-700 tracking-wide">3분이면 충분해요</span>
+            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">16가지 기질 분석</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
               최신 아동 심리학과 MBTI를 결합하여 아이의 찐 성향과 양육 가이드를 동물 캐릭터로 재미있게 알아봅니다.
             </p>
