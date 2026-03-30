@@ -10,7 +10,16 @@ export default function KYKLandingPage() {
       <div className="absolute top-20 right-0 w-64 h-64 bg-brand-red1/10 rounded-full blur-[80px] pointer-events-none" />
 
       {/* Hero Section */}
-      <section className="relative z-10 flex flex-col items-center justify-center pt-16 lg:pt-24 pb-12 px-6 text-center w-full max-w-4xl mx-auto">
+      <section className="relative z-10 flex flex-col items-center justify-center pt-24 lg:pt-24 pb-12 px-6 text-center w-full max-w-4xl mx-auto">
+        
+        {/* Mobile Top Header */}
+        <div className="lg:hidden absolute top-6 left-6 flex items-center gap-2">
+          <div className="w-8 h-8 bg-white rounded-lg shadow-sm flex items-center justify-center border border-slate-100 p-1.5 ring-2 ring-white/50">
+            <Image src="/symbol.png" alt="KYK Logo" width={32} height={32} className="w-full h-full object-contain" />
+          </div>
+          <span className="font-extrabold text-[19px] tracking-tight text-slate-900">KYK</span>
+        </div>
+
         <div className="mb-6 relative group cursor-pointer">
           <div className="absolute inset-0 bg-brand-yellow blur-xl rounded-full opacity-60 animate-pulse group-hover:opacity-80 transition-opacity" />
           <div className="relative w-28 h-28 lg:w-32 lg:h-32 bg-white rounded-[32px] shadow-2xl flex items-center justify-center border-4 border-white overflow-hidden p-4 transform transition-transform group-hover:scale-105">
@@ -21,13 +30,13 @@ export default function KYKLandingPage() {
           </div>
         </div>
 
-        <h1 className="text-[34px] md:text-5xl lg:text-[56px] font-extrabold tracking-tight mb-5 text-slate-900 leading-[1.2]">
-          우리 아이 숨겨진 솔직한 마음,<br className="hidden md:block"/>
+        <h1 className="text-[34px] md:text-5xl lg:text-[56px] font-extrabold tracking-tight mb-5 text-slate-900 leading-[1.35] break-keep">
+          우리 아이 숨겨진 솔직한 마음,<br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red1 to-[#FF6B5C]">AI가 찾아줍니다</span>
         </h1>
 
         <p className="text-slate-500 mb-10 text-[16px] md:text-lg lg:text-xl leading-relaxed max-w-xl break-keep">
-          3분 만에 알아보는 16가지 동물 기질 유형.<br className="hidden md:block"/>
+          3분 만에 알아보는 16가지 동물 기질 유형.<br/>
           아이의 성향에 딱 맞는 1:1 양육 코칭을 경험하세요.
         </p>
 
