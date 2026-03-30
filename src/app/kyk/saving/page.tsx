@@ -24,11 +24,12 @@ export default function SavingPage() {
           return
         }
 
+        const currentStore = useKYKStore.getState()
         const payload = {
-          deviceId: store.deviceId,
-          step1Answers: store.step1Answers,
-          step2Answers: store.step2Answers,
-          step3Answers: store.step3Answers,
+          deviceId: currentStore.deviceId,
+          step1Answers: currentStore.step1Answers,
+          step2Answers: currentStore.step2Answers,
+          step3Answers: currentStore.step3Answers,
         }
 
         const res = await fetch('/api/kyk/submit', {
