@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { calculateKYKResult } from '@/lib/kyk/scoring'
 
 export async function POST(request: Request) {
@@ -30,7 +31,12 @@ export async function POST(request: Request) {
       answers: { step1: step1Answers, step2: step2Answers, step3: step3Answers },
     }
 
-    const { data: insertedRecord, error: dbError } = await supabase
+    const serviceClient = createServiceClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
+    const { data: insertedRecord, error: dbError } = await serviceClient
       .from('kyk_results')
       .insert([insertPayload])
       .select('id')
