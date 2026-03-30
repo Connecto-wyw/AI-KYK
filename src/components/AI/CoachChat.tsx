@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport, type UIMessage } from 'ai'
 import { Send } from 'lucide-react'
@@ -10,6 +11,7 @@ interface CoachChatProps {
   profile: KidProfile
   concern: string
   kidId?: string
+  isUntested?: boolean
 }
 
 const QUICK_REPLIES = [
@@ -19,12 +21,15 @@ const QUICK_REPLIES = [
   '훈육은 어떻게 하나요?',
 ]
 
-export function CoachChat({ profile, concern, kidId }: CoachChatProps) {
+export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProps) {
+  const router = useRouter()
   const [inputValue, setInputValue] = useState('')
   const [hasInteracted, setHasInteracted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const initialMessage = `${profile.title} 유형 아이들은 독특한 강점이 있어요. 요즘 육아하면서 가장 어렵게 느껴지는 순간이 언제인가요?`
+  const initialMessage = isUntested
+    ? `안녕하세요! 부모님의 든든한 육아 파트너 KYK 수석 코치입니다. 요즘 육아하시면서 가장 궁금하거나 어렵게 느껴지는 점이 있으신가요?`
+    : `${profile.title} 유형 아이들은 독특한 강점이 있어요. 요즘 육아하면서 가장 어렵게 느껴지는 순간이 언제인가요?`
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ 
@@ -52,6 +57,14 @@ export function CoachChat({ profile, concern, kidId }: CoachChatProps) {
 
   const submit = (text: string) => {
     if (!text.trim() || isStreaming) return
+
+    if (isUntested) {
+      if (window.confirm('KYK 진단을 먼저 진행해야 아이 성향에 맞춘 정확한 답변이 가능합니다.\n진단을 시작하시겠어요?')) {
+        router.push('/kyk/step1')
+      }
+      return
+    }
+
     setHasInteracted(true)
     sendMessage({ text })
     setInputValue('')
