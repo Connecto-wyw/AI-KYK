@@ -32,15 +32,20 @@ export async function POST(req: Request) {
       const { data: record } = await supabase.from('kyk_results').select('*').eq('id', kidId).single()
       if (record) {
         const profile = KID_PROFILES[record.result_type as KidType]
-        const ageGroup = record.answers?.step3?.ageGroup || '미상'
+        const birthYear = record.answers?.step3?.birthYear || '미상'
+        const gender = record.answers?.step3?.gender || '미상'
+        
+        const currentYear = new Date().getFullYear()
+        const age = birthYear !== '미상' ? currentYear - parseInt(birthYear) + 1 : '미상'
+        const concernParts = record.answers?.step3?.concern || '전반적인 양육 방법'
         
         profileDetails = `
-- Child Age: ${ageGroup}
+- Child Age/Gender: ${birthYear}년생 (${age}세), ${gender}
 - Personality Type: Base(${record.base_type}), Sub(${record.sub_type})
 - Animal Title: ${profile?.title || 'Unknown'}
 - Strengths: ${profile?.strengths?.join(', ') || 'None'}
 - Care Points (Risks): ${profile?.carePoints?.join(', ') || 'None'}
-- Parent's Main Concern: ${record.concern || 'General parenting'}
+- Parent's Main Concern(s): ${concernParts}
 `
       }
 

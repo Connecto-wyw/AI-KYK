@@ -27,7 +27,6 @@ const CONCERNS = [
   '형제자매 혹은 다른 아이와 자주 싸워요',
   '새로운 것에 도전하길 두려워해요',
   '한글·숫자 등 학습에 흥미가 없어요',
-  '특별한 고민은 없어요',
 ]
 
 export default function Step3Page() {
@@ -37,20 +36,50 @@ export default function Step3Page() {
   const [birthYear, setBirthYear] = useState('')
   const [gender, setGender] = useState('')
   const [region, setRegion] = useState('')
-  const [concern, setConcern] = useState('')
+  const [concerns, setConcerns] = useState<string[]>([])
+  const [customConcern, setCustomConcern] = useState('')
 
   useEffect(() => {
     if (step3Answers?.birthYear) setBirthYear(step3Answers.birthYear)
     if (step3Answers?.gender) setGender(step3Answers.gender)
     if (step3Answers?.region) setRegion(step3Answers.region)
-    if (step3Answers?.concern) setConcern(step3Answers.concern)
+    if (step3Answers?.concern) {
+      if (step3Answers.concern.includes('특별한 고민은 없어요')) {
+        setConcerns(['특별한 고민은 없어요'])
+      } else {
+        const parts = step3Answers.concern.split(',').map(s => s.trim())
+        const standard = parts.filter(p => CONCERNS.includes(p))
+        const custom = parts.filter(p => !CONCERNS.includes(p))
+        setConcerns(standard)
+        if (custom.length) setCustomConcern(custom.join(', '))
+      }
+    }
   }, [step3Answers])
 
-  const isComplete = !!birthYear && !!gender && !!region && !!concern
+  const toggleConcern = (c: string) => {
+    if (c === '특별한 고민은 없어요') {
+      setConcerns(['특별한 고민은 없어요'])
+      setCustomConcern('')
+      return
+    }
+    
+    setConcerns(prev => {
+      const withoutNoConcern = prev.filter(x => x !== '특별한 고민은 없어요')
+      if (withoutNoConcern.includes(c)) return withoutNoConcern.filter(x => x !== c)
+      if (withoutNoConcern.length >= 3) return withoutNoConcern
+      return [...withoutNoConcern, c]
+    })
+  }
+
+  const isComplete = !!birthYear && !!gender && !!region && (concerns.length > 0 || customConcern.trim().length > 0)
 
   const handleNext = () => {
     if (isComplete) {
-      setStep3({ birthYear, gender, region, concern })
+      const finalConcerns = [...concerns]
+      if (customConcern.trim()) {
+        finalConcerns.push(customConcern.trim())
+      }
+      setStep3({ birthYear, gender, region, concern: finalConcerns.join(', ') })
       router.push('/kyk/saving')
     }
   }
@@ -141,15 +170,18 @@ export default function Step3Page() {
 
         {/* 고민 */}
         <section className="mb-4">
-          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">요즘 가장 걱정되는 부분</h2>
+          <div className="flex justify-between items-end mb-3">
+            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">요즘 가장 걱정되는 부분</h2>
+            <span className="text-xs text-brand-red1 font-medium bg-brand-red1/5 px-2 py-0.5 rounded-full">최대 3개</span>
+          </div>
           <div className="space-y-2.5">
             {CONCERNS.map((c) => (
               <button
                 key={c}
-                onClick={() => setConcern(c)}
+                onClick={() => toggleConcern(c)}
                 className={cn(
                   "w-full text-left px-5 py-4 rounded-2xl border-2 text-[15px] font-medium transition-all duration-200",
-                  concern === c
+                  concerns.includes(c)
                     ? "border-brand-red1 bg-brand-red1/5 text-brand-red1"
                     : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                 )}
@@ -157,6 +189,38 @@ export default function Step3Page() {
                 {c}
               </button>
             ))}
+
+            {/* Custom Concern Input */}
+            <div className={cn(
+               "w-full p-4 rounded-2xl border-2 transition-all duration-200 bg-white",
+               customConcern.length > 0 ? "border-brand-red1" : "border-slate-200 hover:border-slate-300"
+            )}>
+              <div className="text-[15px] font-medium text-slate-700 mb-2">여기에 있는 예시와는 다른 고민이 있어요</div>
+              <input 
+                type="text" 
+                placeholder="어떤 고민이 있으신가요?" 
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-red1/20 focus:border-brand-red1 transition-all"
+                value={customConcern}
+                onChange={(e) => {
+                  setCustomConcern(e.target.value)
+                  if (concerns.includes('특별한 고민은 없어요')) {
+                    setConcerns(prev => prev.filter(x => x !== '특별한 고민은 없어요'))
+                  }
+                }}
+              />
+            </div>
+
+            <button
+              onClick={() => toggleConcern('특별한 고민은 없어요')}
+              className={cn(
+                "w-full text-left px-5 py-4 rounded-2xl border-2 text-[15px] font-medium transition-all duration-200",
+                concerns.includes('특별한 고민은 없어요')
+                  ? "border-brand-red1 bg-brand-red1/5 text-brand-red1"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+              )}
+            >
+              특별한 고민은 없어요
+            </button>
           </div>
         </section>
       </main>
