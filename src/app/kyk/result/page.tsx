@@ -2,6 +2,8 @@ import { Sparkles, CheckCircle2, AlertCircle, HeartHandshake } from 'lucide-reac
 import { Card } from '@/components/ui/card'
 import { KID_PROFILES, KidType, MBTI_TO_TCI } from '@/lib/kyk/scoring'
 import { CoachChat } from '@/components/AI/CoachChat'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
 const TCI_DIMENSION_LABELS: Record<string, string> = {
   NS: '새로움추구',
@@ -23,36 +25,34 @@ const TCI_DIMENSION_COLORS: Record<string, string> = {
   ST: 'bg-brand-lightblue',
 }
 
-import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
-
-export default async function ResultPage({ searchParams }: { searchParams: Promise<{ kid?: string }> }) {
-  const { kid } = await searchParams
+export default async function ResultPage() {
   const supabase = await createClient()
 
-  if (!kid) {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
     redirect('/kyk/gate')
   }
 
-  const { data: kidData } = await supabase
-    .from('kids')
+  const { data: resultData } = await supabase
+    .from('kyk_results')
     .select('*')
-    .eq('id', kid)
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
     .single()
 
-  if (!kidData) {
-    redirect('/kyk/gate')
+  if (!resultData) {
+    redirect('/kyk/step1')
   }
 
-  const resultType = kidData.kyk_result_type as KidType
+  const resultType = resultData.result_type as KidType
   const profile = KID_PROFILES[resultType]
   const tciScores = MBTI_TO_TCI[resultType]
 
-  if (!profile) return null
+  if (!profile) redirect('/kyk/step1')
 
   return (
     <div className="min-h-[100dvh] bg-white">
-
       <div className="max-w-5xl mx-auto lg:flex lg:gap-8 lg:px-8 lg:pt-8 lg:pb-12">
 
         {/* ── Left: Analysis Cards ── */}
@@ -163,7 +163,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
             {/* Mobile: AI Chat inline */}
             <div className="lg:hidden">
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3 px-1">AI 코치에게 물어보기</p>
-              <CoachChat profile={profile} concern={kidData.main_concern || "양육 고민"} kidId={kid} />
+              <CoachChat profile={profile} concern={resultData.concern || '양육 고민'} kidId={resultData.id} />
             </div>
 
           </div>
@@ -173,7 +173,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
         <div className="hidden lg:flex lg:flex-col w-[380px] shrink-0">
           <div className="sticky top-8">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">AI 코치에게 물어보기</p>
-            <CoachChat profile={profile} concern={kidData.main_concern || "양육 고민"} kidId={kid} />
+            <CoachChat profile={profile} concern={resultData.concern || '양육 고민'} kidId={resultData.id} />
           </div>
         </div>
 
