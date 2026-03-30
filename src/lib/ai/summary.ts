@@ -1,6 +1,6 @@
 import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
-import { createClient } from '@/lib/supabase/server'
+import { createClient as createSupabaseCore } from '@supabase/supabase-js'
 
 const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy_key',
@@ -12,10 +12,13 @@ const openai = createOpenAI({
  */
 export async function summarizeChatMemory(kidId: string, currentMemory: string) {
   try {
-    const supabase = await createClient()
+    const serviceRoleSupabase = createSupabaseCore(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
 
     // 1. Fetch recent chats for this kid
-    const { data: recentChats } = await supabase
+    const { data: recentChats } = await serviceRoleSupabase
       .from('coach_chats')
       .select('role, content, created_at')
       .eq('kid_id', kidId)
@@ -52,7 +55,7 @@ ${chatLog}
     })
 
     // 2. Upsert into kid_memories
-    const { error } = await supabase.from('kid_memories').upsert({
+    const { error } = await serviceRoleSupabase.from('kid_memories').upsert({
       kid_id: kidId,
       summary_context: newMemory.trim(),
       updated_at: new Date().toISOString()

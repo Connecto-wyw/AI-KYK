@@ -1,5 +1,6 @@
 import { createOpenAI } from '@ai-sdk/openai'
 import { streamText, convertToModelMessages, createUIMessageStreamResponse, createUIMessageStream } from 'ai'
+import { createClient as createSupabaseCore } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { summarizeChatMemory } from '@/lib/ai/summary'
@@ -18,10 +19,15 @@ export async function POST(req: Request) {
 
     let memoryContext = ""
     let supabase = null
+    let serviceRoleSupabase: any = null
     let profileDetails = "프로필 정보 없음"
 
     if (kidId) {
       supabase = await createClient()
+      serviceRoleSupabase = createSupabaseCore(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      )
       
       const { data: record } = await supabase.from('kyk_results').select('*').eq('id', kidId).single()
       if (record) {
@@ -38,7 +44,7 @@ export async function POST(req: Request) {
 `
       }
 
-      const { data: memory } = await supabase.from('kid_memories').select('summary_context').eq('kid_id', kidId).single()
+      const { data: memory } = await serviceRoleSupabase.from('kid_memories').select('summary_context').eq('kid_id', kidId).single()
       if (memory) memoryContext = memory.summary_context
 
       // Save the latest user message to DB
@@ -48,9 +54,10 @@ export async function POST(req: Request) {
           ? userMessage.content 
           : (userMessage.parts?.find((p: any) => p.type === 'text')?.text || '')
 
-        await supabase.from('coach_chats').insert([
+        const { error: insertErr } = await serviceRoleSupabase.from('coach_chats').insert([
           { kid_id: kidId, role: 'user', content: textContent }
         ])
+        if (insertErr) console.error("User Message Insert Error:", insertErr)
       }
     }
 
@@ -103,10 +110,11 @@ You are part of a funnel.
       messages: await convertToModelMessages(messages),
       onFinish: async ({ text }) => {
         // Save assistant message to DB when stream finishes
-        if (kidId && supabase) {
-          await supabase.from('coach_chats').insert([
+        if (kidId && serviceRoleSupabase) {
+          const { error: aiInsertErr } = await serviceRoleSupabase.from('coach_chats').insert([
             { kid_id: kidId, role: 'assistant', content: text }
           ])
+          if (aiInsertErr) console.error("AI Message Insert Error:", aiInsertErr)
 
           // Trigger background summarization every N messages
           if (messages.length >= 4 && messages.length % 4 === 0) {
