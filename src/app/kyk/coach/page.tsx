@@ -33,13 +33,21 @@ export default async function CoachPage() {
   const concern = kidData?.concern || '양육 고민'
 
   return (
-    <div className="flex flex-col min-h-screen bg-white p-4 lg:p-8 overflow-hidden relative pb-[100px] lg:pb-8">
-      <div className="w-full max-w-2xl mx-auto pt-4 lg:pt-8 h-full flex flex-col flex-1">
-        <h1 className="text-[14px] lg:text-base font-bold text-slate-400 mb-4 px-2 tracking-tight">
+    <div className="flex flex-col h-[100dvh] bg-slate-50 lg:bg-white overflow-hidden relative pb-[80px] lg:pb-8">
+      {/* Mobile Top Header */}
+      <div className="lg:hidden flex items-center justify-center h-14 bg-white border-b border-slate-100 shrink-0 sticky top-0 z-20">
+        <h1 className="text-[16px] font-extrabold text-slate-800 tracking-tight">
+          AI 코치
+        </h1>
+      </div>
+
+      <div className="w-full max-w-2xl mx-auto h-full flex flex-col flex-1 lg:pt-8 lg:px-4">
+        {/* PC Top Header */}
+        <h1 className="hidden lg:block text-base font-bold text-slate-400 mb-4 px-2 tracking-tight">
           AI 코치에게 물어보기
         </h1>
         
-        <div className="flex-1 w-full relative z-10 flex flex-col">
+        <div className="flex-1 w-full relative z-10 flex flex-col min-h-0 bg-white lg:bg-transparent">
           <CoachChat profile={profile} concern={concern} kidId={kidData?.id} isUntested={isUntested} />
         </div>
       </div>

@@ -81,7 +81,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
   }
 
   return (
-    <div className="flex flex-col bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-lg">
+    <div className="flex flex-col h-full bg-white lg:rounded-3xl overflow-hidden lg:border lg:border-slate-100 lg:shadow-xl">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-white">
         <div className="relative shrink-0">
@@ -97,7 +97,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
       </div>
 
       {/* Messages */}
-      <div className="flex-1 min-h-[300px] max-h-[420px] overflow-y-auto px-4 py-5 space-y-4 bg-slate-50/40">
+      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 bg-slate-50/40">
         {messages.map((m) => {
           const text = getMessageText(m)
           if (!text) return null
@@ -157,7 +157,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 px-4 py-3 border-t border-slate-100 bg-white">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 px-4 py-3 lg:py-4 border-t border-slate-100 bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
         <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
