@@ -41,9 +41,8 @@ export default function SavingPage() {
           throw new Error('Failed to submit data')
         }
 
-        const data = await res.json()
         store.resetAll()
-        router.replace(`/kyk/result?kid=${data.kidId}`)
+        router.replace('/kyk/result')
       } catch (err) {
         console.error(err)
         alert('결과 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
