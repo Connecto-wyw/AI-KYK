@@ -48,8 +48,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, kidId: insertedRecord.id })
-  } catch (err) {
+  } catch (err: any) {
     console.error('Submit API Error:', err)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    return NextResponse.json({ error: err?.message || 'Internal Server Error' }, { status: 500 })
   }
 }
