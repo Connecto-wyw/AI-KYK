@@ -55,8 +55,8 @@ export default function Step2bPage() {
   const isComplete = progressCount === QUESTIONS.length
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-brand-white lg:bg-white w-full max-w-md lg:max-w-2xl mx-auto shadow-none lg:shadow-2xl lg:border-x lg:border-slate-100 relative">
-      <header className="sticky top-0 z-10 flex items-center bg-brand-white lg:bg-white px-4 lg:px-8 h-14 lg:h-16">
+    <div className="flex flex-col min-h-[100dvh] bg-white w-full max-w-md lg:max-w-2xl mx-auto relative lg:transform lg:translate-x-0">
+      <header className="sticky top-0 z-10 flex items-center bg-white px-4 lg:px-8 h-14 lg:h-16">
         <button onClick={() => router.back()} className="p-2 -ml-2 text-slate-400 hover:text-slate-600">
           <ChevronLeft size={24} />
         </button>
@@ -90,17 +90,15 @@ export default function Step2bPage() {
                       onClick={() => handleSelect(q.id, opt.value)}
                       className="group flex flex-col items-center flex-1"
                     >
-                      <div className={cn(
-                        "w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 mb-2 border-2",
-                        isSelected
-                          ? "bg-blue-600 border-blue-600 text-white scale-110 shadow-md"
-                          : "bg-white border-slate-200 text-slate-400 group-hover:border-blue-300"
+                      <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 group-active:scale-95",
+                        isSelected 
+                        ? "bg-brand-navy border-brand-navy text-white scale-110 shadow-md"
+                        : "bg-white border-slate-200 text-slate-400 group-hover:border-brand-lightblue/50"
                       )}>
                         {opt.value}
                       </div>
-                      <span className={cn(
-                        "text-[10px] sm:text-xs font-medium text-center break-keep leading-tight",
-                        isSelected ? "text-blue-700 font-bold" : "text-slate-400"
+                      <span className={cn("mt-3 sm:mt-4 text-xs sm:text-sm transition-colors",
+                        isSelected ? "text-brand-navy font-bold" : "text-slate-400"
                       )}>
                         {opt.label}
                       </span>
@@ -113,7 +111,7 @@ export default function Step2bPage() {
         </div>
       </main>
 
-      <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-brand-white lg:bg-white p-4 lg:px-12 pb-8 z-10 lg:rounded-b-[32px]">
+      <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-white p-4 lg:px-12 pb-8 z-10 border-t border-slate-50 lg:border-t-0">
         <div className="flex items-center justify-between mb-4 px-1">
           <span className="text-sm font-medium text-slate-500">응답 완료</span>
           <span className={cn("text-sm font-bold", isComplete ? "text-brand-red1" : "text-slate-400")}>

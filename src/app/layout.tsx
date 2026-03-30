@@ -17,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-[100dvh] bg-brand-white text-brand-black antialiased`}>
+      <body className={`${inter.className} min-h-[100dvh] bg-white text-brand-black antialiased`}>
         <div className="flex w-full min-h-[100dvh]">
           <BottomNavigation />
-          <main className="flex-1 w-full bg-transparent min-h-[100dvh] overflow-x-hidden relative flex flex-col lg:pl-64">
+          <main className="flex-1 w-full bg-white min-h-[100dvh] overflow-x-hidden relative flex flex-col lg:pl-64">
             {children}
           </main>
         </div>

@@ -46,16 +46,16 @@ export default function GatePage() {
   if (!result) return null
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-brand-white p-6 items-center justify-center relative overflow-hidden">
+    <div className="flex flex-col min-h-[100dvh] bg-white p-6 items-center justify-center relative overflow-hidden">
 
       {/* Background decoration */}
-      <div className="absolute top-[-10%] left-[-20%] w-[140%] h-[50%] bg-gradient-to-b from-blue-100 to-transparent rounded-b-full opacity-60 pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-20%] w-[140%] h-[50%] bg-gradient-to-b from-brand-lightblue/20 to-transparent rounded-b-full opacity-60 pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-md lg:max-w-4xl mx-auto flex flex-col items-center">
         
         {/* Title */}
         <div className="mb-6 lg:mb-10 text-center flex flex-col items-center">
-          <div className="mb-4 lg:mb-6 p-4 bg-white rounded-full text-amber-500 shadow-xl border border-orange-50 animate-bounce-slight inline-flex">
+          <div className="mb-4 lg:mb-6 p-4 bg-white rounded-full text-brand-yellow shadow-xl border border-brand-yellow/20 animate-bounce-slight inline-flex">
             <Sparkles size={36} fill="currentColor" />
           </div>
           <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">

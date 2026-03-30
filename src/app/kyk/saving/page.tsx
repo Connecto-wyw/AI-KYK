@@ -56,9 +56,9 @@ export default function SavingPage() {
   }, [])
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-brand-white p-6 items-center justify-center">
+    <div className="flex flex-col min-h-[100dvh] bg-white p-6 items-center justify-center">
       <div className="flex flex-col items-center">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
+        <Loader2 className="w-12 h-12 text-brand-lightblue animate-spin mb-4" />
         <h2 className="text-xl font-bold text-slate-800">결과 분석 중입니다...</h2>
         <p className="text-sm text-slate-500 mt-2">아이의 성향과 맞춤형 가이드라인을 생성하고 있어요.</p>
       </div>

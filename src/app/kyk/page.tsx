@@ -58,9 +58,9 @@ export default function KYKLandingPage() {
           {/* Feature 1 */}
           <div className="bg-white p-8 rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-slate-50 hover:-translate-y-1 transition-transform">
             <div className="w-14 h-14 bg-brand-yellow/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellow">
-              <Sparkles size={28} />
+              <ShieldCheck size={14} className="text-brand-forestgreen" />
             </div>
-            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">16가지 기질 분석</h4>
+            <span className="text-[13px] font-bold text-slate-700 tracking-wide">3분이면 충분해요</span>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
               최신 아동 심리학과 MBTI를 결합하여 아이의 찐 성향과 양육 가이드를 동물 캐릭터로 재미있게 알아봅니다.
             </p>
@@ -71,8 +71,8 @@ export default function KYKLandingPage() {
             <div className="absolute top-5 right-5 bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
               Coming Soon
             </div>
-            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-500">
-              <MessageCircle size={28} />
+            <div className="w-14 h-14 bg-brand-lightblue/10 rounded-2xl flex items-center justify-center mb-6 text-brand-lightblue">
+              <MessageCircle size={26} strokeWidth={1.5} />
             </div>
             <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">1:1 전담 AI 코치</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
@@ -85,8 +85,8 @@ export default function KYKLandingPage() {
             <div className="absolute top-5 right-5 bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
               Coming Soon
             </div>
-            <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-green-500">
-              <BarChart2 size={28} />
+            <div className="w-14 h-14 bg-brand-yellowgreen/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellowgreen">
+              <BarChart2 size={26} strokeWidth={1.5} />
             </div>
             <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">스케줄 성장 리포트</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">

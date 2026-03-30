@@ -75,11 +75,11 @@ export function CoachChat({ profile, concern, kidId }: CoachChatProps) {
           <div className="w-10 h-10 rounded-full bg-brand-red1 flex items-center justify-center text-white font-black text-sm">
             K
           </div>
-          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-white" />
+          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-brand-yellowgreen border-2 border-white" />
         </div>
         <div>
           <p className="font-bold text-slate-900 text-sm leading-tight">KYK 코치</p>
-          <p className="text-xs text-green-500 font-medium">온라인 · 지금 바로 답변해요</p>
+          <p className="text-xs text-brand-forestgreen font-medium">온라인 · 지금 바로 답변해요</p>
         </div>
       </div>
 

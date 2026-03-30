@@ -51,7 +51,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
   if (!profile) return null
 
   return (
-    <div className="min-h-[100dvh] bg-brand-white">
+    <div className="min-h-[100dvh] bg-white">
 
       <div className="max-w-5xl mx-auto lg:flex lg:gap-8 lg:px-8 lg:pt-8 lg:pb-12">
 
@@ -79,7 +79,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
             {/* Strengths */}
             <Card className="p-6 border-0 shadow-md bg-white rounded-3xl">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                <div className="w-8 h-8 rounded-full bg-brand-forestgreen/10 flex items-center justify-center text-brand-forestgreen">
                   <CheckCircle2 size={17} />
                 </div>
                 <h3 className="font-bold text-[17px] text-slate-800">빛나는 강점</h3>
@@ -87,7 +87,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
               <ul className="space-y-2.5 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
                 {profile.strengths.map((s, i) => (
                   <li key={i} className="flex gap-2.5 text-slate-600 text-[14px] leading-relaxed">
-                    <span className="text-green-500 font-black shrink-0 mt-0.5">✓</span>
+                    <span className="text-brand-forestgreen font-black shrink-0 mt-0.5">✓</span>
                     {s}
                   </li>
                 ))}
@@ -97,7 +97,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
             {/* Care Points */}
             <Card className="p-6 border-0 shadow-md bg-white rounded-3xl">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
+                <div className="w-8 h-8 rounded-full bg-brand-orange/10 flex items-center justify-center text-brand-orange">
                   <AlertCircle size={17} />
                 </div>
                 <h3 className="font-bold text-[17px] text-slate-800">주의 / 성장 특성</h3>
@@ -105,7 +105,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
               <ul className="space-y-2.5">
                 {profile.carePoints.map((s, i) => (
                   <li key={i} className="flex gap-2.5 text-slate-600 text-[14px] leading-relaxed">
-                    <span className="text-orange-400 font-black shrink-0 mt-0.5">!</span>
+                    <span className="text-brand-orange font-black shrink-0 mt-0.5">!</span>
                     {s}
                   </li>
                 ))}
@@ -115,7 +115,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
             {/* Approaches */}
             <Card className="p-6 border-0 shadow-md bg-white rounded-3xl">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                <div className="w-8 h-8 rounded-full bg-brand-lightblue/10 flex items-center justify-center text-brand-lightblue">
                   <HeartHandshake size={17} />
                 </div>
                 <h3 className="font-bold text-[17px] text-slate-800">추천 양육 가이드</h3>
@@ -123,7 +123,7 @@ export default async function ResultPage({ searchParams }: { searchParams: Promi
               <ul className="space-y-2.5">
                 {profile.approaches.map((s, i) => (
                   <li key={i} className="flex gap-2.5 text-slate-600 text-[14px] leading-relaxed">
-                    <span className="text-blue-400 font-black shrink-0 mt-0.5">→</span>
+                    <span className="text-brand-lightblue font-black shrink-0 mt-0.5">→</span>
                     {s}
                   </li>
                 ))}

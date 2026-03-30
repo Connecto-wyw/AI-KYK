@@ -44,7 +44,7 @@ export default function Step1Page() {
   }
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-brand-white lg:bg-white w-full max-w-md lg:max-w-2xl mx-auto shadow-none lg:shadow-2xl lg:border-x lg:border-slate-100 relative">
+    <div className="flex flex-col min-h-[100dvh] bg-white w-full max-w-md lg:max-w-2xl mx-auto relative lg:transform lg:translate-x-0">
       {/* Header */}
       <header className="sticky top-0 z-10 flex items-center bg-brand-white lg:bg-white px-4 lg:px-8 h-14 lg:h-16">
         <button onClick={() => router.back()} className="p-2 -ml-2 text-slate-400 hover:text-slate-600">
@@ -91,7 +91,7 @@ export default function Step1Page() {
       </main>
 
       {/* Footer */}
-      <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-brand-white lg:bg-white p-4 lg:px-12 pb-8 z-10 lg:rounded-b-[32px]">
+      <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-white p-4 lg:px-12 pb-8 z-10 border-t border-slate-50 lg:border-t-0">
         <div className="flex items-center justify-between mb-4 px-1">
           <span className="text-sm font-medium text-slate-500">선택된 단어</span>
           <span className={cn(
