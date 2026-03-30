@@ -23,14 +23,28 @@ const TCI_DIMENSION_COLORS: Record<string, string> = {
   ST: 'bg-brand-lightblue',
 }
 
-// TODO: Google Cloud ID 발급 후 아래 주석 해제 및 auth 게이트 복원
-// import { createClient } from '@/lib/supabase/server'
-// import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
-const TEST_RESULT_TYPE: KidType = 'INTJ'
+export default async function ResultPage({ searchParams }: { searchParams: Promise<{ kid?: string }> }) {
+  const { kid } = await searchParams
+  const supabase = await createClient()
 
-export default async function ResultPage() {
-  const resultType = TEST_RESULT_TYPE
+  if (!kid) {
+    redirect('/kyk/gate')
+  }
+
+  const { data: kidData } = await supabase
+    .from('kids')
+    .select('*')
+    .eq('id', kid)
+    .single()
+
+  if (!kidData) {
+    redirect('/kyk/gate')
+  }
+
+  const resultType = kidData.kyk_result_type as KidType
   const profile = KID_PROFILES[resultType]
   const tciScores = MBTI_TO_TCI[resultType]
 
@@ -149,7 +163,7 @@ export default async function ResultPage() {
             {/* Mobile: AI Chat inline */}
             <div className="lg:hidden">
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3 px-1">AI 코치에게 물어보기</p>
-              <CoachChat profile={profile} concern="수면, 식습관 등 기본 생활" />
+              <CoachChat profile={profile} concern={kidData.main_concern || "양육 고민"} kidId={kid} />
             </div>
 
           </div>
@@ -159,7 +173,7 @@ export default async function ResultPage() {
         <div className="hidden lg:flex lg:flex-col w-[380px] shrink-0">
           <div className="sticky top-8">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">AI 코치에게 물어보기</p>
-            <CoachChat profile={profile} concern="수면, 식습관 등 기본 생활" />
+            <CoachChat profile={profile} concern={kidData.main_concern || "양육 고민"} kidId={kid} />
           </div>
         </div>
 

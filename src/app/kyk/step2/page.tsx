@@ -55,8 +55,8 @@ export default function Step2Page() {
   const isComplete = progressCount === QUESTIONS.length
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-brand-white w-full max-w-md lg:max-w-4xl mx-auto shadow-2xl lg:shadow-none border-x border-slate-100 lg:border-x-0 relative">
-      <header className="sticky top-0 z-10 flex items-center bg-brand-white px-4 lg:px-8 h-14 lg:h-16">
+    <div className="flex flex-col min-h-[100dvh] bg-brand-white lg:bg-white w-full max-w-md lg:max-w-2xl mx-auto shadow-none lg:shadow-2xl lg:border-x lg:border-slate-100 relative">
+      <header className="sticky top-0 z-10 flex items-center bg-brand-white lg:bg-white px-4 lg:px-8 h-14 lg:h-16">
         <button onClick={() => router.back()} className="p-2 -ml-2 text-slate-400 hover:text-slate-600">
           <ChevronLeft size={24} />
         </button>
@@ -113,7 +113,7 @@ export default function Step2Page() {
         </div>
       </main>
 
-      <footer className="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-4xl bg-brand-white p-4 lg:px-12 pb-8">
+      <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-brand-white lg:bg-white p-4 lg:px-12 pb-8 z-10 lg:rounded-b-[32px]">
         <div className="flex items-center justify-between mb-4 px-1">
           <span className="text-sm font-medium text-slate-500">응답 완료</span>
           <span className={cn("text-sm font-bold", isComplete ? "text-brand-red1" : "text-slate-400")}>

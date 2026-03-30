@@ -8,6 +8,8 @@ import { Sparkles, Lock, ArrowRight } from 'lucide-react'
 import { useKYKStore } from '@/store/useKYKStore'
 import { calculateKYKResult, KYKResultData } from '@/lib/kyk/scoring'
 
+import { createClient } from '@/lib/supabase/client'
+
 export default function GatePage() {
   const { step2Answers } = useKYKStore()
   const [result, setResult] = useState<KYKResultData | null>(null)
@@ -21,14 +23,24 @@ export default function GatePage() {
   }, [step2Answers])
 
   const handleGoogleLogin = async () => {
-    // TODO: Google Cloud ID 발급 후 아래 OAuth 코드로 교체
-    // setIsLoading(true)
-    // const supabase = createClient()
-    // await supabase.auth.signInWithOAuth({
-    //   provider: 'google',
-    //   options: { redirectTo: `${window.location.origin}/api/auth/callback` }
-    // })
-    router.push('/kyk/result')
+    setIsLoading(true)
+    const supabase = createClient()
+    
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { 
+        redirectTo: `${window.location.origin}/api/auth/callback`,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        }
+      }
+    })
+
+    if (error) {
+      console.error('Google login error:', error)
+      setIsLoading(false)
+    }
   }
 
   if (!result) return null

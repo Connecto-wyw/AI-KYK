@@ -9,6 +9,7 @@ import { KidProfile } from '@/lib/kyk/scoring'
 interface CoachChatProps {
   profile: KidProfile
   concern: string
+  kidId?: string
 }
 
 const QUICK_REPLIES = [
@@ -18,7 +19,7 @@ const QUICK_REPLIES = [
   '훈육은 어떻게 하나요?',
 ]
 
-export function CoachChat({ profile, concern }: CoachChatProps) {
+export function CoachChat({ profile, concern, kidId }: CoachChatProps) {
   const [inputValue, setInputValue] = useState('')
   const [hasInteracted, setHasInteracted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -26,7 +27,14 @@ export function CoachChat({ profile, concern }: CoachChatProps) {
   const initialMessage = `${profile.title} 유형 아이들은 독특한 강점이 있어요. 요즘 육아하면서 가장 어렵게 느껴지는 순간이 언제인가요?`
 
   const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: '/api/chat' }),
+    transport: new DefaultChatTransport({ 
+      api: '/api/chat',
+      headers: {
+        'x-kid-id': kidId || '',
+        'x-kid-title': encodeURIComponent(profile.title),
+        'x-kid-concern': encodeURIComponent(concern)
+      }
+    }),
     messages: [
       {
         id: 'welcome',

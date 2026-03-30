@@ -41,12 +41,9 @@ export default function SavingPage() {
           throw new Error('Failed to submit data')
         }
 
-        // Submitting successful, we can clear the Zustand store to prevent resubmitting (optional)
-        // store.resetAll() -- In MVP, let's just keep it to show on the result page if we want, or clear it.
-        // Actually, best is to clear it and rely completely on fetching from DB in '/kyk/result',
-        // but for speed, we can just redirect!
-        
-        router.replace('/kyk/result')
+        const data = await res.json()
+        store.resetAll()
+        router.replace(`/kyk/result?kid=${data.kidId}`)
       } catch (err) {
         console.error(err)
         alert('결과 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
