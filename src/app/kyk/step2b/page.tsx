@@ -10,12 +10,12 @@ import { useKYKStore } from '@/store/useKYKStore'
 import { cn } from '@/lib/utils'
 
 const QUESTIONS = [
-  { id: 'q2', text: '우리 아이는 새로운 친구를 사귀는 것이 어렵지 않다.' },
-  { id: 'q3', text: '우리 아이는 혼자서도 조용히 잘 논다.' },
-  { id: 'q4', text: '처음 보는 사람 앞에서도 자연스럽게 말한다.' },
-  { id: 'q5', text: '우리 아이는 이야기를 들을 때 그 배경이나 이유를 궁금해한다.' },
-  { id: 'q6', text: '우리 아이는 그림을 사실적으로 그리는 걸 좋아한다.' },
-  { id: 'q7', text: '놀이 중 상상 속 세계나 규칙을 만들어내는 편이다.' },
+  { id: 'q8', text: '친구가 울면 함께 공감하려고 한다.' },
+  { id: 'q9', text: '우리 아이는 상황을 논리적으로 설명하려 한다.' },
+  { id: 'q10', text: '어떤 것이 옳고 그른지를 중요하게 생각한다.' },
+  { id: 'q11', text: '우리 아이는 해야 할 일을 미리 계획해서 처리하는 편이다.' },
+  { id: 'q12', text: '일정이 바뀌면 당황하거나 싫어한다.' },
+  { id: 'q13', text: '하고 싶은 것을 먼저 하고, 싫은 건 나중에 미루는 편이다.' },
 ]
 
 const LIKERT_OPTIONS = [
@@ -25,7 +25,7 @@ const LIKERT_OPTIONS = [
   { value: 4, label: '매우 그렇다' }
 ]
 
-export default function Step2Page() {
+export default function Step2bPage() {
   const router = useRouter()
   const { step2Answers, setStep2 } = useKYKStore()
   const [answers, setAnswers] = useState<Record<string, number>>({})
@@ -47,7 +47,7 @@ export default function Step2Page() {
   const handleNext = () => {
     if (Object.keys(answers).length === QUESTIONS.length) {
       setStep2({ ...step2Answers, ...answers })
-      router.push('/kyk/step2b')
+      router.push('/kyk/step3')
     }
   }
 
@@ -62,9 +62,9 @@ export default function Step2Page() {
         </button>
         <Image src="/symbol.png" alt="KYK" width={24} height={24} className="ml-1 object-contain opacity-80" />
         <div className="flex-1 px-3">
-          <Progress value={50} className="h-2" />
+          <Progress value={75} className="h-2" />
         </div>
-        <div className="w-8 text-xs text-right font-medium text-slate-400">2/4</div>
+        <div className="w-8 text-xs text-right font-medium text-slate-400">3/4</div>
       </header>
 
       <main className="flex-1 px-6 lg:px-12 py-8 pb-32">
@@ -77,7 +77,7 @@ export default function Step2Page() {
             <div key={q.id} className="py-4 border-b border-slate-100 last:border-0">
               <div className="flex gap-3 mb-6">
                 <span className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-yellow/20 text-brand-red1 text-xs font-bold shrink-0">
-                  {idx + 1}
+                  {idx + 7}
                 </span>
                 <p className="text-slate-800 font-medium leading-relaxed">{q.text}</p>
               </div>
