@@ -28,7 +28,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const initialMessage = isUntested
-    ? `안녕하세요! 부모님의 든든한 육아 파트너 KYK 수석 코치입니다. 요즘 육아하시면서 가장 궁금하거나 어렵게 느껴지는 점이 있으신가요?`
+    ? `안녕하세요! 부모님의 든든한 육아 파트너 AI 수석 코치입니다. 요즘 육아하시면서 가장 궁금하거나 어렵게 느껴지는 점이 있으신가요?`
     : `${profile.title} 유형 아이들은 독특한 강점이 있어요. 요즘 육아하면서 가장 어렵게 느껴지는 순간이 언제인가요?`
 
   const { messages, sendMessage, status } = useChat({
@@ -85,13 +85,13 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-white">
         <div className="relative shrink-0">
-          <div className="w-10 h-10 rounded-full bg-brand-red1 flex items-center justify-center text-white font-black text-sm">
-            K
+          <div className="w-10 h-10 rounded-[14px] bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden p-1.5 shadow-sm">
+            <img src="/symbol.png" alt="AI 코치" className="w-full h-full object-contain" />
           </div>
-          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-brand-yellowgreen border-2 border-white" />
+          <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-brand-yellowgreen border-2 border-white" />
         </div>
         <div>
-          <p className="font-bold text-slate-900 text-sm leading-tight">KYK 코치</p>
+          <p className="font-bold text-slate-900 text-[15px] leading-tight mb-0.5">AI 코치</p>
           <p className="text-xs text-brand-forestgreen font-medium">온라인 · 지금 바로 답변해요</p>
         </div>
       </div>
@@ -105,8 +105,8 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
           return (
             <div key={m.id} className={`flex items-end gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
               {!isUser && (
-                <div className="w-7 h-7 rounded-full bg-brand-red1 flex items-center justify-center text-white font-black text-xs shrink-0 mb-0.5">
-                  K
+                <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 mb-0.5 p-1 shadow-sm">
+                  <img src="/symbol.png" alt="AI 코치" className="w-full h-full object-contain" />
                 </div>
               )}
               <div
@@ -125,8 +125,8 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
         {/* Typing indicator */}
         {isStreaming && (
           <div className="flex items-end gap-2 justify-start">
-            <div className="w-7 h-7 rounded-full bg-brand-red1 flex items-center justify-center text-white font-black text-xs shrink-0">
-              K
+            <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 p-1 shadow-sm">
+              <img src="/symbol.png" alt="AI 코치" className="w-full h-full object-contain" />
             </div>
             <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
               <span className="inline-flex gap-1 items-center h-4">

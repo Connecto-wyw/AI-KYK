@@ -34,13 +34,6 @@ export default async function CoachPage() {
 
   return (
     <div className="flex flex-col h-[100dvh] bg-slate-50 lg:bg-white overflow-hidden relative pb-[80px] lg:pb-8">
-      {/* Mobile Top Header */}
-      <div className="lg:hidden flex items-center justify-center h-14 bg-white border-b border-slate-100 shrink-0 sticky top-0 z-20">
-        <h1 className="text-[16px] font-extrabold text-slate-800 tracking-tight">
-          AI 코치
-        </h1>
-      </div>
-
       <div className="w-full max-w-2xl mx-auto h-full flex flex-col flex-1 lg:pt-8 lg:px-4">
         {/* PC Top Header */}
         <h1 className="hidden lg:block text-base font-bold text-slate-400 mb-4 px-2 tracking-tight">
