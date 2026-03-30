@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 
     if (dbError) {
       console.error('DB Insert Error:', dbError)
-      return NextResponse.json({ error: 'Database error' }, { status: 500 })
+      return NextResponse.json({ error: dbError.message || 'Database error', details: dbError }, { status: 500 })
     }
 
     return NextResponse.json({ success: true, kidId: insertedRecord.id })

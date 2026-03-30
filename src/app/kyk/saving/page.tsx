@@ -38,15 +38,16 @@ export default function SavingPage() {
         })
 
         if (!res.ok) {
-          throw new Error('Failed to submit data')
+          const errorData = await res.json().catch(() => ({}))
+          throw new Error(errorData.error || 'Failed to submit data')
         }
 
         store.resetAll()
         router.replace('/kyk/result')
-      } catch (err) {
+      } catch (err: any) {
         console.error(err)
-        alert('결과 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
-        router.replace('/kyk/gate')
+        alert(`결과 저장 중 오류가 발생했습니다: \n${err.message}`)
+        router.replace('/kyk/step1')
       }
     }
 
