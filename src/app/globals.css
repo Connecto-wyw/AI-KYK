@@ -5,6 +5,21 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-brand-white: #EBE4DF;
+  --color-brand-black: #191919;
+  --color-brand-red1: #C53324;
+  --color-brand-red2: #AB3628;
+  --color-brand-yellow: #FAB41E;
+
+  --color-brand-yellowgreen: #96BE28;
+  --color-brand-lightblue: #0A96CD;
+  --color-brand-pink: #DC91B4;
+  --color-brand-dustypurple: #B4AAB4;
+  --color-brand-forestgreen: #05965A;
+  --color-brand-navy: #004696;
+  --color-brand-orange: #F06428;
+  --color-brand-ivory: #FFF0D7;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
