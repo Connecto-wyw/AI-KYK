@@ -9,7 +9,7 @@ import { useState } from 'react'
 const NAV_ITEMS = [
   { name: 'KYK 진단', href: '/kyk', icon: Sparkles },
   { name: 'AI 코치', href: '/kyk/coach', icon: MessageCircle, disabled: false },
-  { name: '성장 플랜', href: '#report', icon: BarChart2, disabled: true },
+  { name: '성장 플랜', href: '/kyk/plan', icon: BarChart2, disabled: false },
   { name: '마이', href: '#my', icon: User, disabled: true }
 ]
 
