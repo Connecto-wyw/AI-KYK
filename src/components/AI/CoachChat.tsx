@@ -37,7 +37,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
 
 검사 결과를 보니 부모님께서 요즘 ${concernText} 문제로 고민이 있으신 것 같아요. 우리 아이는 기본적으로 [${profile.strengths[0]}] 특징이 있지만, 종종 [${profile.carePoints[0]}] 취약점 때문에 부모님이 다루기 까다로울 때가 있을 거예요.
 
-이러한 기질의 아이들은 훈육과 칭찬 방식이 완전히 달라야 합니다. 최근에 구체적으로 어떤 행동이나 상황 때문에 가장 힘드셨나요? 편하게 말씀해주세요.`
+이러한 성향의 아이들은 훈육과 칭찬 방식이 완전히 달라야 합니다. 최근에 구체적으로 어떤 행동이나 상황 때문에 가장 힘드셨나요? 편하게 말씀해주세요.`
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ 

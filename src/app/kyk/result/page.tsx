@@ -137,7 +137,7 @@ export default async function ResultPage() {
                   <div className="w-8 h-8 rounded-full bg-brand-red1/10 flex items-center justify-center text-brand-red1">
                     <Sparkles size={16} />
                   </div>
-                  <h3 className="font-bold text-[17px] text-slate-800">타고난 기질 (TCI)</h3>
+                  <h3 className="font-bold text-[17px] text-slate-800">타고난 성향 (TCI)</h3>
                 </div>
                 <div className="space-y-3.5">
                   {Object.entries(tciScores).map(([key, score]) => (

@@ -30,12 +30,12 @@ export default async function GrowthPlanPage() {
             <Image src="/symbol.png" alt="KYK Logo" width={40} height={40} className="w-full h-full object-contain" />
           </div>
           <h2 className="text-xl font-bold text-slate-800 mb-2">아직 진단 결과가 없어요</h2>
-          <p className="text-slate-500 mb-8 break-keep text-[14.5px]">AI 맞춤형 성장 플랜을 받으려면 무료 기질 진단을 먼저 진행해주세요.</p>
+          <p className="text-slate-500 mb-8 break-keep text-[14.5px]">AI 맞춤형 성장 플랜을 받으려면 무료 성향 진단을 먼저 진행해주세요.</p>
           <Link
             href="/kyk/step1"
             className="flex items-center justify-center w-full max-w-sm h-14 bg-brand-red1 hover:bg-brand-red2 text-white font-bold text-[15px] rounded-2xl shadow-md transition-all active:scale-[0.98]"
           >
-            기질 진단 시작하기
+            성향 진단 시작하기
           </Link>
         </div>
       </div>

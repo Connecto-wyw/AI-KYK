@@ -48,7 +48,7 @@ export default async function PremiumReportPage({ params }: { params: { id: stri
         {/* 1. Deep Analysis */}
         <Card className="p-8 border-2 border-brand-red1/20 shadow-2xl bg-white rounded-3xl">
           <h2 className="text-2xl font-bold text-brand-red1 mb-4 flex items-center gap-2 tracking-tight">
-            <Sparkles /> 심층 기질 분석
+            <Sparkles /> 심층 성향 분석
           </h2>
           <p className="text-slate-700 text-[15px] lg:text-lg leading-relaxed break-keep font-medium">
             {report.deepAnalysis}

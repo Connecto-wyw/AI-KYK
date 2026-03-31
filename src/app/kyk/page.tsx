@@ -36,7 +36,7 @@ export default function KYKLandingPage() {
         </h1>
 
         <p className="text-slate-500 mb-10 text-[16px] md:text-lg lg:text-xl leading-relaxed max-w-xl break-keep">
-          아이의 기질과 부모의 고민을 함께 분석해<br/>
+          아이의 성향과 부모의 고민을 함께 분석해<br/>
           AI가 지금 상황에 맞는 육아 방향을 제안합니다.
         </p>
 
@@ -46,7 +46,7 @@ export default function KYKLandingPage() {
             className="group flex items-center justify-center w-full text-xl h-[64px] bg-slate-900 hover:bg-slate-800 text-white rounded-2xl shadow-xl transition-all hover:scale-[1.02]"
           >
             <Sparkles className="mr-2 w-5 h-5 text-brand-yellow" />
-            무료 기질 분석 시작하기
+            무료 성향 분석 시작하기
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <p className="mt-4 text-[13px] text-slate-400 font-medium flex items-center justify-center gap-1.5">
@@ -69,7 +69,7 @@ export default function KYKLandingPage() {
             <div className="w-14 h-14 bg-brand-yellow/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellow">
               <Sparkles size={26} strokeWidth={1.5} />
             </div>
-            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">16가지 기질 분석</h4>
+            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">16가지 성향 분석</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
               최신 아동 심리학과 MBTI를 결합하여 아이의 찐 성향과 양육 가이드를 동물 캐릭터로 재미있게 알아봅니다.
             </p>
@@ -85,7 +85,7 @@ export default function KYKLandingPage() {
             </div>
             <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">1:1 전담 AI 코치</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
-              우리 아이의 기질 데이터와 나이, 성별을 모두 기억하는 똑똑한 AI 코치에게 언제든 육아 고민을 상담하세요.
+              우리 아이의 성향 데이터와 나이, 성별을 모두 기억하는 똑똑한 AI 코치에게 언제든 육아 고민을 상담하세요.
             </p>
           </div>
 
@@ -112,7 +112,7 @@ export default function KYKLandingPage() {
           className="pointer-events-auto flex items-center justify-center w-full max-w-sm h-14 bg-slate-900 text-white font-semibold text-[17px] rounded-2xl shadow-xl active:scale-[0.98] transition-transform"
         >
           <Sparkles className="mr-2 w-4 h-4 text-brand-yellow" />
-          무료 기질 분석 시작하기
+          무료 성향 분석 시작하기
         </Link>
         <p className="pointer-events-auto mt-2.5 text-[11px] text-slate-500 font-medium">
           가입 없이 빠르게 확인해 보세요!
