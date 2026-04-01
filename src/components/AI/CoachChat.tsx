@@ -91,37 +91,37 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
   return (
     <div className="flex flex-col h-full bg-white lg:rounded-3xl overflow-hidden lg:border lg:border-slate-100 lg:shadow-xl">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-white">
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-50 bg-white/80 backdrop-blur-md shrink-0 z-20 shadow-sm relative">
         <div className="relative shrink-0">
-          <div className="w-10 h-10 rounded-[14px] bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden p-1.5 shadow-sm">
+          <div className="w-[42px] h-[42px] rounded-2xl bg-brand-lightblue/20 border border-slate-50 flex items-center justify-center overflow-hidden p-2 shadow-sm">
             <img src="/symbol.png" alt="AI 코치" className="w-full h-full object-contain" />
           </div>
-          <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-brand-yellowgreen border-2 border-white" />
+          <span className="absolute -bottom-0.5 -right-0.5 w-[14px] h-[14px] rounded-full bg-brand-yellowgreen border-[3px] border-white" />
         </div>
         <div>
-          <p className="font-bold text-slate-900 text-[15px] leading-tight mb-0.5">AI 코치</p>
-          <p className="text-xs text-brand-forestgreen font-medium">온라인 · 지금 바로 답변해요</p>
+          <p className="font-extrabold text-slate-900 text-[16px] leading-tight mb-0.5">전담 AI 코치</p>
+          <p className="text-[12px] text-brand-blue font-bold tracking-wide">온라인 · 1:1 맞춤 상담 중</p>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 bg-slate-50/40">
+      <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6 bg-slate-50/30">
         {messages.map((m) => {
           const text = getMessageText(m)
           if (!text) return null
           const isUser = m.role === 'user'
           return (
-            <div key={m.id} className={`flex items-end gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
+            <div key={m.id} className={`flex gap-3 max-w-full ${isUser ? 'justify-end' : 'justify-start'}`}>
               {!isUser && (
-                <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 mb-0.5 p-1 shadow-sm">
+                <div className="w-[36px] h-[36px] rounded-[14px] bg-white border border-slate-100 flex items-center justify-center overflow-hidden shrink-0 mt-1 p-1.5 shadow-sm">
                   <img src="/symbol.png" alt="AI 코치" className="w-full h-full object-contain" />
                 </div>
               )}
               <div
-                className={`max-w-[78%] rounded-2xl px-4 py-3 text-[14px] leading-relaxed ${
+                className={`max-w-[80%] px-5 py-4 text-[15px] leading-relaxed break-keep font-medium shadow-sm ${
                   isUser
-                    ? 'bg-brand-red1 text-white rounded-br-sm'
-                    : 'bg-white text-slate-800 rounded-bl-sm shadow-sm border border-slate-100'
+                    ? 'bg-slate-900 text-white rounded-[24px] rounded-tr-md'
+                    : 'bg-brand-lightblue/10 text-slate-800 rounded-[28px] rounded-tl-md border border-brand-lightblue/20'
                 }`}
               >
                 {text}
@@ -132,15 +132,15 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
 
         {/* Typing indicator */}
         {isStreaming && (
-          <div className="flex items-end gap-2 justify-start">
-            <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 p-1 shadow-sm">
+          <div className="flex items-start gap-3 justify-start max-w-full">
+            <div className="w-[36px] h-[36px] rounded-[14px] bg-white border border-slate-100 flex items-center justify-center overflow-hidden shrink-0 mt-1 p-1.5 shadow-sm">
               <img src="/symbol.png" alt="AI 코치" className="w-full h-full object-contain" />
             </div>
-            <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
-              <span className="inline-flex gap-1 items-center h-4">
-                <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0ms]" />
-                <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:150ms]" />
-                <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:300ms]" />
+            <div className="bg-brand-lightblue/10 border border-brand-lightblue/20 rounded-[24px] rounded-tl-md px-5 py-4 shadow-sm flex items-center">
+              <span className="inline-flex gap-1.5 items-center h-4">
+                <span className="w-2 h-2 bg-brand-blue/40 rounded-full animate-bounce [animation-delay:0ms]" />
+                <span className="w-2 h-2 bg-brand-blue/40 rounded-full animate-bounce [animation-delay:150ms]" />
+                <span className="w-2 h-2 bg-brand-blue/40 rounded-full animate-bounce [animation-delay:300ms]" />
               </span>
             </div>
           </div>
@@ -165,20 +165,20 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 px-4 py-3 lg:py-4 border-t border-slate-100 bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+      <form onSubmit={handleSubmit} className="flex items-center gap-3 px-5 py-4 border-t border-slate-50 bg-white shrink-0 z-20">
         <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="궁금한 점을 물어보세요..."
+          placeholder="궁금한 양육 고민을 질문해주세요..."
           disabled={isStreaming}
-          className="flex-1 bg-slate-50 border border-slate-200 text-slate-800 rounded-full pl-4 pr-4 py-2.5 text-sm focus:outline-none focus:border-brand-red1 focus:ring-1 focus:ring-brand-red1/30 transition-all disabled:opacity-50"
+          className="flex-1 bg-slate-50 border border-slate-100 text-slate-800 rounded-full pl-5 pr-5 h-[52px] text-[15px] font-medium focus:outline-none focus:border-brand-blue/30 focus:bg-white focus:ring-4 focus:ring-brand-blue/5 transition-all disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={!inputValue.trim() || isStreaming}
-          className="w-9 h-9 rounded-full bg-brand-red1 text-white flex items-center justify-center disabled:opacity-40 disabled:bg-slate-300 transition-all hover:bg-brand-red2 shrink-0"
+          className="w-[52px] h-[52px] rounded-full bg-slate-900 text-white flex items-center justify-center disabled:opacity-30 disabled:bg-slate-300 transition-all hover:bg-slate-800 shrink-0 shadow-md"
         >
-          <Send size={15} className="-ml-0.5" />
+          <Send size={20} className="-ml-0.5" />
         </button>
       </form>
     </div>
