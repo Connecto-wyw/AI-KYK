@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowRight, Sparkles, MessageCircle, BarChart2, ShieldCheck } from 'lucide-react'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { dictionaries } from '@/lib/i18n/dictionaries'
+import { LanguageSelector } from '@/components/ui/LanguageSelector'
 
 export default function KYKLandingPage() {
   const { language } = useLanguageStore()
@@ -27,7 +28,12 @@ export default function KYKLandingPage() {
           <span className="font-extrabold text-[19px] tracking-tight text-slate-900">KYK</span>
         </div>
 
-        <div className="mb-6 relative group cursor-pointer">
+        {/* Global Language Selector (Top Right) */}
+        <div className="absolute top-6 right-6 z-50">
+          <LanguageSelector />
+        </div>
+
+        <div className="mb-6 mt-16 lg:mt-6 relative group cursor-pointer">
           <div className="absolute inset-0 bg-brand-yellow blur-xl rounded-full opacity-60 animate-pulse group-hover:opacity-80 transition-opacity" />
           <div className="relative w-28 h-28 lg:w-32 lg:h-32 bg-white rounded-[32px] shadow-2xl flex items-center justify-center border-4 border-white overflow-hidden p-4 transform transition-transform group-hover:scale-105">
             <Image src="/symbol.png" alt="KYK 심볼" width={100} height={100} className="w-full h-full object-contain" priority />
