@@ -16,6 +16,17 @@ export async function POST(req: Request) {
     const kidId = req.headers.get('x-kid-id')
     const kidTitle = decodeURIComponent(req.headers.get('x-kid-title') || '')
     const kidConcern = decodeURIComponent(req.headers.get('x-kid-concern') || '')
+    const kidLanguage = req.headers.get('x-kid-language') || 'ko'
+
+    const langMap: Record<string, string> = {
+      ko: 'Korean',
+      en: 'English',
+      ms: 'Malay',
+      id: 'Indonesian',
+      vi: 'Vietnamese',
+      th: 'Thai'
+    }
+    const responseLang = langMap[kidLanguage] || 'English'
 
     let memoryContext = ""
     let supabase = null
@@ -77,7 +88,7 @@ export async function POST(req: Request) {
       return createUIMessageStreamResponse({ stream })
     }
 
-    const systemPrompt = `You are the KYK AI Parenting Coach, an experienced, highly personalized child behavior expert. All responses MUST be in Korean.
+    const systemPrompt = `You are the KYK AI Parenting Coach, an experienced, highly personalized child behavior expert. All responses MUST be in ${responseLang}.
 
 CORE POSITIONING:
 - Be emotionally aware but calm, clear, practical, and action-oriented.

@@ -26,6 +26,28 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
   const [hasInteracted, setHasInteracted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
+  const KOR_CONCERNS = [
+    '말이 늦거나 표현이 부족해요',
+    '밥을 잘 안 먹거나 편식이 심해요',
+    '형제자매 혹은 다른 아이와 자주 싸워요',
+    '주의력이 부족하고 산만해서 다칠까봐 걱정돼요',
+    '친구들과 잘 어울리지 못하고 겉도는 것 같아요',
+    '어린이집이나 유치원 가기를 너무 싫어해요',
+    '짜증이나 화를 참지 못하고 심하게 부려요'
+  ]
+
+  let localizedConcern = concern
+  KOR_CONCERNS.forEach((korStr, idx) => {
+    if (dict.step3ConcernList && dict.step3ConcernList[idx]) {
+      localizedConcern = localizedConcern.replace(korStr, dict.step3ConcernList[idx])
+    }
+  })
+
+  // Handle NO concern string
+  if (localizedConcern.includes('특별한 고민은 없어요')) {
+    localizedConcern = localizedConcern.replace('특별한 고민은 없어요', dict.concernFallback)
+  }
+
   const QUICK_REPLIES = [
     dict.coachQuickRep1,
     dict.coachQuickRep2,
@@ -33,9 +55,9 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
     dict.coachQuickRep4,
   ]
 
-  const concernText = concern.includes('특별한 고민은 없어요')
+  const concernText = localizedConcern.includes(dict.concernFallback)
     ? dict.concernFallback
-    : `'${concern}'`
+    : `'${localizedConcern}'`
 
   let initialMessage = ''
   if (isUntested) {
@@ -54,7 +76,8 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
       headers: {
         'x-kid-id': kidId || '',
         'x-kid-title': encodeURIComponent(profile.title),
-        'x-kid-concern': encodeURIComponent(concern)
+        'x-kid-concern': encodeURIComponent(localizedConcern),
+        'x-kid-language': language
       }
     }),
     messages: [
