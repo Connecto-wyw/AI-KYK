@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function ShopFrontPage() {
   return (
@@ -9,7 +10,7 @@ export default function ShopFrontPage() {
 
       <div className="flex flex-col gap-8">
         {/* Featured Item */}
-        <div className="flex flex-col lg:flex-row gap-6 w-full group cursor-pointer">
+        <Link href="/kyk/shop/1" className="flex flex-col lg:flex-row gap-6 w-full group cursor-pointer">
           {/* Image Side */}
           <div className="w-full lg:w-[45%] relative rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-square lg:aspect-[4/5] bg-slate-50 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 flex-shrink-0">
             {/* Top Badge Overlay */}
@@ -58,7 +59,7 @@ export default function ShopFrontPage() {
               </span>
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* Divider */}
         <hr className="w-full border-t border-slate-100/80 my-2" />
@@ -67,7 +68,7 @@ export default function ShopFrontPage() {
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4 pb-12">
           
           {/* Sub Item 1 */}
-          <div className="flex flex-col group cursor-pointer border border-slate-100 rounded-[20px] overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+          <Link href="/kyk/shop/2" className="flex flex-col group cursor-pointer border border-slate-100 rounded-[20px] overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
             <div className="relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-slate-50">
               <Image 
                 src="/img/items/item-2.png" 
@@ -94,10 +95,10 @@ export default function ShopFrontPage() {
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Sub Item 2 */}
-          <div className="flex flex-col group cursor-pointer border border-slate-100 rounded-[20px] overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+          <Link href="/kyk/shop/3" className="flex flex-col group cursor-pointer border border-slate-100 rounded-[20px] overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
             <div className="relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-slate-50">
               <Image 
                 src="/img/items/item-3.png" 
@@ -124,7 +125,7 @@ export default function ShopFrontPage() {
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
 
         </div>
       </div>
