@@ -6,6 +6,8 @@ import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport, type UIMessage } from 'ai'
 import { Send } from 'lucide-react'
 import { KidProfile } from '@/lib/kyk/scoring'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 
 interface CoachChatProps {
   profile: KidProfile
@@ -14,30 +16,37 @@ interface CoachChatProps {
   isUntested?: boolean
 }
 
-const QUICK_REPLIES = [
-  '고집 부릴 때 어떻게 해요?',
-  '어떤 칭찬이 효과적인가요?',
-  '또래 관계가 걱정돼요',
-  '훈육은 어떻게 하나요?',
-]
 
 export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProps) {
   const router = useRouter()
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
+  
   const [inputValue, setInputValue] = useState('')
   const [hasInteracted, setHasInteracted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
+  const QUICK_REPLIES = [
+    dict.coachQuickRep1,
+    dict.coachQuickRep2,
+    dict.coachQuickRep3,
+    dict.coachQuickRep4,
+  ]
+
   const concernText = concern.includes('특별한 고민은 없어요')
-    ? `전반적인 아이 양육과 발달`
+    ? dict.concernFallback
     : `'${concern}'`
 
-  const initialMessage = isUntested
-    ? `안녕하세요! 부모님의 든든한 육아 파트너 AI 코치입니다. 요즘 아이를 키우시면서 가장 어렵거나 궁금한 점이 있으신가요?`
-    : `안녕하세요! '${profile.title}' 성향을 가진 우리 아이 맞춤형 AI 코치입니다. 
-
-검사 결과를 보니 부모님께서 요즘 ${concernText} 문제로 고민이 있으신 것 같아요. 우리 아이는 기본적으로 [${profile.strengths[0]}] 특징이 있지만, 종종 [${profile.carePoints[0]}] 취약점 때문에 부모님이 다루기 까다로울 때가 있을 거예요.
-
-이러한 성향의 아이들은 훈육과 칭찬 방식이 완전히 달라야 합니다. 최근에 구체적으로 어떤 행동이나 상황 때문에 가장 힘드셨나요? 편하게 말씀해주세요.`
+  let initialMessage = ''
+  if (isUntested) {
+    initialMessage = dict.greetingUntested
+  } else {
+    initialMessage = dict.greetingp1
+      .replace('{title}', profile.title)
+      .replace('{concern}', concernText)
+      .replace('{strength}', profile.strengths[0] || '')
+      .replace('{carePoint}', profile.carePoints[0] || '')
+  }
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ 
@@ -67,7 +76,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
     if (!text.trim() || isStreaming) return
 
     if (isUntested) {
-      if (window.confirm('KYK 진단을 먼저 진행해야 아이 성향에 맞춘 정확한 답변이 가능합니다.\n진단을 시작하시겠어요?')) {
+      if (window.confirm(dict.coachAlertUntested)) {
         router.push('/kyk/step1')
       }
       return
@@ -99,8 +108,8 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
           <span className="absolute -bottom-0.5 -right-0.5 w-[14px] h-[14px] rounded-full bg-brand-yellowgreen border-[3px] border-white" />
         </div>
         <div>
-          <p className="font-extrabold text-slate-900 text-[16px] leading-tight mb-0.5">전담 AI 코치</p>
-          <p className="text-[12px] text-brand-blue font-bold tracking-wide">온라인 · 1:1 맞춤 상담 중</p>
+          <p className="font-extrabold text-slate-900 text-[16px] leading-tight mb-0.5">{dict.coachTitle}</p>
+          <p className="text-[12px] text-brand-blue font-bold tracking-wide">{dict.coachStatus}</p>
         </div>
       </div>
 
@@ -169,7 +178,7 @@ export function CoachChat({ profile, concern, kidId, isUntested }: CoachChatProp
         <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="궁금한 양육 고민을 질문해주세요..."
+          placeholder={dict.coachInputPlaceholder}
           disabled={isStreaming}
           className="flex-1 bg-slate-50 border border-slate-100 text-slate-800 rounded-full pl-5 pr-5 h-[52px] text-[15px] font-medium focus:outline-none focus:border-brand-blue/30 focus:bg-white focus:ring-4 focus:ring-brand-blue/5 transition-all disabled:opacity-50"
         />

@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { ArrowRight, Sparkles, MessageCircle, BarChart2, ShieldCheck } from 'lucide-react'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { dictionaries } from '@/lib/i18n/dictionaries'
-import { LanguageSelector } from '@/components/ui/LanguageSelector'
 
 export default function KYKLandingPage() {
   const { language } = useLanguageStore()
@@ -112,10 +111,7 @@ export default function KYKLandingPage() {
         </div>
       </section>
 
-      {/* Footer / Language Selector */}
-      <footer className="relative z-10 w-full mt-4 mb-8 lg:mb-0 flex justify-center pb-24 lg:pb-12">
-        <LanguageSelector />
-      </footer>
+      {/* Footer / Language Selector removed since it is now in layout.tsx */}
       
       {/* Bottom Sticky CTA for Mobile */}
       <div className="fixed bottom-[72px] lg:hidden left-0 right-0 p-4 bg-gradient-to-t from-brand-white via-brand-white to-transparent pointer-events-none z-40 flex flex-col items-center">

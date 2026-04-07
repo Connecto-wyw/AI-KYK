@@ -4,6 +4,8 @@ import { KID_PROFILES, KidType, MBTI_TO_TCI } from '@/lib/kyk/scoring'
 import { CoachChat } from '@/components/AI/CoachChat'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
+import { getLocalizedProfiles } from '@/lib/kyk/scoring-i18n'
 
 const TCI_DIMENSION_LABELS: Record<string, string> = {
   NS: '새로움추구',
@@ -33,6 +35,10 @@ export default async function ResultPage() {
     redirect('/kyk/gate')
   }
 
+  const cookieStore = await cookies()
+  const lang = cookieStore.get('kyk-lang')?.value || 'en'
+  const localizedProfiles = getLocalizedProfiles(lang)
+
   const { data: resultData } = await supabase
     .from('kyk_results')
     .select('*')
@@ -46,7 +52,7 @@ export default async function ResultPage() {
   }
 
   const resultType = resultData.result_type as KidType
-  const profile = KID_PROFILES[resultType]
+  const profile = localizedProfiles[resultType]
   const tciScores = MBTI_TO_TCI[resultType]
 
   if (!profile) redirect('/kyk/step1')
