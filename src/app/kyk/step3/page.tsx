@@ -7,6 +7,8 @@ import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useKYKStore } from '@/store/useKYKStore'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 import { cn } from '@/lib/utils'
 
 const BIRTH_YEARS = Array.from({ length: 9 }, (_, i) => String(2016 + i)) // 2016~2024 (2~10세)
@@ -32,6 +34,8 @@ const CONCERNS = [
 export default function Step3Page() {
   const router = useRouter()
   const { step3Answers, setStep3 } = useKYKStore()
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
 
   const [birthYear, setBirthYear] = useState('')
   const [gender, setGender] = useState('')
@@ -98,16 +102,16 @@ export default function Step3Page() {
       </header>
 
       <main className="flex-1 px-6 lg:px-12 py-8 pb-36">
-        <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-2 leading-snug">
-          아이에 대해<br/>조금 더 알려주세요
+        <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-2 leading-snug whitespace-pre-line">
+          {dict.step3Title}
         </h1>
         <p className="text-slate-500 mb-8 text-sm lg:text-base">
-          더 정확한 분석을 위해 필요해요.
+          {dict.step3Subtitle}
         </p>
 
         {/* 출생년도 */}
         <section className="mb-8">
-          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">아이 출생년도</h2>
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{dict.step3BirthYear}</h2>
           <div className="flex flex-wrap gap-2">
             {BIRTH_YEARS.map((year) => (
               <button
@@ -120,7 +124,7 @@ export default function Step3Page() {
                     : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
                 )}
               >
-                {year}년
+                {year}{dict.step3YearSuffix}
               </button>
             ))}
           </div>
@@ -128,9 +132,9 @@ export default function Step3Page() {
 
         {/* 성별 */}
         <section className="mb-8">
-          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">성별</h2>
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{dict.step3Gender}</h2>
           <div className="flex gap-3">
-            {['남아', '여아'].map((g) => (
+            {['남아', '여아'].map((g, idx) => (
               <button
                 key={g}
                 onClick={() => setGender(g)}
@@ -141,7 +145,7 @@ export default function Step3Page() {
                     : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
                 )}
               >
-                {g}
+                {idx === 0 ? dict.step3Boy : dict.step3Girl}
               </button>
             ))}
           </div>
@@ -149,9 +153,9 @@ export default function Step3Page() {
 
         {/* 지역 */}
         <section className="mb-8">
-          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">현재 사는 지역</h2>
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{dict.step3Region}</h2>
           <div className="flex flex-wrap gap-2">
-            {REGIONS.map((r) => (
+            {REGIONS.map((r, idx) => (
               <button
                 key={r}
                 onClick={() => setRegion(r)}
@@ -162,7 +166,7 @@ export default function Step3Page() {
                     : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
                 )}
               >
-                {r}
+                {dict.step3RegionList[idx]}
               </button>
             ))}
           </div>
@@ -171,11 +175,11 @@ export default function Step3Page() {
         {/* 고민 */}
         <section className="mb-4">
           <div className="flex justify-between items-end mb-3">
-            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">요즘 가장 걱정되는 부분</h2>
-            <span className="text-xs text-brand-red1 font-medium bg-brand-red1/5 px-2 py-0.5 rounded-full">최대 3개</span>
+            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">{dict.step3ConcernTitle}</h2>
+            <span className="text-xs text-brand-red1 font-medium bg-brand-red1/5 px-2 py-0.5 rounded-full">{dict.step3ConcernMax}</span>
           </div>
           <div className="space-y-2.5">
-            {CONCERNS.map((c) => (
+            {CONCERNS.map((c, idx) => (
               <button
                 key={c}
                 onClick={() => toggleConcern(c)}
@@ -186,7 +190,7 @@ export default function Step3Page() {
                     : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                 )}
               >
-                {c}
+                {dict.step3ConcernList[idx]}
               </button>
             ))}
 
@@ -195,10 +199,10 @@ export default function Step3Page() {
                "w-full p-4 rounded-2xl border-2 transition-all duration-200 bg-white",
                customConcern.length > 0 ? "border-brand-red1" : "border-slate-200 hover:border-slate-300"
             )}>
-              <div className="text-[15px] font-medium text-slate-700 mb-2">여기에 있는 예시와는 다른 고민이 있어요</div>
+              <div className="text-[15px] font-medium text-slate-700 mb-2">{dict.step3CustomTitle}</div>
               <input 
                 type="text" 
-                placeholder="어떤 고민이 있으신가요?" 
+                placeholder={dict.step3CustomPlaceholder}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-red1/20 focus:border-brand-red1 transition-all"
                 value={customConcern}
                 onChange={(e) => {
@@ -219,7 +223,7 @@ export default function Step3Page() {
                   : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
               )}
             >
-              특별한 고민은 없어요
+              {dict.step3NoConcern}
             </button>
           </div>
         </section>
@@ -232,7 +236,7 @@ export default function Step3Page() {
           disabled={!isComplete}
           onClick={handleNext}
         >
-          결과 확인하기
+          {dict.step3Submit}
         </Button>
       </footer>
     </div>

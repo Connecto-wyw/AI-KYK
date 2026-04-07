@@ -7,6 +7,8 @@ import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useKYKStore } from '@/store/useKYKStore'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 import { cn } from '@/lib/utils'
 
 const QUESTIONS = [
@@ -18,16 +20,18 @@ const QUESTIONS = [
   { id: 'q7', text: '놀이 중 상상 속 세계나 규칙을 만들어내는 편이다.' },
 ]
 
-const LIKERT_OPTIONS = [
-  { value: 1, label: '전혀 아님' },
-  { value: 2, label: '아님' },
-  { value: 3, label: '그렇다' },
-  { value: 4, label: '매우 그렇다' }
+const LIKERT_VALUES = [
+  { value: 1 },
+  { value: 2 },
+  { value: 3 },
+  { value: 4 }
 ]
 
 export default function Step2Page() {
   const router = useRouter()
   const { step2Answers, setStep2 } = useKYKStore()
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
   const [answers, setAnswers] = useState<Record<string, number>>({})
 
   useEffect(() => {
@@ -68,8 +72,8 @@ export default function Step2Page() {
       </header>
 
       <main className="flex-1 px-6 lg:px-12 py-8 pb-32">
-        <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-8 leading-snug">
-          우리 아이의 평소 모습에<br/>가장 가까운 것을 선택해주세요
+        <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-8 leading-snug whitespace-pre-line">
+          {dict.step2Title}
         </h1>
 
         <div className="space-y-6">
@@ -79,10 +83,10 @@ export default function Step2Page() {
                 <span className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-yellow/20 text-brand-red1 text-xs font-bold shrink-0">
                   {idx + 1}
                 </span>
-                <p className="text-slate-800 font-medium leading-relaxed">{q.text}</p>
+                <p className="text-slate-800 font-medium leading-relaxed">{dict.step2Questions[idx]}</p>
               </div>
               <div className="flex justify-between items-center gap-1">
-                {LIKERT_OPTIONS.map((opt) => {
+                {LIKERT_VALUES.map((opt, optIdx) => {
                   const isSelected = answers[q.id] === opt.value
                   return (
                     <button
@@ -97,10 +101,10 @@ export default function Step2Page() {
                       )}>
                         {opt.value}
                       </div>
-                      <span className={cn("mt-3 sm:mt-4 text-xs sm:text-sm transition-colors",
+                      <span className={cn("mt-3 sm:mt-4 text-xs sm:text-sm transition-colors text-center",
                         isSelected ? "text-brand-navy font-bold" : "text-slate-400"
                       )}>
-                        {opt.label}
+                        {dict.step2Options[optIdx]}
                       </span>
                     </button>
                   )
@@ -113,7 +117,7 @@ export default function Step2Page() {
 
       <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-white p-4 lg:px-12 pb-8 z-10 border-t border-slate-50 lg:border-t-0">
         <div className="flex items-center justify-between mb-4 px-1">
-          <span className="text-sm font-medium text-slate-500">응답 완료</span>
+          <span className="text-sm font-medium text-slate-500">{dict.step2Complete}</span>
           <span className={cn("text-sm font-bold", isComplete ? "text-brand-red1" : "text-slate-400")}>
             {progressCount} / {QUESTIONS.length}
           </span>
@@ -124,7 +128,7 @@ export default function Step2Page() {
           disabled={!isComplete}
           onClick={handleNext}
         >
-          다음으로
+          {dict.step2Next}
         </Button>
       </footer>
     </div>

@@ -4,9 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Share, Check, Reply, ThumbsUp, Heart, CheckCircle2 } from 'lucide-react'
 import { useState } from 'react'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 
 export default function ShopItemPage() {
   const [copied, setCopied] = useState(false)
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
 
   const handleShare = async () => {
     try {
@@ -23,9 +27,9 @@ export default function ShopItemPage() {
       
       {/* Top Header & Context */}
       <div className="px-6 mb-6">
-        <h1 className="text-[22px] font-extrabold text-slate-900 tracking-tight mb-2">Team</h1>
+        <h1 className="text-[22px] font-extrabold text-slate-900 tracking-tight mb-2">{dict.shopHeader}</h1>
         <p className="text-[13px] text-slate-500 font-medium">
-          Trending K-Parenting goods parents love. Join together, unlock better prices. Beta now.
+          {dict.shopSubheader}
         </p>
       </div>
 
@@ -37,7 +41,7 @@ export default function ShopItemPage() {
         {/* Top Badge Overlay */}
         <div className="absolute top-0 left-0 w-full bg-[#4S5A8A]/90 bg-slate-600/90 py-3 z-10">
           <span className="block text-center text-[12px] font-bold text-white tracking-widest uppercase">
-            INDIANBOB Picks : Loved by Korean Moms
+            {dict.shopFeaturedBadge}
           </span>
         </div>
 
@@ -51,7 +55,7 @@ export default function ShopItemPage() {
         {/* Bottom Target Tag Overlay */}
         <div className="absolute bottom-0 left-0 w-full bg-[#EA678C]/90 py-3 z-10 backdrop-blur-sm">
           <span className="block text-center text-[15px] font-extrabold text-white tracking-widest">
-            FREE GIFT
+            {dict.shopTagTarget}
           </span>
         </div>
       </div>
@@ -60,36 +64,36 @@ export default function ShopItemPage() {
       <div className="px-6 mb-6">
         <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
           <h2 className="text-[24px] font-bold text-slate-900 tracking-tight leading-tight">
-            Korean Daily Care Essential
+            {dict.shopItem1Name}
           </h2>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
-            Joined 1
+            {dict.shopJoinedCount.replace('{count}', '1')}
           </span>
         </div>
         
         <p className="text-[14px] text-slate-600 leading-relaxed font-medium mb-4">
-          Inspired by the gentle care routines trusted by Korean moms, this all-in-one shampoo and body wash offers a simple and practical solution for everyday family cleansing. A convenient choice for soft, comfortable care from head to toe.
+          {dict.shopItem1Desc}
         </p>
 
         <div className="flex flex-wrap gap-2 mb-6">
           <span className="px-3 py-1.5 bg-blue-50 text-blue-500 text-[11px] font-extrabold rounded-md tracking-wide">
-            #KoreanMomPick
+            {dict.shopTagKoreanMom}
           </span>
           <span className="px-3 py-1.5 bg-blue-50 text-blue-500 text-[11px] font-extrabold rounded-md tracking-wide">
-            #FreeGift
+            {dict.shopTagFreeGift}
           </span>
         </div>
 
         <div className="flex items-center justify-between border-t border-slate-100 pt-5">
           <span className="text-[12px] font-medium text-slate-500">
-            Share this team with friends
+            {dict.shopShareShare}
           </span>
           <button 
             onClick={handleShare}
             className="bg-slate-900 hover:bg-slate-800 text-white rounded-lg px-4 py-2 text-[12px] font-bold flex items-center gap-1.5 transition-colors active:scale-95"
           >
             {copied ? <Check size={14} className="text-green-400" /> : <Share size={14} />}
-            {copied ? 'Copied' : 'Share'}
+            {copied ? dict.shopShareCopied : dict.shopShareBtn}
           </button>
         </div>
       </div>
@@ -100,24 +104,24 @@ export default function ShopItemPage() {
           {/* subtle background glow */}
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
           
-          <span className="text-[11px] font-bold tracking-widest uppercase mb-1 opacity-90">Team Buy Discount</span>
-          <h3 className="text-2xl font-extrabold tracking-tight mb-2">Up to 40% OFF</h3>
+          <span className="text-[11px] font-bold tracking-widest uppercase mb-1 opacity-90">{dict.shopTeamLabel}</span>
+          <h3 className="text-2xl font-extrabold tracking-tight mb-2">{dict.shopTeamDiscount}</h3>
           
           <div className="w-full bg-white/20 rounded-xl p-3 my-4 backdrop-blur-sm border border-white/10 flex flex-col gap-2 relative z-10 text-left">
             <div className="flex justify-between text-xs font-bold w-full">
-              <span>Goal: 5 Buyers</span>
-              <span>Joined: 4</span>
+              <span>{dict.shopTeamGoal}</span>
+              <span>{dict.shopTeamCurrent}</span>
             </div>
             
             <div className="w-full h-2.5 bg-black/20 rounded-full overflow-hidden">
               <div className="h-full bg-yellow-300 rounded-full w-[80%] shadow-[0_0_10px_rgba(253,224,71,0.5)]" />
             </div>
             
-            <p className="text-center text-[10.5px] mt-1 font-semibold opacity-90">Only 1 more participant needed for the max discount!</p>
+            <p className="text-center text-[10.5px] mt-1 font-semibold opacity-90">{dict.shopTeamMessage}</p>
           </div>
 
           <button className="bg-red-600 hover:bg-red-700 text-white font-extrabold text-[15px] max-w-[200px] w-full py-3 rounded-full shadow-lg transition-transform active:scale-95 relative z-10">
-            Join the Team
+            {dict.shopTeamJoin}
           </button>
         </div>
       </div>
@@ -126,8 +130,8 @@ export default function ShopItemPage() {
       <div className="px-6 mb-8">
         <div className="border border-slate-100 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
           <div className="bg-slate-50 border-b border-slate-100 p-5">
-            <span className="text-[10px] font-extrabold text-slate-500 tracking-wider uppercase mb-1 block">Trending & Premium from Korea</span>
-            <h3 className="text-[17px] font-extrabold text-slate-900 leading-snug">Discover the most trending and premium products from South Korea — carefully curated for you.</h3>
+            <span className="text-[10px] font-extrabold text-slate-500 tracking-wider uppercase mb-1 block">{dict.shopDetailTrendSub}</span>
+            <h3 className="text-[17px] font-extrabold text-slate-900 leading-snug">{dict.shopDetailTrendTitle}</h3>
           </div>
 
           <div className="p-5 flex items-center gap-4 border-b border-slate-50">
@@ -148,10 +152,10 @@ export default function ShopItemPage() {
               <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</div>
               <div>
                 <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                  All-in-One, No Guesswork 
+                  {dict.shopF1Title}
                   <span className="text-xs">✅</span>
                 </h5>
-                <p className="text-[11px] text-slate-500 leading-relaxed">A simple, practical solution for everyday family cleansing: shampoo + body wash in one. Less clutter, fewer steps — easier routines for busy mornings and tired nights.</p>
+                <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopF1Desc}</p>
               </div>
             </div>
 
@@ -160,10 +164,10 @@ export default function ShopItemPage() {
               <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</div>
               <div>
                 <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                  Soft, Comfortable Daily Care
+                  {dict.shopF2Title}
                   <span className="text-xs">☁️</span>
                 </h5>
-                <p className="text-[11px] text-slate-500 leading-relaxed">Inspired by the gentle care routines trusted by Korean moms. Designed to feel comfortable for everyday use — clean, fresh, and never fussy.</p>
+                <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopF2Desc}</p>
               </div>
             </div>
 
@@ -172,10 +176,10 @@ export default function ShopItemPage() {
               <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</div>
               <div>
                 <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                  Family-Friendly for Daily Use
+                  {dict.shopF3Title}
                   <span className="text-xs">👨‍👩‍👧</span>
                 </h5>
-                <p className="text-[11px] text-slate-500 leading-relaxed">A practical choice for shared bathrooms and family travel. Easy to reach for, easy to finish, and easy to restock — the "default pick" you'll keep coming back to.</p>
+                <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopF3Desc}</p>
               </div>
             </div>
 
@@ -183,16 +187,16 @@ export default function ShopItemPage() {
             <div className="mt-3 bg-[#f8fbfa] border border-[#e8f5ed] rounded-xl p-5">
               <h5 className="text-[12px] font-bold text-slate-900 mb-3 flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-green-500" />
-                Why Families Love It
+                {dict.shopWhyLove}
               </h5>
               <ul className="text-[11px] text-slate-600 space-y-2 font-medium">
-                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> One bottle for hair + body</li>
-                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> Simple routines for busy families</li>
-                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> Great for shared bathrooms & travel</li>
-                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> Inspired by Korean moms' practical daily care</li>
+                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> {dict.shopWhyL1}</li>
+                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> {dict.shopWhyL2}</li>
+                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> {dict.shopWhyL3}</li>
+                <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> {dict.shopWhyL4}</li>
               </ul>
               <p className="mt-4 pt-4 border-t border-[#e8f5ed] text-[11px] font-bold text-slate-800">
-                Simple, Gentle, Everyday — the Korean way.
+                {dict.shopWhyFooter}
               </p>
             </div>
 
@@ -203,7 +207,7 @@ export default function ShopItemPage() {
       <div className="px-6 pb-8">
         <Link href="/kyk/shop" className="text-[12px] font-bold text-blue-500 hover:text-blue-600 flex items-center gap-1.5 transition-colors">
           <Reply size={14} className="scale-x-[-1]" />
-          Back to TEAM
+          {dict.shopBackToTeam}
         </Link>
       </div>
 
