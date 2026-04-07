@@ -22,11 +22,14 @@ export default function RootLayout({
         <div className="flex w-full min-h-[100dvh]">
           <BottomNavigation />
           <main className="flex-1 w-full bg-white min-h-[100dvh] overflow-x-hidden relative flex flex-col lg:pl-64">
-            <div className="flex-1 shrink-0 w-full h-full flex flex-col">
+            <div className="flex-1 shrink-0 w-full flex flex-col items-center pb-[80px] lg:pb-0 relative z-10 w-full overflow-hidden">
               {children}
             </div>
-            <footer className="w-full flex justify-center py-6 pb-[100px] lg:pb-8 bg-white border-t border-slate-50 relative z-20">
-              <LanguageSelector />
+            
+            <footer className="w-full flex justify-center py-6 pb-24 lg:pb-12 bg-transparent absolute bottom-0 left-0 right-0 z-0 select-none pointer-events-none">
+              <div className="pointer-events-auto">
+                <LanguageSelector />
+              </div>
             </footer>
           </main>
         </div>

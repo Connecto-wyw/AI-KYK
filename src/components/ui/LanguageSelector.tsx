@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Language, useLanguageStore } from '@/store/useLanguageStore'
 import { Globe, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'ko', label: '한국어' },
@@ -16,6 +17,7 @@ const LANGUAGES: { code: Language; label: string }[] = [
 
 export function LanguageSelector({ className }: { className?: string }) {
   const { language, setLanguage, initialize } = useLanguageStore()
+  const router = useRouter()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -33,7 +35,10 @@ export function LanguageSelector({ className }: { className?: string }) {
         <Globe className="w-4 h-4 text-slate-500 mr-2" />
         <select 
           value={language}
-          onChange={(e) => setLanguage(e.target.value as Language)}
+          onChange={(e) => {
+            setLanguage(e.target.value as Language)
+            router.refresh()
+          }}
           className="appearance-none bg-transparent hover:cursor-pointer outline-none text-[13px] font-semibold text-slate-700 pr-4 focus:ring-0"
         >
           {LANGUAGES.map((lang) => (
