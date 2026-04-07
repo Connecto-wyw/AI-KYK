@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Sparkles, MessageCircle, BarChart2, User } from 'lucide-react'
+import { Sparkles, MessageCircle, BarChart2, User, ShoppingBag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
 const NAV_ITEMS = [
   { name: 'KYK 진단', href: '/kyk', icon: Sparkles },
   { name: 'AI 코치', href: '/kyk/coach', icon: MessageCircle, disabled: false },
+  { name: 'TEAM 쇼핑', href: '/kyk/shop', icon: ShoppingBag, disabled: false },
   { name: '마이', href: '/kyk/my', icon: User, disabled: false }
 ]
 

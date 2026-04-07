@@ -1,0 +1,133 @@
+import Image from 'next/image'
+
+export default function ShopFrontPage() {
+  return (
+    <div className="flex flex-col min-h-screen bg-white relative overflow-hidden pb-32 lg:pb-12 pt-16 px-6 lg:px-12 w-full max-w-4xl mx-auto">
+      <div className="mb-8 mt-4">
+        <h1 className="text-xl font-extrabold text-slate-900 tracking-wider">ITEM</h1>
+      </div>
+
+      <div className="flex flex-col gap-8">
+        {/* Featured Item */}
+        <div className="flex flex-col lg:flex-row gap-6 w-full group cursor-pointer">
+          {/* Image Side */}
+          <div className="w-full lg:w-[45%] relative rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-square lg:aspect-[4/5] bg-slate-50 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 flex-shrink-0">
+            {/* Top Badge Overlay */}
+            <div className="absolute top-0 left-0 w-full bg-[#4S5A8A]/90 bg-slate-600/90 py-2.5 z-10">
+              <span className="block text-center text-[10px] md:text-xs font-bold text-white tracking-widest uppercase">
+                INDIANBOB Picks : Loved by Korean Moms
+              </span>
+            </div>
+
+            <Image 
+              src="/img/items/item-1.png" 
+              alt="Korean Daily Care Essential Shampoo" 
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            
+            {/* Bottom Target Tag Overlay */}
+            <div className="absolute bottom-0 left-0 w-full bg-[#EA678C]/90 py-3 z-10 backdrop-blur-sm">
+              <span className="block text-center text-xs md:text-sm font-extrabold text-white tracking-wide">
+                FREE GIFT
+              </span>
+            </div>
+          </div>
+
+          {/* Content Side */}
+          <div className="w-full lg:w-[55%] flex flex-col justify-center">
+            <div className="flex items-center gap-3 mb-3 flex-wrap">
+              <h2 className="text-[22px] md:text-2xl font-bold text-slate-900 tracking-tight leading-tight">
+                Korean Daily Care Essential
+              </h2>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-500 whitespace-nowrap">
+                Joined 1
+              </span>
+            </div>
+            
+            <p className="text-sm md:text-[15px] text-slate-500 leading-relaxed break-keep mb-5">
+              Inspired by the gentle care routines trusted by Korean moms, this all-in-one shampoo and body wash offers a simple and practical solution for everyday family cleansing...
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1.5 bg-blue-50 text-blue-500 text-xs font-bold rounded-lg tracking-wide">
+                #KoreanMomPick
+              </span>
+              <span className="px-3 py-1.5 bg-blue-50 text-blue-500 text-xs font-bold rounded-lg tracking-wide">
+                #FreeGift
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <hr className="w-full border-t border-slate-100/80 my-2" />
+
+        {/* Sub Items Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 pb-12">
+          
+          {/* Sub Item 1 */}
+          <div className="flex flex-col group cursor-pointer border border-slate-100 rounded-[20px] overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+            <div className="relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-slate-50">
+              <Image 
+                src="/img/items/item-2.png" 
+                alt="Postpartum Care Starter Kit" 
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-4 sm:p-5 flex flex-col">
+              <h3 className="text-[13px] sm:text-[15px] font-bold text-slate-900 mb-2 truncate leading-tight">
+                Postpartum Care Starter Kit
+              </h3>
+              <div className="mb-4">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">
+                  Joined 9
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5 mt-auto">
+                <span className="px-2 py-1 bg-blue-50 text-[#3b82f6] text-[10px] sm:text-[11px] font-bold rounded flex-shrink-0 flex items-center justify-center">
+                  K-Postpartum
+                </span>
+                <span className="px-2 py-1 bg-blue-50 text-[#3b82f6] text-[10px] sm:text-[11px] font-bold rounded flex-shrink-0 flex items-center justify-center">
+                  Recovery Kit
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Sub Item 2 */}
+          <div className="flex flex-col group cursor-pointer border border-slate-100 rounded-[20px] overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+            <div className="relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-slate-50">
+              <Image 
+                src="/img/items/item-3.png" 
+                alt="K-Kids Silicone Tableware Set" 
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-4 sm:p-5 flex flex-col">
+              <h3 className="text-[13px] sm:text-[15px] font-bold text-slate-900 mb-2 truncate leading-tight">
+                K-Kids Silicone Tableware Set
+              </h3>
+              <div className="mb-4">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">
+                  Joined 5
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5 mt-auto">
+                <span className="px-2 py-1 bg-blue-50 text-[#3b82f6] text-[10px] sm:text-[11px] font-bold rounded flex-shrink-0 flex items-center justify-center">
+                  K-Kids Tableware
+                </span>
+                <span className="px-2 py-1 bg-blue-50 text-[#3b82f6] text-[10px] sm:text-[11px] font-bold rounded flex-shrink-0 flex items-center justify-center">
+                  Safe Mealtime
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  )
+}
