@@ -1,8 +1,16 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Sparkles, MessageCircle, BarChart2, ShieldCheck } from 'lucide-react'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
+import { LanguageSelector } from '@/components/ui/LanguageSelector'
 
 export default function KYKLandingPage() {
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
+
   return (
     <div className="flex flex-col min-h-screen bg-brand-white relative overflow-hidden pb-32 lg:pb-12">
       {/* Dynamic Background Effects */}
@@ -26,32 +34,31 @@ export default function KYKLandingPage() {
             <Image src="/symbol.png" alt="KYK 심볼" width={100} height={100} className="w-full h-full object-contain" priority />
           </div>
           <div className="absolute -top-3 -right-3 bg-brand-red1 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg rotate-12 animate-bounce-slight">
-            NEW
+            {dict.badgeNew}
           </div>
         </div>
 
         <h1 className="text-[34px] md:text-5xl lg:text-[56px] font-extrabold tracking-tight mb-5 text-slate-900 leading-[1.35] break-keep">
-          3분 진단으로 시작하는<br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red1 to-[#FF6B5C]">맞춤형 AI 육아 코칭</span>
+          {dict.title1}<br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red1 to-[#FF6B5C]">{dict.title2}</span>
         </h1>
 
-        <p className="text-slate-500 mb-10 text-[16px] md:text-lg lg:text-xl leading-relaxed max-w-xl break-keep">
-          아이의 성향과 부모의 고민을 함께 분석해<br/>
-          AI가 지금 상황에 맞는 육아 방향을 제안합니다.
+        <p className="text-slate-500 mb-10 text-[16px] md:text-lg lg:text-xl leading-relaxed max-w-xl break-keep whitespace-pre-line">
+          {dict.subtitle}
         </p>
 
         <div className="w-full max-w-sm md:max-w-md hidden lg:block">
           <Link
             href="/kyk/step1"
-            className="group flex items-center justify-center w-full text-xl h-[64px] bg-slate-900 hover:bg-slate-800 text-white rounded-2xl shadow-xl transition-all hover:scale-[1.02]"
+            className="group flex items-center justify-center w-full text-xl h-[64px] bg-slate-900 hover:bg-slate-800 text-white rounded-2xl shadow-xl transition-all hover:scale-[1.02] px-4"
           >
-            <Sparkles className="mr-2 w-5 h-5 text-brand-yellow" />
-            무료 성향 분석 시작하기
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Sparkles className="mr-2 w-5 h-5 text-brand-yellow flex-shrink-0" />
+            <span className="truncate">{dict.buttonStart}</span>
+            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
           </Link>
           <p className="mt-4 text-[13px] text-slate-400 font-medium flex items-center justify-center gap-1.5">
-            <ShieldCheck size={14} className="text-green-500" />
-            100% 무료 · 가입 없이 먼저 결과 확인 가능
+            <ShieldCheck size={14} className="text-green-500 flex-shrink-0" />
+            {dict.buttonCaption}
           </p>
         </div>
       </section>
@@ -59,8 +66,8 @@ export default function KYKLandingPage() {
       {/* Features Teasing Section */}
       <section className="relative z-10 px-6 py-12 w-full max-w-5xl mx-auto">
         <div className="text-center mb-10">
-          <h2 className="text-xs lg:text-sm font-bold text-brand-red1 tracking-wider uppercase mb-2">Connecto App Features</h2>
-          <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">단순한 검사, 그 이상.</h3>
+          <h2 className="text-xs lg:text-sm font-bold text-brand-red1 tracking-wider uppercase mb-2">{dict.featuresTitle}</h2>
+          <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">{dict.featuresSubtitle}</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -69,53 +76,58 @@ export default function KYKLandingPage() {
             <div className="w-14 h-14 bg-brand-yellow/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellow">
               <Sparkles size={26} strokeWidth={1.5} />
             </div>
-            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">16가지 성향 분석</h4>
+            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">{dict.feature1Title}</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
-              최신 아동 심리학과 MBTI를 결합하여 아이의 찐 성향과 양육 가이드를 동물 캐릭터로 재미있게 알아봅니다.
+              {dict.feature1Desc}
             </p>
           </div>
 
           {/* Feature 2 */}
           <div className="bg-white p-8 rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-slate-50 relative overflow-hidden group">
             <div className="absolute top-5 right-5 bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
-              Coming Soon
+              {dict.badgeSoon}
             </div>
             <div className="w-14 h-14 bg-brand-lightblue/10 rounded-2xl flex items-center justify-center mb-6 text-brand-lightblue">
               <MessageCircle size={26} strokeWidth={1.5} />
             </div>
-            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">1:1 전담 AI 코치</h4>
+            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">{dict.feature2Title}</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
-              우리 아이의 성향 데이터와 나이, 성별을 모두 기억하는 똑똑한 AI 코치에게 언제든 육아 고민을 상담하세요.
+              {dict.feature2Desc}
             </p>
           </div>
 
           {/* Feature 3 */}
           <div className="bg-white p-8 rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-slate-50 relative overflow-hidden group">
             <div className="absolute top-5 right-5 bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
-              Coming Soon
+              {dict.badgeSoon}
             </div>
             <div className="w-14 h-14 bg-brand-yellowgreen/10 rounded-2xl flex items-center justify-center mb-6 text-brand-yellowgreen">
               <BarChart2 size={26} strokeWidth={1.5} />
             </div>
-            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">맞춤형 성장 플랜</h4>
+            <h4 className="text-[19px] font-bold text-slate-900 mb-3 tracking-tight">{dict.feature3Title}</h4>
             <p className="text-[14.5px] text-slate-500 leading-relaxed font-medium break-keep">
-              아이의 진단 결과를 바탕으로, 앞으로의 학습/놀이 방향성을 제시하는 맞춤형 성장 플랜을 제공합니다.
+              {dict.feature3Desc}
             </p>
           </div>
         </div>
       </section>
+
+      {/* Footer / Language Selector */}
+      <footer className="relative z-10 w-full mt-4 mb-8 lg:mb-0 flex justify-center pb-24 lg:pb-12">
+        <LanguageSelector />
+      </footer>
       
       {/* Bottom Sticky CTA for Mobile */}
       <div className="fixed bottom-[72px] lg:hidden left-0 right-0 p-4 bg-gradient-to-t from-brand-white via-brand-white to-transparent pointer-events-none z-40 flex flex-col items-center">
         <Link
           href="/kyk/step1"
-          className="pointer-events-auto flex items-center justify-center w-full max-w-sm h-14 bg-slate-900 text-white font-semibold text-[17px] rounded-2xl shadow-xl active:scale-[0.98] transition-transform"
+          className="pointer-events-auto flex items-center justify-center w-full max-w-sm h-14 bg-slate-900 text-white font-semibold text-[17px] rounded-2xl shadow-xl active:scale-[0.98] transition-transform px-4"
         >
-          <Sparkles className="mr-2 w-4 h-4 text-brand-yellow" />
-          무료 성향 분석 시작하기
+          <Sparkles className="mr-2 w-4 h-4 text-brand-yellow flex-shrink-0" />
+          <span className="truncate">{dict.buttonStart}</span>
         </Link>
         <p className="pointer-events-auto mt-2.5 text-[11px] text-slate-500 font-medium">
-          가입 없이 빠르게 확인해 보세요!
+          {dict.bottomFloatingCaption}
         </p>
       </div>
 

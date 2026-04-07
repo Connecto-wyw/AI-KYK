@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Sparkles, Lock, ArrowRight } from 'lucide-react'
+import { Sparkles, Lock, ArrowRight, MessageCircle } from 'lucide-react'
 import { useKYKStore } from '@/store/useKYKStore'
 import { calculateKYKResult, KYKResultData } from '@/lib/kyk/scoring'
 
@@ -21,24 +21,19 @@ export default function GatePage() {
       setResult(calculateKYKResult(step2Answers))
     }
   }, [step2Answers])
-
-  const handleGoogleLogin = async () => {
+  const handleKakaoLogin = async () => {
     setIsLoading(true)
     const supabase = createClient()
     
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: 'kakao',
       options: { 
-        redirectTo: `${window.location.origin}/api/auth/callback`,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        }
+        redirectTo: `${window.location.origin}/api/auth/callback`
       }
     })
 
     if (error) {
-      console.error('Google login error:', error)
+      console.error('Kakao login error:', error)
       setIsLoading(false)
     }
   }
@@ -100,15 +95,20 @@ export default function GatePage() {
               나의 분석 결과를 안전하게 저장하고 AI 코치의 맞춤형 가이드를 시작하세요.
             </p>
 
-            <Button
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-              size="lg"
-              className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl shadow-md text-lg transition-transform hover:scale-[1.02]"
-            >
-              {isLoading ? '연결 중...' : 'Google 계정으로 계속'}
-              {!isLoading && <ArrowRight className="ml-2 w-5 h-5" />}
-            </Button>
+            <div className="w-full flex flex-col gap-3">
+              <Button
+                onClick={handleKakaoLogin}
+                disabled={isLoading}
+                size="lg"
+                className="w-full h-14 bg-[#FEE500] hover:bg-[#FADC00] text-[#191919] font-bold rounded-2xl shadow-md text-[17px] transition-transform hover:scale-[1.02] flex items-center justify-center relative border border-transparent"
+              >
+                {/* Custom Kakao Icon placeholder (Speech bubble shape) */}
+                <div className="absolute left-6 text-[#191919]">
+                  <MessageCircle size={22} fill="currentColor" />
+                </div>
+                {isLoading ? '카카오 계정 연결 중...' : '카카오 로그인'}
+              </Button>
+            </div>
 
             <p className="mt-4 text-[11px] text-slate-400 text-center">
               로그인 시 분석 결과가 안전하게 저장되며, AI 코치와 연동되어 개인화된 양육 가이드를 받을 수 있습니다.
