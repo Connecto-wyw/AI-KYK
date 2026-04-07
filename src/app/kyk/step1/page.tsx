@@ -8,18 +8,15 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useKYKStore } from '@/store/useKYKStore'
 import { cn } from '@/lib/utils'
-
-const ADJECTIVES = [
-  '차분한', '똑똑한', '유연한', '상상력이 풍부한', '꼼꼼한',
-  '세심한', '똑 부러진', '요령있는', '말재주 있는', '의젓한',
-  '친구 많은', '에너지넘치는', '겁 없는', '밝은', '긍정 뿜뿜',
-  '호기심 많은', '착한마음씨', '듬직한', '내 의견 확실한', '몸으로 배우는',
-  '믿음직한', '포기 안 하는', '자기 색 뚜렷한', '몰입 잘 하는', '조용히 생각하는'
-]
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 
 export default function Step1Page() {
   const router = useRouter()
   const { step1Answers, setStep1 } = useKYKStore()
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
+  const KOR_ADJECTIVES = dictionaries['ko'].step1Adjectives
   const [selected, setSelected] = useState<string[]>([])
 
   useEffect(() => {
@@ -28,11 +25,11 @@ export default function Step1Page() {
     }
   }, [step1Answers])
 
-  const toggleAdjective = (word: string) => {
-    setSelected(prev => {
-      if (prev.includes(word)) return prev.filter(w => w !== word)
+  const toggleAdjective = (korWord: string) => {
+    setSelected((prev: string[]) => {
+      if (prev.includes(korWord)) return prev.filter((w: string) => w !== korWord)
       if (prev.length >= 5) return prev
-      return [...prev, word]
+      return [...prev, korWord]
     })
   }
 
@@ -54,26 +51,27 @@ export default function Step1Page() {
         <div className="flex-1 px-3">
           <Progress value={33} className="h-2" />
         </div>
-        <div className="w-8 text-xs text-right font-medium text-slate-400">1/3</div>
+        <div className="w-8 text-xs text-right font-medium text-slate-400">{dict.step1Steps}</div>
       </header>
 
       {/* Content */}
       <main className="flex-1 px-6 lg:px-12 py-8 pb-32">
-        <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-2">
-          아이를 가장 잘 설명하는<br/>단어 5개를 골라주세요
+        <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-2 whitespace-pre-wrap">
+          {dict.step1Title}
         </h1>
         <p className="text-slate-500 mb-8 text-sm lg:text-base">
-          평소 아이의 모습과 가장 가까운 것을 직관적으로 선택해주세요.
+          {dict.step1Subtitle}
         </p>
 
         <div className="flex flex-wrap gap-3 lg:gap-4">
-          {ADJECTIVES.map((word) => {
-            const isSelected = selected.includes(word)
+          {dict.step1Adjectives.map((word, index) => {
+            const korWord = KOR_ADJECTIVES[index]
+            const isSelected = selected.includes(korWord)
             const isMaxReached = selected.length >= 5 && !isSelected
             return (
               <button
-                key={word}
-                onClick={() => toggleAdjective(word)}
+                key={korWord}
+                onClick={() => toggleAdjective(korWord)}
                 disabled={isMaxReached}
                 className={cn(
                   "px-4 py-2.5 lg:px-5 lg:py-3 rounded-full text-[15px] lg:text-base font-medium transition-all duration-200",
@@ -93,7 +91,7 @@ export default function Step1Page() {
       {/* Footer */}
       <footer className="fixed lg:absolute bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-none bg-white p-4 lg:px-12 pb-8 z-10 border-t border-slate-50 lg:border-t-0">
         <div className="flex items-center justify-between mb-4 px-1">
-          <span className="text-sm font-medium text-slate-500">선택된 단어</span>
+          <span className="text-sm font-medium text-slate-500">{dict.step1Count}</span>
           <span className={cn(
             "text-sm font-bold",
             selected.length === 5 ? "text-brand-red1" : "text-slate-400"
@@ -107,7 +105,7 @@ export default function Step1Page() {
           disabled={selected.length !== 5}
           onClick={handleNext}
         >
-          다음으로
+          {dict.step1Next}
         </Button>
       </footer>
     </div>

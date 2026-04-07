@@ -5,16 +5,20 @@ import { usePathname } from 'next/navigation'
 import { Sparkles, MessageCircle, BarChart2, User, ShoppingBag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+import { dictionaries } from '@/lib/i18n/dictionaries'
+import { useLanguageStore } from '@/store/useLanguageStore'
 
-const NAV_ITEMS = [
-  { name: 'KYK 진단', href: '/kyk', icon: Sparkles },
-  { name: 'AI 코치', href: '/kyk/coach', icon: MessageCircle, disabled: false },
-  { name: 'TEAM 쇼핑', href: '/kyk/shop', icon: ShoppingBag, disabled: false },
-  { name: '마이', href: '/kyk/my', icon: User, disabled: false }
+const NAV_BASE_ITEMS = [
+  { key: 'navKYKTest', href: '/kyk', icon: Sparkles },
+  { key: 'navAICoach', href: '/kyk/coach', icon: MessageCircle, disabled: false },
+  { key: 'navTeamShop', href: '/kyk/shop', icon: ShoppingBag, disabled: false },
+  { key: 'navMy', href: '/kyk/my', icon: User, disabled: false }
 ]
 
 export function BottomNavigation() {
   const pathname = usePathname()
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
   
   // Hide mobile bottom nav on survey step pages or specific flows (Distraction-free Focus Mode)
   const isSurveyFlow = pathname?.includes('/step') || pathname?.includes('/gate') || pathname?.includes('/saving')
@@ -30,26 +34,27 @@ export function BottomNavigation() {
       {!isSurveyFlow && (
         <nav className="fixed bottom-0 left-0 right-0 z-50 bg-brand-red1 pb-[env(safe-area-inset-bottom)] lg:hidden shadow-[0_-5px_25px_rgba(0,0,0,0.15)]">
           <div className="flex items-center justify-around h-16 w-full max-w-md mx-auto px-2">
-            {NAV_ITEMS.map((item) => {
+            {NAV_BASE_ITEMS.map((item) => {
               const Icon = item.icon
               const isActive = item.href === '/kyk' ? pathname === '/kyk' : pathname?.startsWith(item.href)
+              const name = dict[item.key as keyof typeof dict]
               
               if (item.disabled) {
                 return (
                   <button
-                    key={item.name}
+                    key={item.key}
                     onClick={handleDisabledClick}
                     className="flex flex-col items-center justify-center w-full h-full space-y-1 text-white/50 hover:text-white/70 transition-colors"
                   >
                     <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
-                    <span className="text-[10px] font-medium tracking-wide">{item.name}</span>
+                    <span className="text-[10px] font-medium tracking-wide">{name}</span>
                   </button>
                 )
               }
 
               return (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   href={item.href}
                   className={cn(
                     "flex flex-col items-center justify-center w-full h-full space-y-1 transition-all duration-200 relative",
@@ -61,7 +66,7 @@ export function BottomNavigation() {
                   )}
                   <Icon size={22} strokeWidth={isActive ? 2.5 : 2} className={cn(isActive && "drop-shadow-sm")} />
                   <span className={cn("text-[10px] tracking-wide", isActive ? "font-bold" : "font-medium")}>
-                    {item.name}
+                    {name}
                   </span>
                 </Link>
               )
@@ -81,27 +86,28 @@ export function BottomNavigation() {
         </div>
         
         <div className="flex-1 px-4 space-y-2.5">
-          {NAV_ITEMS.map((item) => {
+          {NAV_BASE_ITEMS.map((item) => {
             const Icon = item.icon
             const isActive = item.href === '/kyk' ? pathname === '/kyk' : pathname?.startsWith(item.href)
+            const name = dict[item.key as keyof typeof dict]
             
             if (item.disabled) {
               return (
                 <button
-                  key={item.name}
+                  key={item.key}
                   onClick={handleDisabledClick}
                   className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-white/50 hover:bg-white/5 transition-colors text-left"
                 >
                   <Icon size={20} />
-                  <span className="font-semibold text-[15px]">{item.name}</span>
-                  <span className="ml-auto text-[10px] font-bold bg-white/10 text-white/70 px-2.5 py-1 rounded-full uppercase tracking-wider">Soon</span>
+                  <span className="font-semibold text-[15px]">{name}</span>
+                  <span className="ml-auto text-[10px] font-bold bg-white/10 text-white/70 px-2.5 py-1 rounded-full uppercase tracking-wider">{dict.navSoonLabel}</span>
                 </button>
               )
             }
 
             return (
               <Link
-                key={item.name}
+                key={item.key}
                 href={item.href}
                 className={cn(
                   "w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all duration-200",
@@ -112,7 +118,7 @@ export function BottomNavigation() {
               >
                 <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
                 <span className="text-[15px]">
-                  {item.name}
+                  {name}
                 </span>
               </Link>
             )

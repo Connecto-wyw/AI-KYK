@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { MessageCircle, ArrowRight, BookOpen, BarChart2, Bell, Settings, AlertCircle, Sparkles } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { KID_PROFILES, KidType } from '@/lib/kyk/scoring'
+import { cookies } from 'next/headers'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 
 const CURATED_LINKS = [
   {
@@ -30,6 +32,11 @@ const CURATED_LINKS = [
 ]
 
 export default async function MyPage() {
+  const cookieStore = await cookies()
+  const langValue = cookieStore.get('kyk-lang')?.value || 'ko'
+  const langKey = Object.keys(dictionaries).includes(langValue) ? (langValue as keyof typeof dictionaries) : 'ko'
+  const dict = dictionaries[langKey]
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -55,8 +62,8 @@ export default async function MyPage() {
   const memorySummary = memory?.summary_context || "아이가 새로운 것을 시도하는 건 좋아하지만 가끔 금방 포기하는 경향이 있는 것 같아요. 끝까지 해내는 힘을 길러주는 5분 놀이법들을 함께 알아볼까요?"
 
   let profile = null
-  let childName = '우리 아이'
-  let subTitle = '가족 계정 · 나이 미상'
+  let childName = dict.myDefaultChild
+  let subTitle = dict.myDefaultSubtitle
   let currentConcern = '아직 진단 전이에요'
 
   if (kidData) {
@@ -87,7 +94,7 @@ export default async function MyPage() {
           {/* Top Right Blob / Premium Badge Area */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red1/5 rounded-bl-full pointer-events-none" />
           <div className="absolute top-6 right-6 px-3 py-1 bg-brand-red1/10 text-brand-red1 text-[11px] font-extrabold tracking-wider rounded-full flex items-center gap-1">
-            프리미엄
+            {dict.myPremium}
           </div>
 
           <div className="relative z-10 pt-2 mb-6">
@@ -104,7 +111,7 @@ export default async function MyPage() {
               <div className="flex items-center gap-1.5 mb-2.5">
                 <AlertCircle className="w-3.5 h-3.5 text-brand-red2" />
                 <span className="text-[11px] font-extrabold text-brand-red2 tracking-wide uppercase">
-                  최근 주 고민
+                  {dict.myRecentConcern}
                 </span>
               </div>
               <p className="text-[16px] font-bold text-slate-800 leading-snug break-keep mb-5">
@@ -116,24 +123,24 @@ export default async function MyPage() {
                   href="/kyk/result" 
                   className="w-full h-[46px] bg-slate-900 hover:bg-slate-800 text-white font-bold text-[14px] rounded-2xl shadow-sm transition-all flex items-center justify-center flex-1"
                 >
-                  KYK 결과 다시 보기
+                  {dict.myReviewResult}
                 </Link>
                 <Link 
                   href="/kyk/step1" 
                   className="w-full h-[46px] bg-white border border-slate-200 text-slate-700 font-bold text-[14px] rounded-2xl shadow-sm hover:bg-slate-50 transition-all flex items-center justify-center flex-1"
                 >
-                  KYK 다시 하기
+                  {dict.myRetakeTest}
                 </Link>
               </div>
             </div>
           ) : (
              <div className="bg-slate-50/80 rounded-3xl p-6 border border-slate-100/50 text-center">
-              <p className="text-[14px] font-medium text-slate-600 mb-4">아직 종합 진단 기록이 없어요.</p>
+              <p className="text-[14px] font-medium text-slate-600 mb-4">{dict.myNoRecord}</p>
               <Link 
                 href="/kyk/step1" 
                 className="w-full h-[48px] bg-brand-red1 hover:bg-brand-red2 text-white font-bold text-[14.5px] rounded-full shadow-sm transition-all flex items-center justify-center"
               >
-                1분 만에 성향 진단 완료하기
+                {dict.myTakeTest}
               </Link>
             </div>
           )}
@@ -148,7 +155,7 @@ export default async function MyPage() {
               <Sparkles className="w-4 h-4 text-brand-blue" />
             </div>
             <h3 className="text-[16px] font-extrabold text-slate-900">
-              AI 코치 노트
+              {dict.myAiCoachNote}
             </h3>
           </div>
           
@@ -161,7 +168,7 @@ export default async function MyPage() {
                 href="/kyk/coach"
                 className="inline-flex items-center text-[13.5px] font-bold text-brand-blue hover:opacity-80 transition-opacity"
               >
-                {hasMemory ? '이어서 대화하기' : '첫 대화 시작하기'} 
+                {hasMemory ? dict.myContinueChat : dict.myStartChat} 
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
@@ -174,10 +181,10 @@ export default async function MyPage() {
         <section>
           <div className="flex items-end justify-between px-1 mb-4">
             <h3 className="text-[20px] font-extrabold text-slate-900">
-              맞춤형 추천 아티클
+              {dict.myArticle}
             </h3>
             <button className="text-[13px] font-semibold text-slate-400 hover:text-slate-600">
-              전체 보기
+              {dict.myViewAll}
             </button>
           </div>
           
@@ -218,7 +225,7 @@ export default async function MyPage() {
               <div className="w-[42px] h-[42px] rounded-full bg-brand-lightblue/10 flex items-center justify-center group-hover:bg-brand-blue/10 transition-colors">
                 <BookOpen className="w-[18px] h-[18px] text-brand-blue" />
               </div>
-              <span className="text-[16px] font-bold text-slate-800">구매한 프리미엄 전략서</span>
+              <span className="text-[16px] font-bold text-slate-800">{dict.myMenuPremium}</span>
             </div>
             <ArrowRight className="w-[18px] h-[18px] text-slate-300 group-hover:text-brand-blue" />
           </button>
@@ -228,7 +235,7 @@ export default async function MyPage() {
               <div className="w-[42px] h-[42px] rounded-full bg-brand-yellowgreen/10 flex items-center justify-center group-hover:bg-brand-yellowgreen/20 transition-colors">
                 <BarChart2 className="w-[18px] h-[18px] text-brand-forestgreen" />
               </div>
-              <span className="text-[16px] font-bold text-slate-800">과거 테스트 결과</span>
+              <span className="text-[16px] font-bold text-slate-800">{dict.myMenuPast}</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="w-5 h-5 flex items-center justify-center rounded-full bg-brand-blue text-white text-[11px] font-bold">
@@ -243,7 +250,7 @@ export default async function MyPage() {
               <div className="w-[42px] h-[42px] rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 transition-colors">
                 <Bell className="w-[18px] h-[18px] text-slate-600" />
               </div>
-              <span className="text-[16px] font-bold text-slate-800">알림 설정</span>
+              <span className="text-[16px] font-bold text-slate-800">{dict.myMenuAlert}</span>
             </div>
             <ArrowRight className="w-[18px] h-[18px] text-slate-300 group-hover:text-slate-600" />
           </button>
@@ -253,7 +260,7 @@ export default async function MyPage() {
               <div className="w-[42px] h-[42px] rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 transition-colors">
                 <Settings className="w-[18px] h-[18px] text-slate-600" />
               </div>
-              <span className="text-[16px] font-bold text-slate-800">기본 설정 (로그아웃 등)</span>
+              <span className="text-[16px] font-bold text-slate-800">{dict.myMenuSetting}</span>
             </div>
             <ArrowRight className="w-[18px] h-[18px] text-slate-300 group-hover:text-slate-600" />
           </button>

@@ -15,6 +15,8 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
   setLanguage: (lang) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('kyk-language', lang)
+      // Save cookie with 1 year expiration
+      document.cookie = `kyk-lang=${lang}; path=/; max-age=31536000`
     }
     set({ language: lang })
   },
@@ -23,6 +25,7 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
     
     const stored = localStorage.getItem('kyk-language') as Language
     if (stored && ['ko', 'en', 'ms', 'id', 'vi', 'th'].includes(stored)) {
+      document.cookie = `kyk-lang=${stored}; path=/; max-age=31536000`
       set({ language: stored, isInitialized: true })
       return
     }
@@ -38,5 +41,6 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
     
     set({ language: detected, isInitialized: true })
     localStorage.setItem('kyk-language', detected)
+    document.cookie = `kyk-lang=${detected}; path=/; max-age=31536000`
   }
 }))

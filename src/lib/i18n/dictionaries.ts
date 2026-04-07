@@ -1,5 +1,13 @@
 export const dictionaries = {
   ko: {
+    // Navigation
+    navKYKTest: "KYK 진단",
+    navAICoach: "AI 코치",
+    navTeamShop: "TEAM 쇼핑",
+    navMy: "마이",
+    navSoonLabel: "Soon",
+    
+    // KYK page
     title1: "3분 진단으로 시작하는",
     title2: "맞춤형 AI 육아 코칭",
     subtitle: "아이의 성향과 부모의 고민을 함께 분석해\nAI가 지금 상황에 맞는 육아 방향을 제안합니다.",
@@ -16,8 +24,49 @@ export const dictionaries = {
     bottomFloatingCaption: "가입 없이 빠르게 확인해 보세요!",
     badgeSoon: "Coming Soon",
     badgeNew: "NEW",
+
+    // My Page
+    myDefaultChild: "우리 아이",
+    myDefaultSubtitle: "가족 계정 · 나이 미상",
+    myPremium: "프리미엄",
+    myRecentConcern: "최근 주 고민",
+    myReviewResult: "KYK 결과 다시 보기",
+    myRetakeTest: "KYK 다시 하기",
+    myNoRecord: "아직 종합 진단 기록이 없어요.",
+    myTakeTest: "1분 만에 성향 진단 완료하기",
+    myAiCoachNote: "AI 코치 노트",
+    myContinueChat: "이어서 대화하기",
+    myStartChat: "첫 대화 시작하기",
+    myArticle: "맞춤형 추천 아티클",
+    myViewAll: "전체 보기",
+    myMenuPremium: "구매한 프리미엄 전략서",
+    myMenuPast: "과거 테스트 결과",
+    myMenuAlert: "알림 설정",
+    myMenuSetting: "기본 설정 (로그아웃 등)",
+
+    // Step 1
+    step1Title: "아이를 가장 잘 설명하는\n단어 5개를 골라주세요",
+    step1Subtitle: "평소 아이의 모습과 가장 가까운 것을 직관적으로 선택해주세요.",
+    step1Count: "선택된 단어",
+    step1Next: "다음으로",
+    step1Steps: "1/3",
+    step1Adjectives: [
+      '차분한', '똑똑한', '유연한', '상상력이 풍부한', '꼼꼼한',
+      '세심한', '똑 부러진', '요령있는', '말재주 있는', '의젓한',
+      '친구 많은', '에너지넘치는', '겁 없는', '밝은', '긍정 뿜뿜',
+      '호기심 많은', '착한마음씨', '듬직한', '내 의견 확실한', '몸으로 배우는',
+      '믿음직한', '포기 안 하는', '자기 색 뚜렷한', '몰입 잘 하는', '조용히 생각하는'
+    ]
   },
   en: {
+    // Navigation
+    navKYKTest: "KYK Test",
+    navAICoach: "AI Coach",
+    navTeamShop: "TEAM Shop",
+    navMy: "My Page",
+    navSoonLabel: "Soon",
+    
+    // KYK page
     title1: "Start with a 3-minute test",
     title2: "Tailored AI Parenting Coach",
     subtitle: "We analyze your child's personality and your parenting concerns\nto suggest the right direction for you right now.",
@@ -34,8 +83,47 @@ export const dictionaries = {
     bottomFloatingCaption: "Check it out quickly without signing up!",
     badgeSoon: "Coming Soon",
     badgeNew: "NEW",
+
+    // My Page
+    myDefaultChild: "My Child",
+    myDefaultSubtitle: "Family Account · Unknown Age",
+    myPremium: "Premium",
+    myRecentConcern: "Recent Main Concern",
+    myReviewResult: "Review KYK Result",
+    myRetakeTest: "Retake KYK Test",
+    myNoRecord: "No comprehensive diagnosis record yet.",
+    myTakeTest: "Complete personality diagnosis in 1 min",
+    myAiCoachNote: "AI Coach Note",
+    myContinueChat: "Continue Chat",
+    myStartChat: "Start First Chat",
+    myArticle: "Recommended Articles",
+    myViewAll: "View All",
+    myMenuPremium: "Purchased Premium Strategy",
+    myMenuPast: "Past Test Results",
+    myMenuAlert: "Notification Settings",
+    myMenuSetting: "General Settings (Logout)",
+
+    step1Title: "Choose 5 words that best\ndescribe your child",
+    step1Subtitle: "Intuitively select traits closest to their usual self.",
+    step1Count: "Selected words",
+    step1Next: "Next",
+    step1Steps: "1 / 3",
+    step1Adjectives: [
+      'Calm', 'Smart', 'Flexible', 'Imaginative', 'Meticulous', 
+      'Detailed', 'Sharp', 'Resourceful', 'Articulate', 'Mature', 
+      'Sociable', 'Energetic', 'Fearless', 'Bright', 'Positive', 
+      'Curious', 'Kind-hearted', 'Reliable', 'Opinionated', 'Kinesthetic', 
+      'Trustworthy', 'Persistent', 'Individualistic', 'Immersive', 'Reflective'
+    ]
   },
   ms: {
+    // Navigation
+    navKYKTest: "Ujian KYK",
+    navAICoach: "Jurulatih AI",
+    navTeamShop: "Kedai TEAM",
+    navMy: "Profil",
+    navSoonLabel: "Akan Tiba",
+
     title1: "Bermula dengan ujian 3 minit",
     title2: "Jurulatih Keibubapaan AI Khusus",
     subtitle: "Kami menganalisis personaliti anak anda dan kebimbangan anda\nuntuk mencadangkan arah keibubapaan yang terbaik pada masa ini.",
@@ -52,8 +140,46 @@ export const dictionaries = {
     bottomFloatingCaption: "Semak dengan cepat tanpa pendaftaran!",
     badgeSoon: "Akan Datang",
     badgeNew: "BARU",
+
+    myDefaultChild: "Anak Saya",
+    myDefaultSubtitle: "Akaun Keluarga · Umur tidak diketahui",
+    myPremium: "Premium",
+    myRecentConcern: "Isu Utama Baru-baru Ini",
+    myReviewResult: "Semak Keputusan KYK",
+    myRetakeTest: "Ambil Semula Ujian",
+    myNoRecord: "Tiada rekod ujian menyeluruh lagi.",
+    myTakeTest: "Selesaikan ujian personaliti dalam 1 minit",
+    myAiCoachNote: "Nota Jurulatih AI",
+    myContinueChat: "Teruskan Sembang",
+    myStartChat: "Mulakan Sembang",
+    myArticle: "Artikel Disyorkan",
+    myViewAll: "Lihat Semua",
+    myMenuPremium: "Strategi Premium yang Dibeli",
+    myMenuPast: "Keputusan Ujian Lepas",
+    myMenuAlert: "Tetapan Pemberitahuan",
+    myMenuSetting: "Tetapan Umum (Log Keluar)",
+
+    step1Title: "Pilih 5 perkataan yang paling\nmenerangkan anak anda",
+    step1Subtitle: "Pilih secara intuitif ciri yang paling hampir dengan mereka.",
+    step1Count: "Perkataan dipilih",
+    step1Next: "Seterusnya",
+    step1Steps: "1/3",
+    step1Adjectives: [
+      'Tenang', 'Pintar', 'Fleksibel', 'Berimaginasi', 'Teliti',
+      'Terperinci', 'Tajam', 'Banyak akal', 'Petah', 'Matang',
+      'Peramah', 'Bertenaga', 'Berani', 'Ceria', 'Positif',
+      'Ingin tahu', 'Baik hati', 'Boleh diharap', 'Berpendirian', 'Kinestetik',
+      'Boleh dipercayai', 'Gigih', 'Individualistik', 'Kusyuk', 'Suka berfikir'
+    ]
   },
   id: {
+    // Navigation
+    navKYKTest: "Tes KYK",
+    navAICoach: "Pelatih AI",
+    navTeamShop: "Toko TEAM",
+    navMy: "Profil",
+    navSoonLabel: "Segera",
+    
     title1: "Mulai dengan tes 3 menit",
     title2: "Pelatih Parenting AI Khusus",
     subtitle: "Kami menganalisis kepribadian anak dan kekhawatiran Anda\nuntuk menyarankan arah pengasuhan yang tepat saat ini.",
@@ -70,8 +196,46 @@ export const dictionaries = {
     bottomFloatingCaption: "Cek dengan cepat tanpa mendaftar!",
     badgeSoon: "Segera Hadir",
     badgeNew: "BARU",
+
+    myDefaultChild: "Anak Saya",
+    myDefaultSubtitle: "Akun Keluarga · Umur tidak diketahui",
+    myPremium: "Premium",
+    myRecentConcern: "Kekhawatiran Utama Saat Ini",
+    myReviewResult: "Lihat Hasil KYK",
+    myRetakeTest: "Ulangi Tes",
+    myNoRecord: "Belum ada catatan tes.",
+    myTakeTest: "Selesaikan tes dalam 1 menit",
+    myAiCoachNote: "Catatan Pelatih AI",
+    myContinueChat: "Lanjutkan Obrolan",
+    myStartChat: "Mulai Obrolan",
+    myArticle: "Artikel Direkomendasikan",
+    myViewAll: "Lihat Semua",
+    myMenuPremium: "Strategi Premium yang Dibeli",
+    myMenuPast: "Hasil Tes Masa Lalu",
+    myMenuAlert: "Pengaturan Notifikasi",
+    myMenuSetting: "Pengaturan Umum (Keluar)",
+
+    step1Title: "Pilih 5 kata yang paling\nmendeskripsikan anak Anda",
+    step1Subtitle: "Pilih secara intuitif ciri yang paling dekat dengan keseharian mereka.",
+    step1Count: "Kata yang dipilih",
+    step1Next: "Selanjutnya",
+    step1Steps: "1 / 3",
+    step1Adjectives: [
+      'Tenang', 'Pintar', 'Fleksibel', 'Imajinatif', 'Teliti',
+      'Detail', 'Tajam', 'Banyak akal', 'Fasih', 'Dewasa',
+      'Suka berteman', 'Penuh energi', 'Pemberani', 'Ceria', 'Positif',
+      'Rasa ingin tahu', 'Baik hati', 'Dapat diandalkan', 'Berpendirian', 'Kinestetik',
+      'Dapat dipercaya', 'Gigih', 'Individualistis', 'Fokus', 'Suka merenung'
+    ]
   },
   vi: {
+    // Navigation
+    navKYKTest: "Kiểm tra KYK",
+    navAICoach: "HLV AI",
+    navTeamShop: "Cửa hàng TEAM",
+    navMy: "Cá nhân",
+    navSoonLabel: "Sắp ra mắt",
+    
     title1: "Bắt đầu với bài kiểm tra 3 phút",
     title2: "Huấn luyện viên nuôi dạy con AI",
     subtitle: "Chúng tôi phân tích tính cách của trẻ và mối quan tâm của bạn\nđể đề xuất hướng nuôi dạy phù hợp nhất hiện tại.",
@@ -88,8 +252,46 @@ export const dictionaries = {
     bottomFloatingCaption: "Kiểm tra nhanh chóng không cần đăng ký!",
     badgeSoon: "Sắp Ra Mắt",
     badgeNew: "MỚI",
+    
+    myDefaultChild: "Con Của Tôi",
+    myDefaultSubtitle: "Tài khoản gia đình · Không rõ tuổi",
+    myPremium: "Cao cấp",
+    myRecentConcern: "Mối quan tâm gần đây",
+    myReviewResult: "Xem lại KYK",
+    myRetakeTest: "Thử lại KYK",
+    myNoRecord: "Chưa có kỷ lục chẩn đoán.",
+    myTakeTest: "Hoàn tất bài kiểm tra trong 1 phút",
+    myAiCoachNote: "Ghi chú HLV AI",
+    myContinueChat: "Tiếp tục trò chuyện",
+    myStartChat: "Bắt đầu trò chuyện",
+    myArticle: "Bài viết đề xuất",
+    myViewAll: "Xem tất cả",
+    myMenuPremium: "Chiến lược Cao cấp đã mua",
+    myMenuPast: "Kết quả kiểm tra trước đây",
+    myMenuAlert: "Cài đặt thông báo",
+    myMenuSetting: "Cài đặt chung (Đăng xuất)",
+
+    step1Title: "Chọn 5 từ mô tả đúng nhất\nvề con bạn",
+    step1Subtitle: "Hãy chọn theo trực giác những đặc điểm giống nhất với con bạn.",
+    step1Count: "Từ đã chọn",
+    step1Next: "Tiếp theo",
+    step1Steps: "1/3",
+    step1Adjectives: [
+      'Điềm tĩnh', 'Thông minh', 'Linh hoạt', 'Giàu tưởng tượng', 'Tỉ mỉ',
+      'Chi tiết', 'Nhạy bén', 'Tháo vát', 'Hoạt ngôn', 'Chững chạc',
+      'Hòa đồng', 'Năng động', 'Dũng cảm', 'Tươi sáng', 'Tích cực',
+      'Tò mò', 'Tốt bụng', 'Đáng tin cậy', 'Có chính kiến', 'Thích vận động',
+      'Đáng tin', 'Kiên trì', 'Cá tính', 'Tập trung', 'Trầm tư'
+    ]
   },
   th: {
+    // Navigation
+    navKYKTest: "ทดสอบ KYK",
+    navAICoach: "โค้ช AI",
+    navTeamShop: "TEAM ช้อป",
+    navMy: "โปรไฟล์",
+    navSoonLabel: "เร็วๆนี้",
+    
     title1: "เริ่มด้วยการทดสอบ 3 นาที",
     title2: "โค้ชเลี้ยงเด็ก AI เฉพาะทาง",
     subtitle: "เราวิเคราะห์บุคลิกภาพของเด็กและความกังวลของคุณ\nเพื่อเสนอแนวทางการเลี้ยงดูที่เหมาะสมในขณะนี้",
@@ -106,5 +308,36 @@ export const dictionaries = {
     bottomFloatingCaption: "ตรวจสอบอย่างรวดเร็วโดยไม่ต้องลงทะเบียน!",
     badgeSoon: "เร็วๆ นี้",
     badgeNew: "ใหม่",
+
+    myDefaultChild: "ลูกของฉัน",
+    myDefaultSubtitle: "บัญชีครอบครัว · ไม่ทราบอายุ",
+    myPremium: "พรีเมียม",
+    myRecentConcern: "ข้อกังวลล่าสุด",
+    myReviewResult: "ดูผลลัพธ์ KYK",
+    myRetakeTest: "ทำแบบทดสอบอีกครั้ง",
+    myNoRecord: "ยังไม่มีบันทึกการวินิจฉัยรวม",
+    myTakeTest: "ทำแบบทดสอบเสร็จใน 1 นาที",
+    myAiCoachNote: "บันทึกโค้ช AI",
+    myContinueChat: "แชทต่อ",
+    myStartChat: "เริ่มแชทครั้งแรก",
+    myArticle: "บทความแนะนำ",
+    myViewAll: "ดูทั้งหมด",
+    myMenuPremium: "กลยุทธ์พรีเมียมที่ซื้อ",
+    myMenuPast: "ผลการทดสอบที่ผ่านมา",
+    myMenuAlert: "การตั้งค่าการแจ้งเตือน",
+    myMenuSetting: "การตั้งค่าทั่วไป (ออกจากระบบ)",
+
+    step1Title: "เลือก 5 คำที่บรรยายตัวตน\nของลูกคุณได้ดีที่สุด",
+    step1Subtitle: "เลือกตามสัญชาตญาณถึงลักษณะที่ใกล้เคียงกับลูกมากที่สุด",
+    step1Count: "คำที่เลือก",
+    step1Next: "ถัดไป",
+    step1Steps: "1 / 3",
+    step1Adjectives: [
+      'สงบ', 'ฉลาด', 'ยืดหยุ่น', 'มีจินตนาการ', 'พิถีพิถัน',
+      'ละเอียดอ่อน', 'เฉียบคม', 'มีไหวพริบ', 'ช่างพูด', 'เป็นผู้ใหญ่',
+      'เข้าสังคมเก่ง', 'มีพลัง', 'กล้าหาญ', 'ร่าเริง', 'คิดบวก',
+      'อยากรู้อยากเห็น', 'ใจดี', 'พึ่งพาได้', 'มีความคิดเห็นชัดเจน', 'เรียนรู้ผ่านการลงมือทำ',
+      'ไว้ใจได้', 'ไม่ยอมแพ้', 'เป็นตัวของตัวเอง', 'มีสมาธิ', 'ช่างคิด'
+    ]
   }
 }
