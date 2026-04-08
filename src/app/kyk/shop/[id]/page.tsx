@@ -59,7 +59,7 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
       <div className="px-6 mb-6">
         <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
           <h2 className="text-[24px] font-bold text-slate-900 tracking-tight leading-tight">
-            {isPostpartum ? "Postpartum Care Starter Kit" : isTableware ? "K-Kids Silicone Tableware Set" : dict.shopItem1Name}
+            {isPostpartum ? dict.shopItem2Name : isTableware ? dict.shopItem3Name : dict.shopItem1Name}
           </h2>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
             {dict.shopJoinedCount.replace('{count}', '1')}
@@ -67,11 +67,7 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
         </div>
         
         <p className="text-[14px] text-slate-600 leading-relaxed font-medium mb-4">
-          {isPostpartum 
-            ? "A curated set of essential postpartum care items used by Korean mothers. Offers a simple way to experience Korean-style postpartum self-care at home." 
-            : isTableware
-            ? "A safe and stylish tableware set designed for young children. Inspired by Korean parenting standards for daily meals and independent eating."
-            : dict.shopItem1Desc}
+          {isPostpartum ? dict.shopItem2Sub : isTableware ? dict.shopItem3Sub : dict.shopItem1Desc}
         </p>
 
         <div className="flex flex-wrap gap-2 mb-6">
@@ -137,10 +133,10 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
             </div>
             <div>
               <h4 className="text-[14px] font-bold text-slate-900">
-                {isPostpartum ? "Korean Postpartum Care Starter Kit" : isTableware ? "K-Kids Silicone Tableware Set" : "Korean Daily Care Essential"}
+                {isPostpartum ? dict.shopItem2TrendTitle : isTableware ? dict.shopItem3TrendTitle : "Korean Daily Care Essential"}
               </h4>
               <p className="text-[11px] text-slate-500 mt-0.5 max-w-[240px] leading-relaxed">
-                {isPostpartum ? "Using the best of natural botanicals. Focus fully on gentle recovery in your own home." : isTableware ? "Safe. Smart. Beautifully designed for modern families." : "One bottle, head-to-toe comfort — inspired by Korean moms' gentle daily routines."}
+                {isPostpartum ? dict.shopItem2TrendDesc : isTableware ? dict.shopItem3TrendDesc : "One bottle, head-to-toe comfort — inspired by Korean moms' gentle daily routines."}
               </p>
             </div>
           </div>
@@ -153,52 +149,52 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Trusted by Korean Mothers <span className="text-xs">👶</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Following postpartum tradition (sanhujori), this setup preserves your body’s warmth while recovering. This helps with managing joint recovery, stress, and setting the tone for the great postpartum journey your mind and body need.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem2F1Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem2F1Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Gentle Daily Recovery <span className="text-xs">🌿</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Relaxing and gentle, soothing elements let you feel calm and tight throughout the postpartum process. Experience a true recovery state with every shower.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem2F2Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem2F2Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Warmth & Comfort First <span className="text-xs">♨️</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Korean postpartum care emphasizes warmth and protection to heal the body. Take your routine seriously gathering priority and protection.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem2F3Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem2F3Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">4</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Simple, Ready to Use Set <span className="text-xs">🛍️</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">No setup needed. Perfect for busy new moms who want recovery without guesswork.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem2F4Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem2F4Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">5</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Self-Care at Home <span className="text-xs">🌸</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Recovery is emotional as much as physical. Bring postpartum care right into your comfortable home.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem2F5Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem2F5Desc}</p>
                   </div>
                 </div>
                 {/* Bottom highlight box */}
                 <div className="mt-3 bg-[#fdfafb] border border-[#fdeaef] rounded-xl p-5">
                   <h5 className="text-[12px] font-bold text-slate-900 mb-3 flex items-center gap-2">
                     <Heart size={16} className="text-[#EA678C]" />
-                    Why Moms in Korea Love It
+                    {dict.shopItem2WhyTitle}
                   </h5>
                   <ul className="text-[11px] text-slate-600 space-y-2 font-medium">
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Inspired by Korea's trusted postpartum tradition</li>
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Premium botanicals for ultimate postpartum relief</li>
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Designed for emotional recovery, comfort and ease</li>
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> No guesswork, just pure recovery focus</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem2WhyL1}</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem2WhyL2}</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem2WhyL3}</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem2WhyL4}</li>
                   </ul>
                   <p className="mt-4 pt-4 border-t border-[#fdeaef] text-[11px] font-bold text-slate-800 tracking-wide uppercase">
-                    Rest, Warmth, Recovery, The Korean way.
+                    {dict.shopItem2WhyFooter}
                   </p>
                 </div>
               </>
@@ -207,52 +203,52 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Designed for Little Hands <span className="text-xs">👐 👶</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Thoughtfully shaped for small hands learning to eat independently. The ergonomic curves and balanced weight help children grip comfortably, building confidence at every meal.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem3F1Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem3F1Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Safe, Food-Grade Silicone <span className="text-xs">🍼 💧</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Made with BPA-free, food-grade silicone trusted by Korean parents. Soft, durable, and gentle on little mouths — giving parents peace of mind at every bite.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem3F2Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem3F2Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Strong Suction, Less Mess <span className="text-xs">💫 🍽️</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">The powerful suction base keeps bowls and plates firmly in place. Less slipping, fewer spills, and calmer mealtimes for both parents and toddlers.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem3F3Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem3F3Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">4</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Everyday Practical & Easy to Clean <span className="text-xs">🧼 ✨</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Dishwasher-safe and effortless to wash by hand. Designed for busy family routines — Because parenting is already demanding enough.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem3F4Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem3F4Desc}</p>
                   </div>
                 </div>
                 <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:bg-slate-50 transition-colors">
                   <div className="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">5</div>
                   <div>
-                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">Minimal Korean Design <span className="text-xs">🎀 🌸</span></h5>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">Soft neutral tones and a clean, modern aesthetic inspired by Korean parenting style. Beautiful enough to leave on your table, functional enough to use everyday.</p>
+                    <h5 className="text-[13px] font-bold text-slate-900 mb-1 flex items-center gap-1.5">{dict.shopItem3F5Title}</h5>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{dict.shopItem3F5Desc}</p>
                   </div>
                 </div>
                 {/* Bottom highlight box */}
                 <div className="mt-3 bg-[#fdfafb] border border-[#fdeaef] rounded-xl p-5">
                   <h5 className="text-[12px] font-bold text-slate-900 mb-3 flex items-center gap-2">
                     <Heart size={16} className="text-[#EA678C]" />
-                    Why Parents Love It in Southeast Asia
+                    {dict.shopItem3WhyTitle}
                   </h5>
                   <ul className="text-[11px] text-slate-600 space-y-2 font-medium">
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Safe materials you can trust</li>
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Designed to support self-feeding milestones</li>
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Reduces mealtime stress and mess</li>
-                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> Stylish enough for modern homes</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem3WhyL1}</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem3WhyL2}</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem3WhyL3}</li>
+                    <li className="flex items-center gap-2"><Check size={12} className="text-[#EA678C]" /> {dict.shopItem3WhyL4}</li>
                   </ul>
                   <p className="mt-4 pt-4 border-t border-[#fdeaef] text-[11px] font-bold text-slate-800 tracking-wide uppercase">
-                    Smarter mealtimes, Safer materials, The Korean way.
+                    {dict.shopItem3WhyFooter}
                   </p>
                 </div>
               </>
