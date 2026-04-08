@@ -6,6 +6,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { getLocalizedProfiles } from '@/lib/kyk/scoring-i18n'
+import { TCIRadarChart } from '@/components/ui/TCIRadarChart'
+import { ResultCaptureCard } from '@/components/ui/ResultCaptureCard'
 
 const TCI_DIMENSION_LABELS: Record<string, string> = {
   NS: '새로움추구',
@@ -57,6 +59,12 @@ export default async function ResultPage() {
 
   if (!profile) redirect('/kyk/step1')
 
+  const tciData = tciScores ? Object.entries(tciScores).map(([key, score]) => ({
+    subject: TCI_DIMENSION_LABELS[key],
+    score: score,
+    fullMark: 4
+  })) : []
+
   return (
     <div className="min-h-[100dvh] bg-white">
       <div className="max-w-5xl mx-auto lg:flex lg:gap-8 lg:px-8 lg:pt-8 lg:pb-12">
@@ -64,23 +72,25 @@ export default async function ResultPage() {
         {/* ── Left: Analysis Cards ── */}
         <div className="flex-1 flex flex-col">
 
-          {/* Hero */}
-          <div className="bg-brand-red2 text-brand-white pt-12 pb-20 px-6 lg:px-10 rounded-b-[40px] lg:rounded-[40px] relative overflow-hidden shadow-xl">
-            <div className="absolute top-8 right-8 opacity-15 text-brand-yellow">
-              <Sparkles size={100} />
+          {/* Hero Capture Wrapper */}
+          <ResultCaptureCard>
+            <div className="bg-brand-red2 text-brand-white pt-12 pb-24 px-6 lg:px-10 rounded-b-[40px] lg:rounded-[40px] relative overflow-hidden shadow-xl h-full">
+              <div className="absolute top-8 right-8 opacity-15 text-brand-yellow">
+                <Sparkles size={100} />
+              </div>
+              <p className="text-brand-white/70 text-sm font-medium mb-2 tracking-wide uppercase">KYK 분석 결과</p>
+              <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 leading-tight">
+                우리 아이는<br/>
+                <span className="text-brand-yellow">{profile.title}</span> 유형!
+              </h1>
+              <p className="text-brand-white/90 text-[14.5px] lg:text-base leading-relaxed max-w-[88%] break-keep">
+                {profile.summary}
+              </p>
             </div>
-            <p className="text-brand-white/70 text-sm font-medium mb-2 tracking-wide uppercase">KYK 분석 결과</p>
-            <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 leading-tight">
-              우리 아이는<br/>
-              <span className="text-brand-yellow">{profile.title}</span> 유형!
-            </h1>
-            <p className="text-brand-white/85 text-[15px] lg:text-base leading-relaxed max-w-[88%]">
-              {profile.summary}
-            </p>
-          </div>
+          </ResultCaptureCard>
 
           {/* Cards */}
-          <div className="px-5 lg:px-0 -mt-10 relative z-10 space-y-4 pb-8">
+          <div className="px-5 lg:px-0 -mt-2 relative z-10 space-y-4 pb-8">
 
             {/* Strengths */}
             <Card className="p-6 border-0 shadow-md bg-white rounded-3xl">
@@ -137,31 +147,16 @@ export default async function ResultPage() {
             </Card>
 
             {/* TCI Chart */}
-            {tciScores && (
-              <Card className="p-6 border-0 shadow-md bg-white rounded-3xl">
-                <div className="flex items-center gap-2 mb-5">
+            {tciData.length > 0 && (
+              <Card className="p-6 border-0 shadow-md bg-white rounded-3xl overflow-hidden">
+                <div className="flex items-center gap-2 mb-2 relative z-10">
                   <div className="w-8 h-8 rounded-full bg-brand-red1/10 flex items-center justify-center text-brand-red1">
                     <Sparkles size={16} />
                   </div>
                   <h3 className="font-bold text-[17px] text-slate-800">타고난 성향 (TCI)</h3>
                 </div>
-                <div className="space-y-3.5">
-                  {Object.entries(tciScores).map(([key, score]) => (
-                    <div key={key} className="flex items-center gap-3">
-                      <div className="w-[108px] shrink-0 text-sm font-medium text-slate-600">
-                        {TCI_DIMENSION_LABELS[key]}
-                      </div>
-                      <div className="flex-1 flex gap-1 h-2.5">
-                        {[1, 2, 3, 4].map((level) => (
-                          <div
-                            key={level}
-                            className={`flex-1 rounded-full transition-all ${level <= score ? TCI_DIMENSION_COLORS[key] : 'bg-slate-100'}`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-xs font-bold text-slate-400 w-4 text-right">{score}</span>
-                    </div>
-                  ))}
+                <div className="-mx-4 -mt-2 mb-[-24px] relative z-0">
+                   <TCIRadarChart data={tciData} />
                 </div>
               </Card>
             )}

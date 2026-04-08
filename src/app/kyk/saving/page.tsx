@@ -12,8 +12,8 @@ export default function SavingPage() {
 
   useEffect(() => {
     async function submitData() {
-      // Small delay just for UX processing magic
-      await new Promise(r => setTimeout(r, 1500))
+      // Simulate heavy AI processing for psychological impact (3.8 seconds)
+      await new Promise(r => setTimeout(r, 3800))
 
       try {
         const supabase = createClient()
@@ -57,11 +57,36 @@ export default function SavingPage() {
   }, [])
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-white p-6 items-center justify-center">
-      <div className="flex flex-col items-center">
-        <Loader2 className="w-12 h-12 text-brand-lightblue animate-spin mb-4" />
-        <h2 className="text-xl font-bold text-slate-800">결과 분석 중입니다...</h2>
-        <p className="text-sm text-slate-500 mt-2">아이의 성향과 맞춤형 가이드라인을 생성하고 있어요.</p>
+    <div className="flex flex-col min-h-[100dvh] bg-slate-900 text-white p-6 items-center justify-center relative overflow-hidden">
+      {/* Background ambient FX */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-yellow/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-red1/10 rounded-full blur-[100px] pointer-events-none" />
+      
+      <div className="flex flex-col items-center relative z-10 w-full max-w-sm">
+        {/* Core Animation Circle */}
+        <div className="relative w-32 h-32 mb-10 flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border-4 border-slate-800 animate-[spin_4s_linear_infinite]" />
+          <div className="absolute inset-0 rounded-full border-t-4 border-brand-red1 animate-[spin_1.5s_linear_infinite]" />
+          <div className="absolute inset-2 rounded-full border-2 border-brand-yellow/30 animate-[spin_3s_linear_infinite_reverse]" />
+          
+          <img src="/symbol.png" alt="KYK AI Enginer" className="w-12 h-12 object-contain filter invert opacity-80 animate-pulse" />
+        </div>
+        
+        <h2 className="text-2xl font-extrabold text-white text-center mb-3 animate-[pulse_2s_ease-in-out_infinite]">
+          AI 분석 엔진 가동 중...
+        </h2>
+        
+        <div className="space-y-2 mt-4 text-center">
+          <p className="text-sm font-medium text-slate-400 animate-[fade-in-up_400ms_ease-out_forwards]">
+            수만 건의 아동 발달 데이터를 매칭하는 중입니다.
+          </p>
+          <p className="text-[13px] text-slate-500 animate-[fade-in-up_400ms_ease-out_800ms_forwards] opacity-0" style={{ animationDelay: '1.2s' }}>
+            부모님의 고민을 기반으로 맞춤형 TCI 기질을 추출합니다.
+          </p>
+          <p className="text-[13px] text-brand-yellow/80 animate-[fade-in-up_400ms_ease-out_2400ms_forwards] opacity-0 font-bold" style={{ animationDelay: '2.4s' }}>
+            거의 다 완성되었어요!
+          </p>
+        </div>
       </div>
     </div>
   )

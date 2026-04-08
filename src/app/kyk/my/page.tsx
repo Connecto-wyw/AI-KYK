@@ -50,13 +50,13 @@ export default async function MyPage() {
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
     .limit(1)
-    .single()
+    .maybeSingle()
 
   const { data: memory } = kidData ? await supabase
     .from('kid_memories')
     .select('summary_context')
     .eq('kid_id', kidData.id)
-    .single() : { data: null }
+    .maybeSingle() : { data: null }
 
   const hasMemory = !!memory?.summary_context
   const memorySummary = memory?.summary_context || "아이가 새로운 것을 시도하는 건 좋아하지만 가끔 금방 포기하는 경향이 있는 것 같아요. 끝까지 해내는 힘을 길러주는 5분 놀이법들을 함께 알아볼까요?"
