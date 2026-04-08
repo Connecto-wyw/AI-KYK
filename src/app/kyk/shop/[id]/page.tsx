@@ -123,7 +123,7 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
               {dict.shopDetailTrendSub}
             </span>
             <h3 className="text-[17px] font-extrabold text-slate-900 leading-snug">
-              {isPostpartum || isTableware ? "Discover the most trending and premium products from South Korea — carefully curated for you." : dict.shopDetailTrendTitle}
+              {dict.shopDetailTrendTitle}
             </h3>
           </div>
 
