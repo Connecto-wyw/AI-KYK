@@ -7,13 +7,13 @@ import { useState } from 'react'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { dictionaries } from '@/lib/i18n/dictionaries'
 
-import { use } from 'react'
+import { useParams } from 'next/navigation'
 
-export default function ShopItemPage({ params }: { params: Promise<{ id: string }> }) {
+export default function ShopItemPage() {
   const [copied, setCopied] = useState(false)
-  const resolvedParams = use(params)
-  const isPostpartum = resolvedParams.id === '2'
-  const isTableware = resolvedParams.id === '3'
+  const params = useParams()
+  const isPostpartum = params?.id === '2'
+  const isTableware = params?.id === '3'
   const { language } = useLanguageStore()
   const dict = dictionaries[language]
 
