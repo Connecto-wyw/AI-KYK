@@ -1,31 +1,21 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
-import { Share, Check, Reply, ThumbsUp, Heart, CheckCircle2 } from 'lucide-react'
-import { useState } from 'react'
-import { useLanguageStore } from '@/store/useLanguageStore'
+import { Check, Reply, Heart, CheckCircle2 } from 'lucide-react'
+import { cookies } from 'next/headers'
 import { dictionaries } from '@/lib/i18n/dictionaries'
+import { ShareButton } from './ShareButton'
 
-import { usePathname } from 'next/navigation'
+export default async function ShopItemPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params
+  const isPostpartum = resolvedParams.id === '2'
+  const isTableware = resolvedParams.id === '3'
+  
+  const cookieStore = await cookies()
+  const langValue = cookieStore.get('kyk-lang')?.value || 'en'
+  const langKey = Object.keys(dictionaries).includes(langValue) ? (langValue as keyof typeof dictionaries) : 'en'
+  const dict = dictionaries[langKey]
 
-export default function ShopItemPage() {
-  const [copied, setCopied] = useState(false)
-  const pathname = usePathname()
-  const isPostpartum = pathname?.includes('/shop/2')
-  const isTableware = pathname?.includes('/shop/3')
-  const { language } = useLanguageStore()
-  const dict = dictionaries[language]
 
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.warn("Failed to copy", err)
-    }
-  }
 
   return (
     <div className="flex flex-col min-h-screen bg-white relative overflow-hidden pb-32 lg:pb-12 pt-8 w-full max-w-[600px] mx-auto border-x border-slate-50">
@@ -97,13 +87,7 @@ export default function ShopItemPage() {
           <span className="text-[12px] font-medium text-slate-500">
             {dict.shopShareShare}
           </span>
-          <button 
-            onClick={handleShare}
-            className="bg-slate-900 hover:bg-slate-800 text-white rounded-lg px-4 py-2 text-[12px] font-bold flex items-center gap-1.5 transition-colors active:scale-95"
-          >
-            {copied ? <Check size={14} className="text-green-400" /> : <Share size={14} />}
-            {copied ? dict.shopShareCopied : dict.shopShareBtn}
-          </button>
+          <ShareButton btnText={dict.shopShareBtn} copiedText={dict.shopShareCopied} />
         </div>
       </div>
 
