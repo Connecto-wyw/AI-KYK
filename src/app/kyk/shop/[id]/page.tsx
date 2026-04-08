@@ -7,13 +7,13 @@ import { useState } from 'react'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { dictionaries } from '@/lib/i18n/dictionaries'
 
-import { useParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export default function ShopItemPage() {
   const [copied, setCopied] = useState(false)
-  const params = useParams()
-  const isPostpartum = params?.id === '2'
-  const isTableware = params?.id === '3'
+  const pathname = usePathname()
+  const isPostpartum = pathname?.includes('/shop/2')
+  const isTableware = pathname?.includes('/shop/3')
   const { language } = useLanguageStore()
   const dict = dictionaries[language]
 
