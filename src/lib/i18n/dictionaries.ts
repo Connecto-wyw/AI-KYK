@@ -251,7 +251,8 @@ export const dictionaries = {
     teamDashCelebDesc1: "현재 ",
     teamDashCelebDescStrong: "참여 인원 1명 (캡틴)",
     teamDashCelebDesc2: "!\n지금 바로 친구에게 링크를 공유하고\n목표 인원을 채워보세요.",
-    teamDashCelebBtn: "공유하러 가기"\n  },
+    teamDashCelebBtn: "공유하러 가기",
+  },
   en: {
     coachEditorial: "1:1 Dedicated Mentor",
     myPageEditorial: "Personalized Dashboard",
@@ -501,7 +502,8 @@ export const dictionaries = {
     teamDashCelebDesc1: "Currently ",
     teamDashCelebDescStrong: "1 participant (Captain)",
     teamDashCelebDesc2: "!\nShare the link with your friends now\nand reach the goal.",
-    teamDashCelebBtn: "Go Share"\n  },
+    teamDashCelebBtn: "Go Share",
+  },
   ms: {
     coachEditorial: "Mentor Khusus 1:1",
     myPageEditorial: "Papan Pemuka Peribadi",
@@ -749,7 +751,8 @@ export const dictionaries = {
     teamDashCelebDesc1: "Kini ",
     teamDashCelebDescStrong: "1 peserta (Kapten)",
     teamDashCelebDesc2: "!\nKongsi pautan sekarang\ndan capai sasaran anda.",
-    teamDashCelebBtn: "Pergi Kongsi"\n  },
+    teamDashCelebBtn: "Pergi Kongsi",
+  },
   id: {
     coachEditorial: "Mentor Khusus 1:1",
     myPageEditorial: "Dasbor Pribadi",
@@ -997,7 +1000,8 @@ export const dictionaries = {
     teamDashCelebDesc1: "Saat ini ",
     teamDashCelebDescStrong: "1 peserta (Kapten)",
     teamDashCelebDesc2: "!\nBagikan tautan sekarang\ndan capai targetnya.",
-    teamDashCelebBtn: "Bagikan"\n  },
+    teamDashCelebBtn: "Bagikan",
+  },
   vi: {
     coachEditorial: "Đồng hành 1:1",
     myPageEditorial: "Bảng điều khiển Cá nhân",
@@ -1245,7 +1249,8 @@ export const dictionaries = {
     teamDashCelebDesc1: "Hiện tại ",
     teamDashCelebDescStrong: "1 người (Đội trưởng)",
     teamDashCelebDesc2: "!\nHãy chia sẻ liên kết ngay\nvà đạt mục tiêu.",
-    teamDashCelebBtn: "Đi chia sẻ"\n  },
+    teamDashCelebBtn: "Đi chia sẻ",
+  },
   th: {
     coachEditorial: "ผู้ดูแลส่วนตัว 1:1",
     myPageEditorial: "หน้าหลักแบบส่วนตัว",
