@@ -119,9 +119,16 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
           
           {/* Avatar Row */}
           <div className="flex items-center gap-0">
-            {[1,2,3,4].map((i) => (
-              <div key={i} className={`w-8 h-8 rounded-full border-2 border-white bg-slate-200 relative overflow-hidden ${i > 1 ? '-ml-2' : ''} shadow-sm`} style={{ zIndex: 10 - i }}>
-                <Image src={`/img/parents/p${i}.jpg`} alt="avatar" fill className="object-cover" />
+            {[
+              { bg: '#FFCDB2', fg: '#8A4030' },
+              { bg: '#B5D5C5', fg: '#2D6A4F' },
+              { bg: '#C9B8E8', fg: '#5C4B8A' },
+              { bg: '#F7DCB4', fg: '#8A6030' },
+            ].map((color, i) => (
+              <div key={i} className={`w-8 h-8 rounded-full border-2 border-white flex items-center justify-center${i > 0 ? ' -ml-2' : ''} shadow-sm`} style={{ zIndex: 10 - i, backgroundColor: color.bg }}>
+                <svg viewBox="0 0 24 24" fill={color.fg} className="w-4 h-4">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
               </div>
             ))}
             <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500 -ml-2 shadow-sm z-0">
