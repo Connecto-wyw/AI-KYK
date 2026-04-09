@@ -24,7 +24,6 @@ export async function POST(req: Request) {
       ms: 'Malay',
       id: 'Indonesian',
       vi: 'Vietnamese',
-      th: 'Thai'
     }
     const responseLang = langMap[kidLanguage] || 'English'
 
