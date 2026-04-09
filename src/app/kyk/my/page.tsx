@@ -7,38 +7,38 @@ import { KID_PROFILES, KidType } from '@/lib/kyk/scoring'
 import { cookies } from 'next/headers'
 import { dictionaries } from '@/lib/i18n/dictionaries'
 
-const CURATED_LINKS = [
-  {
-    title: '등원 전 5분! 아이의 자신감을 키워주는 마법의 놀이',
-    author: '차이의 놀이',
-    category: '놀이 제안',
-    colorUrl: 'bg-brand-yellow/20',
-    image: '/img/curated/my_1.png',
-    url: '#'
-  },
-  {
-    title: '아이가 겪는 복잡한 또래 관계, 어떻게 도와줄까요?',
-    author: '유은희 아동심리',
-    category: '발달 가이드',
-    colorUrl: 'bg-brand-blue/20',
-    image: '/img/curated/my_2.png',
-    url: '#'
-  },
-  {
-    title: '예민한 아이를 위한 마음 근육 단단하게 훈련하는 팁',
-    author: '베이비빌리',
-    category: '행동 교정',
-    colorUrl: 'bg-brand-yellowgreen/20',
-    image: '/img/curated/my_3.png',
-    url: '#'
-  }
-]
-
 export default async function MyPage() {
   const cookieStore = await cookies()
   const langValue = cookieStore.get('kyk-lang')?.value || 'ko'
   const langKey = Object.keys(dictionaries).includes(langValue) ? (langValue as keyof typeof dictionaries) : 'ko'
   const dict = dictionaries[langKey]
+
+  const CURATED_LINKS = [
+    {
+      title: dict.myCuratedTitle1,
+      author: dict.myCuratedAuthor1,
+      category: dict.myCuratedCat1,
+      colorUrl: 'bg-brand-yellow/20',
+      image: '/img/curated/my_1.png',
+      url: '#'
+    },
+    {
+      title: dict.myCuratedTitle2,
+      author: dict.myCuratedAuthor2,
+      category: dict.myCuratedCat2,
+      colorUrl: 'bg-brand-blue/20',
+      image: '/img/curated/my_2.png',
+      url: '#'
+    },
+    {
+      title: dict.myCuratedTitle3,
+      author: dict.myCuratedAuthor3,
+      category: dict.myCuratedCat3,
+      colorUrl: 'bg-brand-yellowgreen/20',
+      image: '/img/curated/my_3.png',
+      url: '#'
+    }
+  ]
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -62,28 +62,34 @@ export default async function MyPage() {
     .maybeSingle() : { data: null }
 
   const hasMemory = !!memory?.summary_context
-  const memorySummary = memory?.summary_context || "아이가 새로운 것을 시도하는 건 좋아하지만 가끔 금방 포기하는 경향이 있는 것 같아요. 끝까지 해내는 힘을 길러주는 5분 놀이법들을 함께 알아볼까요?"
+  const memorySummary = memory?.summary_context || dict.myMemoryFallback
 
   let profile = null
   let childName = dict.myDefaultChild
   let subTitle = dict.myDefaultSubtitle
-  let currentConcern = '아직 진단 전이에요'
+  let currentConcern = dict.myNoDiag
 
   if (kidData) {
     profile = KID_PROFILES[kidData.result_type as KidType]
-    
-    // Instead of raw real name, we use the Animal Type (or you could map to user input)
     childName = profile.title
-    
+
     const birthYear = kidData.answers?.step3?.birthYear
     const currentYear = new Date().getFullYear()
-    const age = birthYear ? `${currentYear - parseInt(birthYear) + 1}세` : ''
-    const gender = kidData.answers?.step3?.gender === '남아' ? '남자아이' : kidData.answers?.step3?.gender === '여아' ? '여자아이' : ''
-    
-    subTitle = `${user.email?.split('@')[0]}님의 아이 ${age ? `· ${age}` : ''} ${gender ? `· ${gender}` : ''}`
+    const age = birthYear ? `${currentYear - parseInt(birthYear) + 1}${dict.myAgeSuffix}` : ''
+
+    const genderRaw = kidData.answers?.step3?.gender
+    const genderDisplay =
+      [dict.step3Boy, '남아'].includes(genderRaw) ? dict.myChildBoy :
+      [dict.step3Girl, '여아'].includes(genderRaw) ? dict.myChildGirl :
+      ''
+
+    const username = user.email?.split('@')[0] || ''
+    subTitle = `${dict.mySubtitleOf.replace('{name}', username)} ${age ? `· ${age}` : ''} ${genderDisplay ? `· ${genderDisplay}` : ''}`.trim()
 
     const concernRaw = kidData.answers?.step3?.concern
-    currentConcern = concernRaw && concernRaw !== '특별한 고민은 없어요' ? concernRaw : '전반적인 발달 방향 점검'
+    currentConcern = concernRaw && concernRaw !== dict.concernDefault && concernRaw !== '특별한 고민은 없어요'
+      ? concernRaw
+      : dict.concernFallback
   }
 
   return (
