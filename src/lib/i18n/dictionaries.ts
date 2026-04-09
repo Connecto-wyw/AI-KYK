@@ -29,7 +29,7 @@ export const dictionaries = {
     shopFrontNewsletterTitle: "이너 서클 참여하기",
     shopFrontNewsletterDesc: "신상품, 독점 팀 할인, 전문가의 육아 팁을 가장 먼저 받아보세요.",
     shopFrontNewsletterPlaceholder: "이메일을 입력하세요",
-    shopFrontNewsletterBtn: "구독하기",
+    shopFrontNewsletterBtn: "구독",
     shopFrontNewsletterTerms: "구독함으로써 이용약관 및 개인정보 보도방침에 동의하게 됩니다.",
     coachTitle: "전담 AI 코치",
     coachStatus: "온라인 · 1:1 맞춤 상담 중",

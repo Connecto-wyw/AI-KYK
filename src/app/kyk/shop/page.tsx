@@ -174,7 +174,7 @@ export default async function ShopFrontPage() {
                    placeholder={dict.shopFrontNewsletterPlaceholder}
                    className="w-full bg-white border-0 rounded-l-full py-4 pl-6 pr-4 text-sm font-medium outline-none focus:ring-2 focus:ring-brand-red1/20 transition-all placeholder:text-slate-400"
                  />
-                 <button className="bg-[#1A1A1A] hover:bg-black text-white font-bold text-sm px-8 rounded-r-full transition-colors whitespace-nowrap">
+                 <button className="bg-[#1A1A1A] hover:bg-black text-white font-bold text-sm px-5 rounded-r-full transition-colors whitespace-nowrap">
                    {dict.shopFrontNewsletterBtn}
                  </button>
              </div>
