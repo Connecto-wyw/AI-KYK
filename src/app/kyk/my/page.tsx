@@ -87,6 +87,11 @@ export default async function MyPage() {
     <div className="flex flex-col min-h-[100dvh] bg-slate-50 lg:bg-slate-100 pb-[100px] lg:pb-12 w-full font-sans">
       <div className="w-full max-w-2xl mx-auto px-5 lg:px-4 pt-4 lg:pt-8 space-y-8 flex-1">
         
+        <div className="px-1">
+          <p className="text-[11px] font-bold text-brand-red1 tracking-widest uppercase mb-1">{dict.myPageEditorial}</p>
+          <h2 className="text-[32px] font-extrabold text-slate-900 tracking-tight">{dict.myPageTitle}</h2>
+        </div>
+
         {/* ==============================================
             SECTION 1: Profile & Current Concern
             ============================================== */}
