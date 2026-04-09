@@ -22,10 +22,9 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
       
       {/* Top Header & Context */}
       <div className="px-6 mb-6">
-        <h1 className="text-[22px] font-extrabold text-slate-900 tracking-tight mb-2">{dict.shopHeader}</h1>
-        <p className="text-[13px] text-slate-500 font-medium">
+        <h1 className="text-[20px] font-extrabold text-slate-900 tracking-tight leading-snug">
           {dict.shopSubheader}
-        </p>
+        </h1>
       </div>
 
       <hr className="border-t border-slate-100/60 w-[calc(100%-3rem)] mx-auto mb-6" />
