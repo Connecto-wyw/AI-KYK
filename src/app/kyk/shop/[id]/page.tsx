@@ -21,7 +21,7 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
   const trendTitle = isPostpartum ? dict.shopItem2TrendTitle : isTableware ? dict.shopItem3TrendTitle : dict.shopDetailTrendTitle;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F7F8F9] relative overflow-x-hidden pb-[100px] w-full max-w-[600px] mx-auto border-x border-slate-50 font-sans">
+    <div className="flex flex-col min-h-screen bg-[#F7F8F9] relative w-full max-w-[600px] mx-auto border-x border-slate-50 font-sans">
       
       {/* Top Navigation */}
       <div className="flex items-center justify-between px-5 py-4 bg-white z-50 sticky top-0">
@@ -340,7 +340,7 @@ export default async function ShopItemPage({ params }: { params: Promise<{ id: s
       </div>
 
       {/* Sticky Bottom Actions */}
-      <div className="fixed bottom-0 left-[50%] -translate-x-[50%] z-50 w-full max-w-[600px] bg-white pt-4 pb-6 px-6 border-t border-slate-100 flex items-center justify-between gap-5 shadow-[0_-10px_40px_rgba(0,0,0,0.06)] rounded-t-[24px]">
+      <div className="sticky bottom-0 z-50 mt-auto w-full bg-white pt-4 pb-6 px-6 border-t border-slate-100 flex items-center justify-between gap-5 shadow-[0_-10px_40px_rgba(0,0,0,0.06)] rounded-t-[24px]">
         <div className="flex flex-col items-center justify-center gap-1.5 min-w-[70px]">
           {/* Changed this back to standard sharing or kept static info */}
           <Heart size={24} className="text-[#999999]" strokeWidth={2}/>
