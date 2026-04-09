@@ -1,7 +1,6 @@
 export const dictionaries = {
   ko: {
     coachEditorial: "1:1 전담 멘토",
-    coachTitle: "맞춤형 AI 코치",
     myPageEditorial: "나만의 대시보드",
     myPageTitle: "마이페이지",
     shopFrontTitle: "Team Shop",
@@ -210,7 +209,6 @@ export const dictionaries = {
   },
   en: {
     coachEditorial: "1:1 Dedicated Mentor",
-    coachTitle: "Personalized AI Coach",
     myPageEditorial: "Personalized Dashboard",
     myPageTitle: "My Page",
     shopFrontTitle: "Team Shop",
@@ -416,7 +414,6 @@ export const dictionaries = {
   },
   ms: {
     coachEditorial: "Mentor Khusus 1:1",
-    coachTitle: "Jurulatih AI Peribadi",
     myPageEditorial: "Papan Pemuka Peribadi",
     myPageTitle: "Halaman Saya",
     shopFrontTitle: "Kedai Team",
@@ -620,7 +617,6 @@ export const dictionaries = {
   },
   id: {
     coachEditorial: "Mentor Khusus 1:1",
-    coachTitle: "Pelatih AI Pribadi",
     myPageEditorial: "Dasbor Pribadi",
     myPageTitle: "Halaman Saya",
     shopFrontTitle: "Toko Tim",
@@ -824,7 +820,6 @@ export const dictionaries = {
   },
   vi: {
     coachEditorial: "Đồng hành 1:1",
-    coachTitle: "Huấn luyện viên AI Cá nhân",
     myPageEditorial: "Bảng điều khiển Cá nhân",
     myPageTitle: "Trang của Tôi",
     shopFrontTitle: "Cửa hàng Nhóm",
@@ -1028,7 +1023,6 @@ export const dictionaries = {
   },
   th: {
     coachEditorial: "ผู้ดูแลส่วนตัว 1:1",
-    coachTitle: "โค้ช AI ส่วนตัว",
     myPageEditorial: "หน้าหลักแบบส่วนตัว",
     myPageTitle: "หน้าของฉัน",
     shopFrontTitle: "ร้านหมู่คณะ",
