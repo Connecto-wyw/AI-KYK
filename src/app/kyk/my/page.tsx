@@ -13,6 +13,7 @@ const CURATED_LINKS = [
     author: '차이의 놀이',
     category: '놀이 제안',
     colorUrl: 'bg-brand-yellow/20',
+    image: '/img/curated/my_1.png',
     url: '#'
   },
   {
@@ -20,6 +21,7 @@ const CURATED_LINKS = [
     author: '유은희 아동심리',
     category: '발달 가이드',
     colorUrl: 'bg-brand-blue/20',
+    image: '/img/curated/my_2.png',
     url: '#'
   },
   {
@@ -27,6 +29,7 @@ const CURATED_LINKS = [
     author: '베이비빌리',
     category: '행동 교정',
     colorUrl: 'bg-brand-yellowgreen/20',
+    image: '/img/curated/my_3.png',
     url: '#'
   }
 ]
@@ -197,9 +200,12 @@ export default async function MyPage() {
             {CURATED_LINKS.map((link, i) => (
               <a key={i} href={link.url} className="shrink-0 w-[240px] snap-center">
                 <div className="bg-white rounded-[32px] overflow-hidden shadow-sm h-full flex flex-col active:scale-[0.98] transition-transform">
-                  {/* Fake Image Container */}
-                  <div className={`w-full h-[120px] ${link.colorUrl} flex items-center justify-center text-black/10`}>
-                    <Image src="/symbol.png" alt="thumbnail" width={40} height={40} className="opacity-20 mix-blend-multiply" />
+                  <div className={`w-full h-[140px] relative ${link.colorUrl} flex items-center justify-center shrink-0 overflow-hidden`}>
+                    {link.image ? (
+                      <Image src={link.image} alt={link.title} fill className="object-cover" />
+                    ) : (
+                      <Image src="/symbol.png" alt="thumbnail" width={40} height={40} className="opacity-20 mix-blend-multiply" />
+                    )}
                   </div>
                   
                   <div className="p-5 flex flex-col flex-1">
