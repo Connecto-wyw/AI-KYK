@@ -103,7 +103,7 @@ export default function TeamDashboardClient({ teamId, isNew }: { teamId: string,
               <div className="w-full h-[14px] bg-slate-100 rounded-full overflow-hidden flex items-center p-0.5">
                 <div 
                   className="h-full bg-brand-red1 rounded-full transition-all duration-1000 ease-out" 
-                  style={{ width: \`\${(currentCount / targetCount) * 100}%\` }}
+                  style={{ width: `${(currentCount / targetCount) * 100}%` }}
                 />
               </div>
               <p className="text-[12px] font-extrabold text-slate-500 mt-3 bg-brand-red1/5 text-brand-red2 py-2 px-3 rounded-xl inline-block">
@@ -133,9 +133,9 @@ export default function TeamDashboardClient({ teamId, isNew }: { teamId: string,
             </button>
             <button 
               onClick={handleCopyLink}
-              className={\`w-full border-2 h-[58px] rounded-[20px] font-black text-[15px] flex items-center justify-center gap-2.5 transition-all active:scale-[0.98] \${
+              className={`w-full border-2 h-[58px] rounded-[20px] font-black text-[15px] flex items-center justify-center gap-2.5 transition-all active:scale-[0.98] ${
                 copied ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
-              }\`}
+              }`}
             >
               {copied ? <Check size={18} className="text-brand-yellow" /> : <Copy size={18} />}
               {copied ? '링크가 클립보드에 복사되었습니다.' : '내 전용 초대 링크 복사하기'}
