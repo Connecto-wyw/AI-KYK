@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { Reply, Zap, Lock, Globe, Gift, AlertCircle } from 'lucide-react'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { dictionaries } from '@/lib/i18n/dictionaries'
+import { createClient } from '@/lib/supabase/client'
 
 export default function TeamShopBundlePage() {
   const router = useRouter()
@@ -18,7 +19,7 @@ export default function TeamShopBundlePage() {
   const [teamName, setTeamName] = useState('')
   const [description, setDescription] = useState('')
   const [privacy, setPrivacy] = useState<'public' | 'private'>('public')
-  
+
   const [errorShake, setErrorShake] = useState(false)
   const [toastMsg, setToastMsg] = useState('')
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -30,36 +31,101 @@ export default function TeamShopBundlePage() {
     { id: 3, name: dict.shopItem3Name, originalPrice: 45000, teamPrice: 27000, img: '/img/items/item-3.png', limit: 3, discountRate: 40 },
   ]
 
-  const handleCreateTeam = () => {
+  const showError = (msg: string) => {
+    setToastMsg(msg)
+    setErrorShake(true)
+    setTimeout(() => setErrorShake(false), 600)
+    setTimeout(() => setToastMsg(''), 3000)
+  }
+
+  const handleCreateTeam = async () => {
     if (!selectedProduct) {
-      setToastMsg(dict.bundleErrSelectProduct)
-      setErrorShake(true)
-      setTimeout(() => setErrorShake(false), 600)
-      setTimeout(() => setToastMsg(''), 3000)
+      showError(dict.bundleErrSelectProduct)
+      return
+    }
+    if (!teamName.trim()) {
+      showError(dict.bundleOpentitle2Name + ' ' + (dict.bundleErrRequired || '을 입력해주세요'))
       return
     }
 
-    const isMockLoggedIn = false 
-    if (!isMockLoggedIn && typeof document !== 'undefined' && !document.cookie.includes('supabase-auth-token')) {
-       setShowLoginModal(true)
-       return
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      setShowLoginModal(true)
+      return
     }
 
-    submitForm()
+    await submitForm(user.id)
   }
 
-  const submitForm = async () => {
+  const submitForm = async (_userId: string) => {
     setIsSubmitting(true)
-    await new Promise(r => setTimeout(r, 1200))
-    const mockTeamId = `team-${Date.now()}`
-    router.push(`/kyk/shop/team/${mockTeamId}?new=true`)
+    try {
+      const gateway = language === 'ko' ? 'toss' : 'stripe'
+
+      // 1. 팀 + 주문 생성
+      const res = await fetch('/api/teams/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: selectedProduct,
+          teamName: teamName.trim(),
+          description: description.trim(),
+          privacy,
+          gateway,
+        }),
+      })
+
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+
+      const { teamId, orderId, amount, productName } = data
+
+      // 2. 결제 실행
+      if (gateway === 'toss') {
+        const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk')
+        const tossPayments = await loadTossPayments(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY!)
+        const payment = tossPayments.payment({ customerKey: _userId })
+        await payment.requestPayment({
+          method: 'CARD',
+          amount: { currency: 'KRW', value: amount },
+          orderId,
+          orderName: productName,
+          successUrl: `${window.location.origin}/kyk/shop/payment/success?gateway=toss&orderId=${orderId}`,
+          failUrl: `${window.location.origin}/kyk/shop/payment/fail?gateway=toss&orderId=${orderId}`,
+        })
+        // requestPayment는 리다이렉트 후 돌아오지 않음
+      } else {
+        // Stripe: 세션 생성 후 리다이렉트
+        const stripeRes = await fetch('/api/payments/stripe/create-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId, amount, productName, teamId }),
+        })
+        const stripeData = await stripeRes.json()
+        if (!stripeRes.ok) throw new Error(stripeData.error)
+        window.location.href = stripeData.url
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Error'
+      showError(message)
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleKakaoLogin = () => {
+    const supabase = createClient()
+    supabase.auth.signInWithOAuth({
+      provider: 'kakao',
+      options: { redirectTo: `${window.location.origin}/kyk/shop/bundle` },
+    })
   }
 
   const activeProd = BUNDLE_PRODUCTS.find(p => p.id === selectedProduct)
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-[#fdfdfd] relative w-full max-w-[600px] mx-auto border-x border-slate-50 font-sans pb-[120px]">
-      
+
       <div className="flex items-center justify-between px-5 py-4 bg-white/90 backdrop-blur-md z-40 sticky top-0 border-b border-slate-100">
         <Link href="/kyk/shop" className="text-[#AB3628] hover:opacity-80 transition-opacity">
           <Reply size={20} className="scale-x-[-1]" />
@@ -67,7 +133,7 @@ export default function TeamShopBundlePage() {
         <h1 className="text-[15px] font-extrabold text-[#AB3628] tracking-widest">
           {dict.bundlePageTitle}
         </h1>
-        <div className="w-5" /> 
+        <div className="w-5" />
       </div>
 
       <section className="bg-gradient-to-br from-[#8A2627] to-[#C53324] px-6 py-10 relative overflow-hidden text-center shadow-inner">
@@ -77,7 +143,7 @@ export default function TeamShopBundlePage() {
             <span className="text-[#ffecd2] text-[10px] items-center font-extrabold tracking-widest uppercase">{dict.bundleBenefitBadge}</span>
           </div>
           <h2 className="text-[26px] font-black text-white leading-[1.25] tracking-tight mb-3 drop-shadow-md whitespace-pre-line"
-              dangerouslySetInnerHTML={{ __html: dict.bundleHeroTitle?.replace(/\n/g, '<br/>') || '' }} 
+              dangerouslySetInnerHTML={{ __html: dict.bundleHeroTitle?.replace(/\n/g, '<br/>') || '' }}
           />
           <p className="text-white/85 text-[14px] font-medium leading-relaxed max-w-[280px]">
             {dict.bundleHeroDesc}
@@ -88,26 +154,26 @@ export default function TeamShopBundlePage() {
       </section>
 
       <section className="px-5 py-8 flex flex-col gap-8">
-        
+
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-black">1</div>
             <h3 className="text-[17px] font-extrabold text-slate-800">{dict.bundleOpentitle1} <span className="text-brand-red1">*</span></h3>
           </div>
           <p className="text-[13px] text-slate-500 font-medium pl-7 mb-2">{dict.bundleOpentitle1Sub}</p>
-          
+
           <div className="flex flex-col gap-4 pl-1">
             {BUNDLE_PRODUCTS.map((prod) => (
-              <label 
-                key={prod.id} 
+              <label
+                key={prod.id}
                 className={`relative flex items-center gap-4 p-4 rounded-[20px] border-2 cursor-pointer transition-all active:scale-[0.98] ${
                   selectedProduct === prod.id ? 'border-brand-red1 bg-red-50/30 shadow-md shadow-red-900/5' : 'border-slate-100 bg-white hover:border-slate-200'
                 }`}
               >
-                <input 
-                  type="radio" 
-                  name="productSelection" 
-                  className="hidden" 
+                <input
+                  type="radio"
+                  name="productSelection"
+                  className="hidden"
                   checked={selectedProduct === prod.id}
                   onChange={() => setSelectedProduct(prod.id)}
                 />
@@ -147,23 +213,23 @@ export default function TeamShopBundlePage() {
             <div className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-black">2</div>
             <h3 className="text-[17px] font-extrabold text-slate-800">{dict.bundleOpentitle2}</h3>
           </div>
-          
+
           <div className="pl-1 space-y-5">
             <div className="space-y-2">
               <label className="text-[12px] font-extrabold text-slate-600 ml-1">{dict.bundleOpentitle2Name} <span className="text-brand-red1">*</span></label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder={dict.bundleOpentitle2NamePl}
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
                 className="w-full bg-white border border-slate-200 rounded-[16px] px-5 py-4 text-[14px] font-medium placeholder:text-slate-400 focus:outline-none focus:border-brand-red1 focus:ring-1 focus:ring-brand-red1 transition-all"
               />
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-[12px] font-extrabold text-slate-600 ml-1">{dict.bundleOpentitle2Desc}</label>
-              <textarea 
-                placeholder={dict.bundleOpentitle2DescPl} 
+              <textarea
+                placeholder={dict.bundleOpentitle2DescPl}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full bg-white border border-slate-200 rounded-[16px] px-5 py-4 text-[14px] font-medium placeholder:text-slate-400 focus:outline-none focus:border-brand-red1 focus:ring-1 focus:ring-brand-red1 transition-all h-24 resize-none"
@@ -173,7 +239,7 @@ export default function TeamShopBundlePage() {
             <div className="space-y-2 pt-2">
               <label className="text-[12px] font-extrabold text-slate-600 ml-1">{dict.bundleOpentitle2Privacy}</label>
               <div className="grid grid-cols-2 gap-3">
-                <button 
+                <button
                   onClick={() => setPrivacy('public')}
                   className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[16px] border-2 transition-all ${
                     privacy === 'public' ? 'border-slate-800 bg-slate-50 text-slate-900' : 'border-slate-100 hover:border-slate-200 text-slate-400'
@@ -182,7 +248,7 @@ export default function TeamShopBundlePage() {
                   <Globe size={22} className={privacy === 'public' ? 'text-brand-blue' : ''} />
                   <span className="text-[13px] font-bold">{dict.bundlePrivacyPublic}</span>
                 </button>
-                <button 
+                <button
                   onClick={() => setPrivacy('private')}
                   className={`flex flex-col items-center justify-center gap-2 py-4 rounded-[16px] border-2 transition-all ${
                     privacy === 'private' ? 'border-slate-800 bg-slate-50 text-slate-900' : 'border-slate-100 hover:border-slate-200 text-slate-400'
@@ -212,9 +278,10 @@ export default function TeamShopBundlePage() {
           </div>
         )}
 
-        <button 
+        <button
           onClick={handleCreateTeam}
-          className={`relative overflow-hidden w-full bg-[#8A2627] text-white rounded-[20px] py-[16px] flex items-center justify-center gap-2 font-extrabold text-[15px] shadow-lg shadow-red-900/25 transition-all outline-none ${
+          disabled={isSubmitting}
+          className={`relative overflow-hidden w-full bg-[#8A2627] text-white rounded-[20px] py-[16px] flex items-center justify-center gap-2 font-extrabold text-[15px] shadow-lg shadow-red-900/25 transition-all outline-none disabled:opacity-70 ${
             errorShake ? 'animate-[shake_0.4s_ease-in-out_1]' : 'active:scale-[0.98] hover:bg-[#7A1F26]'
           }`}
         >
@@ -246,18 +313,14 @@ export default function TeamShopBundlePage() {
              <p className="text-[13px] text-slate-500 font-medium leading-relaxed mb-6">
                 {dict.bundleLoginDesc}
              </p>
-             <button 
-                onClick={() => {
-                   setShowLoginModal(false)
-                   document.cookie = "supabase-auth-token=mock; path=/"
-                   submitForm()
-                }}
+             <button
+                onClick={handleKakaoLogin}
                 className="w-full bg-[#fae100] hover:bg-[#eed500] text-[#371d1e] font-extrabold text-[15px] py-[15px] rounded-[18px] transition-colors flex items-center justify-center gap-2 shadow-sm"
              >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4c-4.97 0-9 3.18-9 7.1 0 2.54 1.7 4.76 4.2 5.96-.2.72-.75 2.68-.78 2.87-.04.22.12.22.25.13.1-.07 3.08-2.02 4.3-2.84.66.1 1.33.15 2.03.15 4.97 0 9-3.18 9-7.1S16.97 4 12 4Z"/></svg>
                 {dict.bundleLoginKakao}
              </button>
-             <button 
+             <button
                 onClick={() => setShowLoginModal(false)}
                 className="mt-4 text-[13px] font-bold text-slate-400 hover:text-slate-600 underline underline-offset-2"
              >
