@@ -40,6 +40,22 @@ CREATE TABLE public.kid_memories (
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
+-- 5. message_logs (비즈뿌리오 알림톡 등 발송 로그 저장)
+CREATE TABLE public.message_logs (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  event_type TEXT NOT NULL,
+  recipient TEXT NOT NULL,
+  template_code TEXT NOT NULL,
+  template_data JSONB,
+  dedupe_key TEXT UNIQUE,
+  status TEXT NOT NULL CHECK (status IN ('success', 'failed')),
+  response_code TEXT,
+  response_message TEXT,
+  provider TEXT NOT NULL DEFAULT 'bizppurio',
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
 -- =======================================================
 -- Row Level Security (RLS) 설정 
 -- (자신의 데이터만 안전하게 읽고 쓸 수 있도록 권한 제어)

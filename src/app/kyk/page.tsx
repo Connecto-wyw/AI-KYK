@@ -1,15 +1,47 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Sparkles, MessageCircle, BarChart2, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Sparkles, MessageCircle, BarChart2, ShieldCheck, LogOut, LogIn } from 'lucide-react'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { dictionaries } from '@/lib/i18n/dictionaries'
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
+import { createClient } from '@/lib/supabase/client'
+import type { User } from '@supabase/supabase-js'
 
 export default function KYKLandingPage() {
   const { language } = useLanguageStore()
   const dict = dictionaries[language]
+
+  const [user, setUser] = useState<User | null>(null)
+  const supabase = createClient()
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const handleLogin = async (provider: 'kakao' | 'google') => {
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/api/auth/callback?next=/kyk`
+      }
+    })
+  }
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-brand-white relative overflow-hidden pb-32 lg:pb-12">
@@ -28,9 +60,36 @@ export default function KYKLandingPage() {
           <span className="font-extrabold text-[19px] tracking-tight text-slate-900">KYK</span>
         </div>
 
-        {/* Global Language Selector (Top Right) */}
+        {/* Login Button (Top Right) */}
         <div className="absolute top-6 right-6 z-50">
-          <LanguageSelector />
+          {user ? (
+            <div className="flex items-center gap-2.5 px-2 py-1.5">
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-1 text-[13px] font-bold text-slate-600 hover:text-brand-red1 transition-colors py-1"
+              >
+                <LogOut size={14} />
+                Logout
+              </button>
+              {user.user_metadata?.avatar_url ? (
+                <img src={user.user_metadata.avatar_url} alt="Profile" className="w-8 h-8 rounded-full border border-slate-200 object-cover" />
+              ) : (
+                <div className="w-8 h-8 bg-brand-red1/10 rounded-full flex items-center justify-center text-brand-red1 font-bold text-xs border border-brand-red1/20">
+                  {user.email?.charAt(0).toUpperCase() || 'U'}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center px-2 py-1.5">
+              <button 
+                onClick={() => handleLogin(language === 'ko' ? 'kakao' : 'google')}
+                className="flex items-center gap-1 text-[13px] font-bold text-slate-600 hover:text-brand-red1 transition-colors py-1 pl-2"
+              >
+                <LogIn size={14} />
+                Login
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mb-6 mt-16 lg:mt-6 relative group cursor-pointer">
@@ -117,8 +176,10 @@ export default function KYKLandingPage() {
         </div>
       </section>
 
-      {/* Footer / Language Selector removed since it is now in layout.tsx */}
-      
+      {/* Language Selector (Bottom) */}
+      <div className="relative z-50 flex justify-center pb-40 lg:pb-12 mt-8">
+        <LanguageSelector />
+      </div>
       {/* Bottom Sticky CTA for Mobile */}
       <div className="fixed bottom-[72px] lg:hidden left-0 right-0 p-4 bg-gradient-to-t from-brand-white via-brand-white to-transparent pointer-events-none z-40 flex flex-col items-center">
         <Link

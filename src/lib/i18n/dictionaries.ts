@@ -70,6 +70,8 @@ export const dictionaries = {
     navTeamShop: "TEAM 쇼핑",
     navMy: "MY",
     navSoonLabel: "Soon",
+    navLoginKakao: "카카오 로그인",
+    navLoginGoogle: "Google 로그인",
     
     // KYK page
     title1: "3분 진단으로 시작하는",
@@ -354,6 +356,8 @@ export const dictionaries = {
     navTeamShop: "TEAM Shop",
     navMy: "MY",
     navSoonLabel: "Soon",
+    navLoginKakao: "Login with Kakao",
+    navLoginGoogle: "Sign in with Google",
     
     // KYK page
     title1: "Start with a 3-minute test",
@@ -634,6 +638,8 @@ export const dictionaries = {
     navTeamShop: "Kedai TEAM",
     navMy: "MY",
     navSoonLabel: "Akan Tiba",
+    navLoginKakao: "Log masuk Kakao",
+    navLoginGoogle: "Log masuk Google",
 
     title1: "Bermula dengan ujian 3 minit",
     title2: "Jurulatih Keibubapaan AI Khusus",
@@ -912,6 +918,8 @@ export const dictionaries = {
     navTeamShop: "Toko TEAM",
     navMy: "MY",
     navSoonLabel: "Segera",
+    navLoginKakao: "Login Kakao",
+    navLoginGoogle: "Login Google",
     
     title1: "Mulai dengan tes 3 menit",
     title2: "Pelatih Parenting AI Khusus",
@@ -1190,6 +1198,8 @@ export const dictionaries = {
     navTeamShop: "Cửa hàng TEAM",
     navMy: "MY",
     navSoonLabel: "Sắp ra mắt",
+    navLoginKakao: "Đăng nhập Kakao",
+    navLoginGoogle: "Đăng nhập Google",
     
     title1: "Bắt đầu với bài kiểm tra 3 phút",
     title2: "Huấn luyện viên nuôi dạy con AI",
@@ -1468,6 +1478,8 @@ export const dictionaries = {
     navTeamShop: "TEAM ช้อป",
     navMy: "MY",
     navSoonLabel: "เร็วๆนี้",
+    navLoginKakao: "เข้าสู่ระบบ Kakao",
+    navLoginGoogle: "เข้าสู่ระบบ Google",
     
     title1: "เริ่มด้วยการทดสอบ 3 นาที",
     title2: "โค้ชเลี้ยงเด็ก AI เฉพาะทาง",
