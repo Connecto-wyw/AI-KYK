@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
     if (teamError || !team) {
       console.error('Team create error:', teamError)
-      return NextResponse.json({ error: 'Failed to create team' }, { status: 500 })
+      return NextResponse.json({ error: teamError?.message ?? 'Failed to create team', detail: teamError }, { status: 500 })
     }
 
     const isKrw = gateway === 'toss'
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
     if (orderError || !order) {
       console.error('Order create error:', orderError)
-      return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
+      return NextResponse.json({ error: orderError?.message ?? 'Failed to create order', detail: orderError }, { status: 500 })
     }
 
     return NextResponse.json({
