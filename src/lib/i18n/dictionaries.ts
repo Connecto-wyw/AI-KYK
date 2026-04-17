@@ -394,22 +394,22 @@ export const dictionaries = {
     step4Q1Title: "What are your core parenting values?",
     step4Q1Max: "Max 2",
     step4Q1Options: [
-      { id: "self", p1: "🧭 Self-Directed", p2: "Independent and decision-making" },
-      { id: "achieve", p1: "🏆 Goal-Oriented", p2: "Persistent in achieving goals" },
-      { id: "emotion", p1: "💖 Emotion-Focused", p2: "Empathy, expression, and stability" },
+      { id: "self", p1: "🧭 Self-Directed", p2: "Independent and responsible choices" },
+      { id: "achieve", p1: "🏆 Goal-Oriented", p2: "Focused on achieving goals and results" },
+      { id: "emotion", p1: "💖 Emotion-Focused", p2: "Empathy, care, and emotional stability" },
+      { id: "happy", p1: "😊 Minimized Stress", p2: "Prioritizing joy over competition" },
       { id: "balance", p1: "⚖️ Balanced Growth", p2: "Study, play, and emotion in harmony" },
       { id: "advance", p1: "🚀 Advanced Prep", p2: "Staying ahead of peers is important" },
-      { id: "happy", p1: "😊 Minimized Stress", p2: "Smiling everyday over huge success" },
-      { id: "explore", p1: "🎨 Creative Explorer", p2: "Trying new, even quirky things" },
-      { id: "health", p1: "💪 Health/Active", p2: "Physically strong and energetic" }
+      { id: "explore", p1: "🎨 Creative Explorer", p2: "Free thinking and trying new things" },
+      { id: "health", p1: "💪 Health/Active", p2: "Physical strength and activity first" }
     ],
 
     step4Q2Title: "What is your child's learning level?",
     step4Q2Subjects: [
-      { id: "lang", name: "📝 Language (Native)", levels: ["No interest / Not started", "Simple words / basics", "Reading sentences / fluent"] },
-      { id: "math", name: "🔢 Mathematics", levels: ["Cannot recognize numbers", "Understands numbers 1-20", "Simple calculations or concepts"] },
-      { id: "eng", name: "🔤 Foreign Language", levels: ["No exposure", "Familiar with words/songs", "Understands simple sentences"] },
-      { id: "art", name: "🎨 Arts & Sports", levels: ["No interest", "Enjoys casually", "Learning consistently"] }
+      { id: "language", name: "📝 Language (Native)", levels: ["① Not started yet", "② Simple words/reading", "③ Fluent sentences/expression"] },
+      { id: "math", name: "🔢 Mathematics", levels: ["① Cannot recognize numbers", "② Understands numbers 1-20", "③ Simple calculations"] },
+      { id: "english", name: "🔤 Foreign Language", levels: ["① No exposure", "② Familiar with words/songs", "③ Understands simple sentences"] },
+      { id: "art", name: "🎨 Arts & Sports", levels: ["① No interest", "② Enjoys casually", "③ Learning consistently"] }
     ],
 
     step4Q3Title: "What is your parenting teaching style?",
@@ -712,22 +712,22 @@ export const dictionaries = {
     step4Q1Title: "What are your core parenting values?",
     step4Q1Max: "Max 2",
     step4Q1Options: [
-      { id: "self", p1: "🧭 Self-Directed", p2: "Independent and decision-making" },
-      { id: "achieve", p1: "🏆 Goal-Oriented", p2: "Persistent in achieving goals" },
-      { id: "emotion", p1: "💖 Emotion-Focused", p2: "Empathy, expression, and stability" },
-      { id: "balance", p1: "⚖️ Balanced Growth", p2: "Study, play, and emotion in harmony" },
-      { id: "advance", p1: "🚀 Advanced Prep", p2: "Staying ahead of peers is important" },
-      { id: "happy", p1: "😊 Minimized Stress", p2: "Smiling everyday over huge success" },
-      { id: "explore", p1: "🎨 Creative Explorer", p2: "Trying new, even quirky things" },
-      { id: "health", p1: "💪 Health/Active", p2: "Physically strong and energetic" }
+      { id: "self", p1: "🧭 Arah Kendiri", p2: "Pilihan yang bebas dan bertanggungjawab" },
+      { id: "achieve", p1: "🏆 Berorientasikan Matlamat", p2: "Fokus pada pencapaian matlamat dan pantang menyerah" },
+      { id: "emotion", p1: "💖 Fokus Emosi", p2: "Empati, penjagaan dan kestabilan emosi" },
+      { id: "happy", p1: "😊 Kurangkan Tekanan", p2: "Mengutamakan kegembiraan berbanding persaingan" },
+      { id: "balance", p1: "⚖️ Pertumbuhan Seimbang", p2: "Kajian, bermain dan emosi dalam harmoni" },
+      { id: "advance", p1: "🚀 Persediaan Awal", p2: "Kekal mendahului rakan sebaya adalah penting" },
+      { id: "explore", p1: "🎨 Penjelajah Kreatif", p2: "Pemikiran bebas dan mencuba perkara baharu" },
+      { id: "health", p1: "💪 Kesihatan/Aktif", p2: "Kesihatan fizikal dan kecergasan" }
     ],
 
     step4Q2Title: "What is your child's learning level?",
     step4Q2Subjects: [
-      { id: "lang", name: "📝 Language (Native)", levels: ["No interest / Not started", "Simple words / basics", "Reading sentences / fluent"] },
-      { id: "math", name: "🔢 Mathematics", levels: ["Cannot recognize numbers", "Understands numbers 1-20", "Simple calculations or concepts"] },
-      { id: "eng", name: "🔤 Foreign Language", levels: ["No exposure", "Familiar with words/songs", "Understands simple sentences"] },
-      { id: "art", name: "🎨 Arts & Sports", levels: ["No interest", "Enjoys casually", "Learning consistently"] }
+      { id: "language", name: "📝 Bahasa (Ibunda)", levels: ["① Belum bermula", "② Perkataan mudah", "③ Ayat fasih/ekspresi"] },
+      { id: "math", name: "🔢 Matematik", levels: ["① Tidak kenal nombor", "② Faham nombor 1-20", "③ Pengiraan mudah"] },
+      { id: "english", name: "🔤 Bahasa Asing", levels: ["① Tiada pendedahan", "② Biasa dengan perkataan/lagu", "③ Faham ayat mudah"] },
+      { id: "art", name: "🎨 Seni & Sukan", levels: ["① Tiada minat", "② Nikmati secara kasual", "③ Belajar secara konsisten"] }
     ],
 
     step4Q3Title: "What is your parenting teaching style?",
