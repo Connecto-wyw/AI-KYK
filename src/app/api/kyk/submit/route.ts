@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { calculateKYKResult, KID_PROFILES, KidType } from '@/lib/kyk/scoring'
 import { createOpenAI } from '@ai-sdk/openai'
-import { generateText } from 'ai'
+import { generateObject } from 'ai'
+import { z } from 'zod'
 
 const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy_key',
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
     const profile = KID_PROFILES[result.mbtiType as KidType]
 
     let analysisReport = null
+    let premiumData = null
     if (step4Answers && process.env.OPENAI_API_KEY) {
       const parentValues = step4Answers.parentValues?.join(', ') || '알 수 없음'
       const parentStyle = step4Answers.parentStyle || '알 수 없음'
@@ -48,17 +50,22 @@ export async function POST(request: Request) {
 1. 부모 vs 아이 "격차 분석": 부모가 '성취지향형'이거나 '선행/경쟁 대비형'인데 아이의 학습 수준이 초기(① 아직 시작 전, 등)라면 "속도 과부하 위험"을 반드시 짚으세요.
 2. 스타일 충돌 분석: 부모 스타일이 '밀착 리드형'인데 지향 가치가 '행복/스트레스 최소형'이거나 '자율 존중형' 등 충돌이 있다면 "말과 행동 불일치(목표와 방식의 충돌)"가 있음을 지적하세요.
 
-위 정보를 바탕으로, 다음 세 가지 항목을 각각 명확한 마크다운 헤더(## 1. 현재 상태 진단, ## 2. 위험 신호, ## 3. 추천 전략) 형식으로 작성하세요. 각 항목은 3-4문장씩 뼈대만 간결하고 명확하게 작성하며, 구체적인 근거를 들어 서술하세요.
-1. "현재 상태 진단" (부모 기대 대비 아이의 기질/수준 분석)
-2. "위험 신호" (과부하, 방임, 불균형 등의 우려 여부를 파악, 발견된 충돌이나 격차를 명시)
-3. "추천 양육 전략 3가지" (충돌과 격차를 해소하기 위한 현실적인 우선 접근법)`
+위 정보를 바탕으로 부모 기대 대비 아이의 기질/수준 분석, 우려되는 위험 신호(과부하/방임/불균형), 그리고 이를 해소하기 위한 즉각적인 실행 전략을 구체적인 상황을 들어 작성하세요.
+`
 
       try {
-        const aiRes = await generateText({
+        const aiRes = await generateObject({
           model: openai('gpt-4o-mini'),
+          schema: z.object({
+            gap_analysis: z.string().describe("현재 상태 진단 텍스트. 부모의 기대치와 아이의 실제 발달상태의 격차나 조화를 객관적으로 분석합니다. 3~4문장."),
+            risk_signals: z.array(z.string()).describe("위험 신호 리스트. 2~3개."),
+            action_strategies: z.array(z.string()).describe("추천 양육 전략 리스트. 즉각 실행 가능한 행동지침 3가지."),
+            premium_markdown: z.string().describe("프리미엄 레포트에 쓰일 상세 보조 요약 마크다운 텍스트."),
+          }),
           prompt: analysisPrompt,
         })
-        analysisReport = aiRes.text
+        analysisReport = aiRes.object
+        premiumData = aiRes.object
       } catch (err) {
         console.error('OpenAI step4 generation error:', err)
       }
@@ -71,6 +78,7 @@ export async function POST(request: Request) {
       sub_type: result.mbtiType.slice(2, 4),
       concern: step3Answers?.concern || null,
       answers: { step1: step1Answers, step2: step2Answers, step3: step3Answers, step4: step4Answers, step4_analysis: analysisReport },
+      premium_data: premiumData
     }
 
     const { data: insertedRecord, error: dbError } = await supabase
