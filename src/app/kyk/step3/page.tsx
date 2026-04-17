@@ -84,7 +84,7 @@ export default function Step3Page() {
         finalConcerns.push(customConcern.trim())
       }
       setStep3({ birthYear, gender, region, concern: finalConcerns.join(', ') })
-      router.push('/kyk/saving')
+      router.push('/kyk/step4')
     }
   }
 
@@ -96,9 +96,9 @@ export default function Step3Page() {
         </button>
         <Image src="/symbol.png" alt="KYK" width={24} height={24} className="ml-1 object-contain opacity-80" />
         <div className="flex-1 px-3">
-          <Progress value={100} className="h-2" />
+          <Progress value={75} className="h-2" />
         </div>
-        <div className="w-8 text-xs text-right font-medium text-slate-400">4/4</div>
+        <div className="w-8 text-xs text-right font-medium text-slate-400">3/4</div>
       </header>
 
       <main className="flex-1 px-6 lg:px-12 py-8 pb-36">
@@ -236,7 +236,7 @@ export default function Step3Page() {
           disabled={!isComplete}
           onClick={handleNext}
         >
-          {dict.step3Submit}
+          {dict.step3Next || "다음"}
         </Button>
       </footer>
     </div>

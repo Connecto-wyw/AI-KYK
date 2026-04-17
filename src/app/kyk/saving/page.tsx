@@ -5,10 +5,14 @@ import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { useKYKStore } from '@/store/useKYKStore'
 import { createClient } from '@/lib/supabase/client'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { dictionaries } from '@/lib/i18n/dictionaries'
 
 export default function SavingPage() {
   const router = useRouter()
   const store = useKYKStore()
+  const { language } = useLanguageStore()
+  const dict = dictionaries[language]
 
   useEffect(() => {
     async function submitData() {
@@ -30,6 +34,7 @@ export default function SavingPage() {
           step1Answers: currentStore.step1Answers,
           step2Answers: currentStore.step2Answers,
           step3Answers: currentStore.step3Answers,
+          step4Answers: currentStore.step4Answers,
         }
 
         const res = await fetch('/api/kyk/submit', {
@@ -56,6 +61,29 @@ export default function SavingPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Calculate dynamic teaser
+  const computeSpeedLabel = () => {
+    const { parentStyle, childLevels } = store.step4Answers || {};
+    if (!parentStyle || !childLevels) return language === 'ko' ? '빠를' : 'fast';
+
+    let totalLevel = 0;
+    let count = 0;
+    for (const key in childLevels) {
+      totalLevel += childLevels[key];
+      count++;
+    }
+    const avg = count > 0 ? totalLevel / count : 0;
+
+    // parentStyle: lead (fast), nature (slow), respect, coach
+    if (parentStyle === 'lead' && avg < 1.0) return language === 'ko' ? '빠를' : 'fast';
+    if (parentStyle === 'nature' && avg >= 2.0) return language === 'ko' ? '느릴' : 'slow'; 
+    if (parentStyle === 'lead' && avg >= 1.5) return language === 'ko' ? '알맞을' : 'well-paced';
+    return language === 'ko' ? '다를' : 'different';
+  }
+
+  const speedStr = computeSpeedLabel();
+  const teaserText = dict.savingTeaser ? dict.savingTeaser.replace('{speed}', speedStr) : `지금 양육 방향은\n아이에게 조금 ${speedStr} 수 있어요`;
+
   return (
     <div className="flex flex-col min-h-[100dvh] bg-slate-900 text-white p-6 items-center justify-center relative overflow-hidden">
       {/* Background ambient FX */}
@@ -76,16 +104,18 @@ export default function SavingPage() {
           AI 분석 엔진 가동 중...
         </h2>
         
-        <div className="space-y-2 mt-4 text-center">
-          <p className="text-sm font-medium text-slate-400 animate-[fade-in-up_400ms_ease-out_forwards]">
-            수만 건의 아동 발달 데이터를 매칭하는 중입니다.
+        <div className="space-y-4 mt-8 text-center max-w-sm">
+          <p className="text-[17px] font-bold text-white whitespace-pre-line animate-[fade-in-up_400ms_ease-out_forwards] bg-white/10 p-5 rounded-2xl border border-white/20 shadow-xl backdrop-blur-md">
+            {teaserText}
           </p>
-          <p className="text-[13px] text-slate-500 animate-[fade-in-up_400ms_ease-out_800ms_forwards] opacity-0" style={{ animationDelay: '1.2s' }}>
-            부모님의 고민을 기반으로 맞춤형 TCI 기질을 추출합니다.
-          </p>
-          <p className="text-[13px] text-brand-yellow/80 animate-[fade-in-up_400ms_ease-out_2400ms_forwards] opacity-0 font-bold" style={{ animationDelay: '2.4s' }}>
-            거의 다 완성되었어요!
-          </p>
+          <div className="space-y-2 mt-4 pt-4">
+            <p className="text-[13px] text-slate-500 animate-[fade-in-up_400ms_ease-out_800ms_forwards] opacity-0" style={{ animationDelay: '1.2s' }}>
+              부모님의 기대치와 아이의 기질을 결합하고 있습니다...
+            </p>
+            <p className="text-[13px] text-brand-yellow/80 animate-[fade-in-up_400ms_ease-out_2400ms_forwards] opacity-0 font-bold" style={{ animationDelay: '2.4s' }}>
+              분석이 거의 완료되었어요!
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ export function BottomNavigation() {
             {NAV_BASE_ITEMS.map((item) => {
               const Icon = item.icon
               const isActive = item.href === '/kyk' ? pathname === '/kyk' : pathname?.startsWith(item.href)
-              const name = dict[item.key as keyof typeof dict]
+              const name = dict[item.key as keyof typeof dict] as string
               
               if (item.disabled) {
                 return (
@@ -89,7 +89,7 @@ export function BottomNavigation() {
           {NAV_BASE_ITEMS.map((item) => {
             const Icon = item.icon
             const isActive = item.href === '/kyk' ? pathname === '/kyk' : pathname?.startsWith(item.href)
-            const name = dict[item.key as keyof typeof dict]
+            const name = dict[item.key as keyof typeof dict] as string
             
             if (item.disabled) {
               return (

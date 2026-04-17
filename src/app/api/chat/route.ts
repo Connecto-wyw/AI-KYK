@@ -48,6 +48,10 @@ export async function POST(req: Request) {
         const currentYear = new Date().getFullYear()
         const age = birthYear !== '미상' ? currentYear - parseInt(birthYear) + 1 : '미상'
         const concernParts = record.answers?.step3?.concern || '전반적인 양육 방법'
+        const step4 = record.answers?.step4 || {}
+        const parentValues = step4.parentValues?.join(', ') || 'None'
+        const parentStyle = step4.parentStyle || 'Unknown'
+        const childLevelsStr = Object.entries(step4.childLevels || {}).map(([k,v]) => `${k}:Level ${v}`).join(', ') || 'None'
         
         profileDetails = `
 - Child Age/Gender: ${birthYear}년생 (${age}세), ${gender}
@@ -56,6 +60,9 @@ export async function POST(req: Request) {
 - Strengths: ${profile?.strengths?.join(', ') || 'None'}
 - Care Points (Risks): ${profile?.carePoints?.join(', ') || 'None'}
 - Parent's Main Concern(s): ${concernParts}
+- Parent Values: ${parentValues}
+- Parent Style: ${parentStyle}
+- Child Learning Levels: ${childLevelsStr}
 `
       }
 
@@ -101,11 +108,17 @@ ${memoryContext ? memoryContext : 'No past interactions yet.'}
 
 PERSONALIZATION RULE (CRITICAL):
 Every response MUST be explicitly grounded in the child's temperament. Connect the behavior to their specific traits. Explain *why* the child reacts this way based on their KYK profile. 
-Occasionally (but naturally), explicitly mention the child's exact age, gender, and personality title in your response (e.g., "우리 5세 남아이고 [성향 이름] 성향을 가졌기 때문에...", "[성향 이름]인 4세 여아들은 특히...").
+Occasionally (but naturally), explicitly mention the child's exact age, gender, and personality title in your response.
+
+PARENTING EXPECTATIONS ANALYSIS:
+Based on the provided Parent Values, Parent Style, and Child Learning Levels, you MUST silently evaluate:
+1. 부모 기대 vs 현재 수준의 갭 차이: 부모가 '성취지향형', '선행/경쟁 대비형'인데 아이의 학습 수준이 아직 시작 전/초급이라면 "속도 과부하 위험"을 파악하세요.
+2. 스타일 충돌 분석: 부모 스타일이 '밀착 리드형'인데 가치관이 '행복/스트레스 최소형'이거나 '자율 존중형'일 경우 "말과 행동 불일치(목표와 방식의 충돌)"를 파악하세요.
+3. 이를 바탕으로 현실적인 성장 전략 및 코칭 제시. 현재 양육 방향이 아이에게 과부하, 진도 불일치인지 점검하고 조언하세요.
 
 RESPONSE STRUCTURE (Keep it concise, 3-4 sentences total):
 1. Empathy: 1 short sentence acknowledging the parent.
-2. Interpretation: Explain the behavior linked to the temperament.
+2. Interpretation: Explain the behavior linked to temperament, noting any clash with parent expectations if relevant.
 3. Action: Give exactly ONE practical action to take.
 4. Script: Give exactly ONE example sentence the parent can actually say.
 (Rotate your style between Action coaching, Pattern insight, and Situation interpretation so you don't sound robotic).
