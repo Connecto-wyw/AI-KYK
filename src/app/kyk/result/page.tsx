@@ -77,7 +77,7 @@ export default async function ResultPage() {
   return (
     <div className="min-h-[100dvh] bg-white text-slate-800">
       {!isUnlocked && (
-        <PaywallOverlay kidId={resultData.id} />
+        <PaywallOverlay kidId={resultData.id} lang={lang} />
       )}
 
       <div className={`max-w-5xl mx-auto lg:flex lg:gap-8 lg:px-8 lg:pt-8 lg:pb-12 ${!isUnlocked ? "blur-xl pointer-events-none select-none opacity-40 h-[100vh] overflow-hidden" : ""}`}>
