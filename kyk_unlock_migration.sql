@@ -43,15 +43,15 @@ CREATE TABLE IF NOT EXISTS kyk_payments (
 ALTER TABLE kyk_unlock_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE kyk_payments ENABLE ROW LEVEL SECURITY;
 
--- 본인의 kyk_results만 조회 가능
--- 기존에 kyk_results RLS가 없다면 추가합니다.
--- ALTER TABLE kyk_results ENABLE ROW LEVEL SECURITY;
--- CREATE POLICY "kyk_results_select" ON kyk_results FOR SELECT USING (user_id = auth.uid());
+-- 기존의 정책 삭제 (보안 조치 및 중복 방지)
+DROP POLICY IF EXISTS "kyk_unlock_events_select" ON kyk_unlock_events;
+DROP POLICY IF EXISTS "kyk_unlock_events_insert" ON kyk_unlock_events;
+DROP POLICY IF EXISTS "kyk_unlock_events_update" ON kyk_unlock_events;
 
+DROP POLICY IF EXISTS "kyk_payments_select" ON kyk_payments;
+DROP POLICY IF EXISTS "kyk_payments_insert" ON kyk_payments;
+DROP POLICY IF EXISTS "kyk_payments_update" ON kyk_payments;
+
+-- 중복 생성을 막기 위해 Select 정책만 재생성
 CREATE POLICY "kyk_unlock_events_select" ON kyk_unlock_events FOR SELECT USING (user_id = auth.uid());
-CREATE POLICY "kyk_unlock_events_insert" ON kyk_unlock_events FOR INSERT WITH CHECK (user_id = auth.uid());
-CREATE POLICY "kyk_unlock_events_update" ON kyk_unlock_events FOR UPDATE USING (user_id = auth.uid());
-
 CREATE POLICY "kyk_payments_select" ON kyk_payments FOR SELECT USING (user_id = auth.uid());
-CREATE POLICY "kyk_payments_insert" ON kyk_payments FOR INSERT WITH CHECK (user_id = auth.uid());
-CREATE POLICY "kyk_payments_update" ON kyk_payments FOR UPDATE USING (user_id = auth.uid());

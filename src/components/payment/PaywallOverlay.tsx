@@ -84,39 +84,16 @@ export function PaywallOverlay({ kidId, lang = 'en', onUnlockSuccess }: PaywallO
 
   const handleWatchAd = async () => {
     setIsLoadingAd(true)
-    try {
-      // Mockup 흐름: 바로 완료 처리 (실제 연동 전 퍼널 테스트용)
-      const res = await fetch('/api/kyk/ad/complete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resultId: kidId, action: 'mock_ad_watch' })
-      })
-
-      const data = await res.json()
-      if (data.success) {
-        if (onUnlockSuccess) onUnlockSuccess()
-        router.refresh()
-      } else {
-        alert(text.loadingAd)
-      }
-    } catch (e) {
-      alert(text.errorAlert)
-    } finally {
-      setIsLoadingAd(false)
-    }
+    // 테스트용 강제 언락 바이패스 (다른 분들 확인용)
+    router.push('?unlocked=true')
+    setIsLoadingAd(false)
   }
 
   const handlePayment = async () => {
     setIsLoadingPay(true)
-    try {
-      // 차후 Toss Payments 연동을 위한 진입점
-      alert(text.payAlert)
-      // Toss 호출 로직 들어갈 자리...
-    } catch (e) {
-      alert(text.errorAlert)
-    } finally {
-      setIsLoadingPay(false)
-    }
+    // 테스트용 강제 언락 바이패스
+    router.push('?unlocked=true')
+    setIsLoadingPay(false)
   }
 
   return (

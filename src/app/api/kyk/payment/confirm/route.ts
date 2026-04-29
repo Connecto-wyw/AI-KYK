@@ -1,19 +1,20 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { supabaseAdmin } from '@/lib/supabase/admin'
 
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    if (!user) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
+    if (authError || !user) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
 
     const { paymentKey, orderId, amount } = await request.json()
     if (!paymentKey || !orderId || !amount) {
       return NextResponse.json({ success: false, error: 'Missing payment parameters' }, { status: 400 })
     }
 
-    // 1. Verify existence of the ready order
+    // 1. Verify existence of the ready order (safe to use user client for SELECT)
     const { data: paymentRecord, error: fetchErr } = await supabase
       .from('kyk_payments')
       .select('*')
@@ -45,24 +46,24 @@ export async function POST(request: Request) {
     const tossData = await tossRes.json()
 
     if (!tossRes.ok) {
-      // Failed payment
-      await supabase.from('kyk_payments').update({
+      // Failed payment: Use supabaseAdmin to update since client cannot update
+      await supabaseAdmin.from('kyk_payments').update({
         status: 'failed',
         raw_response: tossData
       }).eq('order_id', orderId)
-      return NextResponse.json({ success: false, error: tossData.message }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Payment processing failed with provider' }, { status: 400 })
     }
 
-    // 3. Mark successful in DB
-    await supabase.from('kyk_payments').update({
+    // 3. Mark successful in DB: Use supabaseAdmin
+    await supabaseAdmin.from('kyk_payments').update({
       status: 'paid',
       payment_key: paymentKey,
       raw_response: tossData,
       confirmed_at: new Date().toISOString()
     }).eq('order_id', orderId)
 
-    // 4. Record the unlock event (진실의 원천 업데이트)
-    await supabase.from('kyk_unlock_events').insert({
+    // 4. Record the unlock event (진실의 원천 업데이트): Use supabaseAdmin
+    await supabaseAdmin.from('kyk_unlock_events').insert({
       result_id: paymentRecord.result_id,
       user_id: user.id,
       source: 'payment',
@@ -70,8 +71,8 @@ export async function POST(request: Request) {
       completed_at: new Date().toISOString()
     })
 
-    // 5. Update cached kyk_results unlock state
-    await supabase.from('kyk_results').update({
+    // 5. Update cached kyk_results unlock state: Use supabaseAdmin
+    await supabaseAdmin.from('kyk_results').update({
       is_unlocked: true,
       unlock_type: 'paid',
       paid_order_id: orderId,
@@ -80,7 +81,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true })
   } catch (err: any) {
-    console.error('Payment confirm fallback error:', err)
-    return NextResponse.json({ success: false, error: 'Payment flow error' }, { status: 500 })
+    console.error('Payment confirm error:', err)
+    return NextResponse.json({ success: false, error: 'Internal server error during payment confirmation' }, { status: 500 })
   }
 }
+

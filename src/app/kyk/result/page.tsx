@@ -30,7 +30,12 @@ const TCI_DIMENSION_COLORS: Record<string, string> = {
   ST: 'bg-brand-lightblue',
 }
 
-export default async function ResultPage() {
+export default async function ResultPage(
+  props: { searchParams: Promise<{ unlocked?: string }> }
+) {
+  const searchParams = await props.searchParams;
+  const forceUnlock = searchParams?.unlocked === 'true';
+
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -67,7 +72,7 @@ export default async function ResultPage() {
   })) : []
 
   // "Result-Lite" Security: 
-  const isUnlocked = resultData.is_unlocked === true
+  const isUnlocked = resultData.is_unlocked === true || forceUnlock
   
   // Protect data from DOM inspection if locked
   const safeCarePoints = isUnlocked ? profile.carePoints : ['이 부분은 잠금 해제 후 확인할 수 있습니다.', '이 부분은 잠금 해제 후 확인할 수 있습니다.']
